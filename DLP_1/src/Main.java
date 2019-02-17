@@ -10,7 +10,7 @@ public class Main {
 			return;
 		}
 
-		// creates a lexer that feeds off of input CharStream
+		// creates a  lexer that feeds off of input CharStream
 		CharStream input = CharStreams.fromFileName(args[0]);
 
 		// creates a buffer of tokens pulled from the lexer

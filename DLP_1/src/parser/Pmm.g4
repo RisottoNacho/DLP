@@ -14,7 +14,7 @@ fragment
 LETTER: [a-zA-Z];
 fragment
 EXPONENT: [eE][+-]?DIGIT+;
-  		 
+  
 REAL_CONSTANT: (DIGIT+)(EXPONENT|('\.'DIGIT*));		 
 INT_CONSTANT: [0-9]+ ;
 ID: ('_'|LETTER)(LETTER|DIGIT|'_')*;
