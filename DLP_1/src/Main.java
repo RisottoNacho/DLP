@@ -10,7 +10,7 @@ public class Main {
 			return;
 		}
 
-		// creates a  lexer that feeds off of input CharStream
+		// creates a lexer that feeds off of input CharStream
 		CharStream input = CharStreams.fromFileName(args[0]);
 
 		// creates a buffer of tokens pulled from the lexer
@@ -22,14 +22,13 @@ public class Main {
 			// We get the semantic value of the token
 			Object semanticValue = null;
 			switch (token.getType()) {			
-			// TODO: Implement the lexemeToChar and lexemeToReal methods in LexerHelper
-			/*case PmmLexer.CHAR_CONSTANT:
+			case PmmLexer.CHAR_CONSTANT:
 				semanticValue = LexerHelper.lexemeToChar(token.getText());
 				break;
 			case PmmLexer.REAL_CONSTANT:
 				semanticValue = LexerHelper.lexemeToReal(token.getText());
 				break;
-			*/
+			
 			case PmmLexer.INT_CONSTANT:
 				semanticValue = LexerHelper.lexemeToInt(token.getText());
 				break;

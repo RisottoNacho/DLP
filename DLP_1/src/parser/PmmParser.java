@@ -17,7 +17,8 @@ public class PmmParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		LINE_COMMENT=1, COMMENT=2, WHITESPACE=3, INT_CONSTANT=4, ID=5, CHAR_CONSTANT=6;
+		LINE_COMMENT=1, COMMENT=2, WHITESPACE=3, REAL_CONSTANT=4, INT_CONSTANT=5, 
+		ID=6, CHAR_CONSTANT=7;
 	public static final int
 		RULE_program = 0;
 	public static final String[] ruleNames = {
@@ -27,7 +28,8 @@ public class PmmParser extends Parser {
 	private static final String[] _LITERAL_NAMES = {
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, "LINE_COMMENT", "COMMENT", "WHITESPACE", "INT_CONSTANT", "ID", "CHAR_CONSTANT"
+		null, "LINE_COMMENT", "COMMENT", "WHITESPACE", "REAL_CONSTANT", "INT_CONSTANT", 
+		"ID", "CHAR_CONSTANT"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -105,7 +107,7 @@ public class PmmParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\b\7\4\2\t\2\3\2\3"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\t\7\4\2\t\2\3\2\3"+
 		"\2\3\2\2\2\3\2\2\2\2\5\2\4\3\2\2\2\4\5\3\2\2\2\5\3\3\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
