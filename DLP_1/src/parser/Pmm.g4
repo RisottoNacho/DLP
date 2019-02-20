@@ -1,7 +1,26 @@
 grammar Pmm;	
 
-program: 
+program: statement+ EOF
        ;
+       
+       
+statement: expression '=' expression ';'
+|	'print' expression (',' expression)+ ';'
+	;
+	
+expression: 
+	expression'['expression']'
+|	expression'.'expression
+|	expression ('*'|'/'|'%') expression
+|	expression ('+'|'-') expression
+|	ID
+|	INT_CONSTANT
+	;
+
+
+
+
+
 
 
 LINE_COMMENT: '#'.*?'\r'?('\n'|EOF) -> skip;
