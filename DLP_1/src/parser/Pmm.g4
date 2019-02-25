@@ -9,15 +9,21 @@ statement: expression '=' expression ';'
 	;
 	
 expression: 
-	expression'['expression']'
+|	'!' expression
+|	'-' expression
+|	expression'['expression']'
 |	expression'.'expression
 |	expression ('*'|'/'|'%') expression
 |	expression ('+'|'-') expression
+|	expression ('>'|'<'|'>='|'<='|'=='|'!=') expression
+|	expression ('||'|'&&')  expression
 |	ID
 |	INT_CONSTANT
+|	CHAR_CONSTANT
+|	REAL_CONSTANT
 	;
 
-
+variable: ID;
 
 
 
