@@ -6,10 +6,11 @@ import ast.definitions.Definition;
 
 public class Program extends ConcreteASTNode {
 
-	private List<Definition> listDef; PENDIENTE SEGUIR CON ESTO
+	private List<Definition> listDef;
 	
 	public Program (int row,int column,List<Definition> ls) {
 		super(row,column);
+		setListDef(ls);
 	}
 
 	public List<Definition> getListDef() {

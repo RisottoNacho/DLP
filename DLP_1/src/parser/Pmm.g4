@@ -39,25 +39,34 @@ expression returns [Expresion ast]:
 |	REAL_CONSTANT
 	;
 
-listExpression: expression(,expression)*
+listExpression: expression(,expression)*;
 
-variable: ID;
+/**
+variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,
+	$ID
+);};
+**/
 
 type: 'int'
 |	'double'
 |	'char'
-|	'void'
+|	'void' // QUE HACER CON VOID Y FUNC TYPE
 |	'string'
 |	'struct'
 |	'['INT_CONSTANT']' type
 	;
 	
-listDefVariable:
-	(defVariable ';')*
+listDefVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
+	(v=defVariable {$ast.addAll($v.ast);} ';')*
 	;
 
-defVariable:
-	ID (,ID)* ':' type
+defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
+	a=ID{
+	$ast.add($a = new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
+	$a),t);
+	} (,b=ID{$ast.add($a = new VariableDefinition($b.getLine(),$b.getCharPositionInLine()+1,
+	$b),t);
+	})* ':' t=type
 	;
 	
 campo:
@@ -65,14 +74,14 @@ campo:
 	;	
 	
 defFuncion returns [FunctionDefinition ast]:
-	'def' ID '('(campo(,campo)*)?')' ':' type '{'listDefVariable listStatement '}'
+	'def' ID '('(campo(,campo)*)?')' ':' (type '{'a=listDefVariable b=listStatement '}')?
 	{
-	ast = newFunctionDefinition();
-	}
+	ast = newFunctionDefinition($a.start.getLine(),$a.start.getCharPositionInLine()+1,);
+	} // SEGUIR AQUI FINALIZAR CREACION DEFINICION FUNCION
 	;
 
 listStament returns [List<Statement> ast = new ArrayList<Statement>()]:
-	(s=statement {$as.add($s.ast)})*
+	(s=statement {$ast.add($s.ast)})*
 	;
 
 statement:
@@ -80,7 +89,8 @@ statement:
 |	defVariable';'
 |	ID '('listExpression?')'
 |	'if' expression ':' '{'statement* '}'
-|	'if' expression ':' '{'statement* '}' 'else' '{'statement* '}'
+|	'if' expression ':' statement
+|	'if' expression ':' ('{'statement* '}'| statement) 'else'( '{'statement* '}'| statement)
 |	'while' expression ':' '{'statement* '}'
 |	'print' listExpression
 |	'input'	listExpression
