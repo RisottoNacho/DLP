@@ -1,7 +1,5 @@
 package ast.definitions;
 
-import ast.ConcreteASTNode;
-
-public class VariableDefinition extends ConcreteASTNode  implements Definition {
+public class VariableDefinition extends ConcreteDefinition  implements Definition {
 
 }

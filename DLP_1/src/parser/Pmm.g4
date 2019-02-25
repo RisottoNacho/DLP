@@ -1,5 +1,13 @@
 grammar Pmm;	
 
+@header{
+    import ast.*;
+    import ast.definitions.*;
+    import ast.expresions.*;
+    import ast.statements.*;
+    import ast.types.*;
+}
+
 program: listDefVariable defFuncion* main EOF
        ;
        
@@ -9,10 +17,10 @@ statement: expression '=' expression ';'
 	;
 
 main:
-	'def' 'main' '('(campo(,campo)*)?')' ':' type '{'listDefVariable statement* '}'
+	'def' 'main' '('(campo(,campo)*)?')' ':' '{'listDefVariable statement* '}'
 	;
 
-expression: 
+expression returns [Expresion ast]: 
 	'('type')' expression 
 |	'('expression')'
 |	'!' expression
@@ -20,11 +28,13 @@ expression:
 |	expression'['expression']'
 |	expression'.'expression
 |	expression ('*'|'/'|'%') expression
-|	expression ('+'|'-') expression
+|	iz = expression op=('+'|'-') de = expression 
+{	$ast = new Aritmetic($iz.start.getLine(),$iz.start.getCharPositionInLine()+1,$iz.ast,$op.text,$de.ast);
+}
 |	expression ('>'|'<'|'>='|'<='|'=='|'!=') expression
 |	expression ('||'|'&&')  expression
-|	ID
-|	INT_CONSTANT
+|	ID {$ast = new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text);}
+|	INT_CONSTANT {$ast = new IntLiteral($INT_CONSTANT.getLine(),$INT_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToInt($INT_CONSTANT.text));}
 |	CHAR_CONSTANT
 |	REAL_CONSTANT
 	;
@@ -54,8 +64,15 @@ campo:
 	ID : type
 	;	
 	
-defFuncion:
-	'def' ID '('(campo(,campo)*)?')' ':' type '{'listDefVariable statement* '}'
+defFuncion returns [FunctionDefinition ast]:
+	'def' ID '('(campo(,campo)*)?')' ':' type '{'listDefVariable listStatement '}'
+	{
+	ast = newFunctionDefinition();
+	}
+	;
+
+listStament returns [List<Statement> ast = new ArrayList<Statement>()]:
+	(s=statement {$as.add($s.ast)})*
 	;
 
 statement:
