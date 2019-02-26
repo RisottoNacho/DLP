@@ -12,12 +12,9 @@ program: listDefVariable defFuncion* main EOF
        ;
        
        
-statement: expression '=' expression ';'
-|	'print' expression (',' expression)+ ';'
-	;
 
 main:
-	'def' 'main' '('(campo(,campo)*)?')' ':' '{'listDefVariable statement* '}'
+	'def' 'main' '('fieldList?')' ':' '{'listDefVariable statement* '}'
 	;
 
 expression returns [Expresion ast]: 
@@ -39,7 +36,7 @@ expression returns [Expresion ast]:
 |	REAL_CONSTANT
 	;
 
-listExpression: expression(,expression)*;
+listExpression: expression(','expression)*;
 
 /**
 variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,
@@ -50,9 +47,9 @@ variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCha
 type: 'int'
 |	'double'
 |	'char'
-|	'void' // QUE HACER CON VOID Y FUNC TYPE
+|	
 |	'string'
-|	'struct'
+|	'struct' '{'fieldList'}'
 |	'['INT_CONSTANT']' type
 	;
 	
@@ -64,19 +61,29 @@ defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefini
 	a=ID{
 	$ast.add($a = new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
 	$a),t);
-	} (,b=ID{$ast.add($a = new VariableDefinition($b.getLine(),$b.getCharPositionInLine()+1,
+	} (','b=ID{$ast.add($a = new VariableDefinition($b.getLine(),$b.getCharPositionInLine()+1,
 	$b),t);
 	})* ':' t=type
 	;
 	
-campo:
-	ID : type
+field returns [Field ast]:
+	ID ':' t=type {$ast = new Field($ID.getLine(),$ID.getCharPositionInLine()+1,$ID,$t.ast);}
 	;	
 	
+fieldList returns [List<Field> ast = new ArrayList()]: 
+	(f1=field{
+	$ast.add($f1.ast);
+}
+	(','f2=field{
+	$ast.add($f2.ast);
+}
+	)*) 
+;
+	
 defFuncion returns [FunctionDefinition ast]:
-	'def' ID '('(campo(,campo)*)?')' ':' (type '{'a=listDefVariable b=listStatement '}')?
+	'def' ID '('fieldList?')' ':' (type '{'a=listDefVariable b=listStatement '}')?
 	{
-	ast = newFunctionDefinition($a.start.getLine(),$a.start.getCharPositionInLine()+1,);
+	ast = newFunctionDefinition($a.start.getLine(),$a.start.getCharPositionInLine()+1,$ID,);
 	} // SEGUIR AQUI FINALIZAR CREACION DEFINICION FUNCION
 	;
 
