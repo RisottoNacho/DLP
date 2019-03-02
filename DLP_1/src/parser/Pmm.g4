@@ -8,13 +8,27 @@ grammar Pmm;
     import ast.types.*;
 }
 
-program: listDefVariable defFuncion* main EOF
+program returns [Program ast]: a=listDefVariable b=listDefFunction m=main EOF
+{
+	List<Definition> ls = new ArrayList<Definition>();
+	la.addAll($a.ast);
+	la.addAll($b.ast);
+	ls.add($m.ast);
+	$ast = new Program(0,0,ls);
+}
        ;
        
-       
+listDefFunction returns [List<FunctionDefinition> ast = new ArrayList<FunctionDefinition>())]   :
+	(d=defFuncion
+	{$ast.add($d.ast);}
+	)*
+;
 
-main:
-	'def' 'main' '('fieldList?')' ':' '{'listDefVariable statement* '}'
+main returns [FunctionDefinition ast]:
+	'def' id='main' '('c=fieldList?')' ':' '{'a=listDefVariable b=listStament '}'
+	{
+	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id,$a.ast,$b.ast,$c.ast);
+}
 	;
 
 expression returns [Expresion ast]: 
@@ -47,7 +61,6 @@ variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCha
 type: 'int'
 |	'double'
 |	'char'
-|	
 |	'string'
 |	'struct' '{'fieldList'}'
 |	'['INT_CONSTANT']' type
@@ -81,9 +94,9 @@ fieldList returns [List<Field> ast = new ArrayList()]:
 ;
 	
 defFuncion returns [FunctionDefinition ast]:
-	'def' ID '('fieldList?')' ':' (type '{'a=listDefVariable b=listStatement '}')?
+	'def' ID '('c=fieldList?')' ':' (type '{'a=listDefVariable b=listStatement '}')?
 	{
-	ast = newFunctionDefinition($a.start.getLine(),$a.start.getCharPositionInLine()+1,$ID,);
+	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID,$a.ast,$b.ast,c.ast);
 	} // SEGUIR AQUI FINALIZAR CREACION DEFINICION FUNCION
 	;
 
