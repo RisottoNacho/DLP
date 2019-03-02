@@ -51,7 +51,8 @@ expression returns [Expresion ast]:
 |	REAL_CONSTANT	{$ast = new RealLiteral($REAL_CONSTANT.getLine(),$REAL_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToReal($REAL_CONSTANT.text));}	
 	;
 
-listExpression: expression(','expression)*;
+listExpression returns [List<Expresion> ast = new ArrayList<Expresion>]: e1=expression	{$ast.add($e1.ast);}
+(','e2=expression{$ast.add($e2.ast);})*;
 
 /**
 variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,
