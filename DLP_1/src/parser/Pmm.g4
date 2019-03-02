@@ -108,10 +108,10 @@ listStament returns [List<Statement> ast = new ArrayList<Statement>()]:
 	(s=statement {$ast.add($s.ast)})*
 	;
 
-statement:
-	expression '=' expression
-|	defVariable';'
-|	ID '('listExpression?')'
+statement returns [List<Statement> ast = new ArrayList<Statement>()]:
+	e1=expression '=' e2=expression	{$ast.add(new Assignment($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
+|	v=defVariable';'	{$ast.addAll($v.ast);}
+|	ID '('listExpression?')'	{}
 |	'if' expression ':' '{'statement* '}'
 |	'if' expression ':' statement
 |	'if' expression ':' ('{'statement* '}'| statement) 'else'( '{'statement* '}'| statement)
