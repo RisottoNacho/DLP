@@ -27,27 +27,28 @@ listDefFunction returns [List<FunctionDefinition> ast = new ArrayList<FunctionDe
 main returns [FunctionDefinition ast]:
 	'def' id='main' '('c=fieldList?')' ':' '{'a=listDefVariable b=listStament '}'
 	{
-	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id,$a.ast,$b.ast,$c.ast);
+	$ast = new FunctionDefinition($id.start.getLine(),$id.start.getCharPositionInLine()+1,$id.text,$a.ast,$b.ast,$c.ast);
 }
 	;
 
 expression returns [Expresion ast]: 
-	'('type')' expression 
-|	'('expression')'
-|	'!' expression
-|	'-' expression
-|	expression'['expression']'
-|	expression'.'expression
-|	expression ('*'|'/'|'%') expression
+	'('t=type')' e=expression	{ast = new Cast($t.start.getLine(),$t.start.getCharPositionInLine()+1,$e.ast,$t.ast);}
+|	'('e=expression')'	{$ast = $e.start.ast; }
+|	'!' e=expression	{$ast = new UnaryNot($e.start.getLine(),$e.start.getCharPositionInLine()+1,$e.ast);}
+|	'-' e=expression	{$ast = new UnaryMinus($e.start.getLine(),$e.start.getCharPositionInLine()+1,$e.ast);}
+|	e1=expression'['e2=expression']'	{$ast = new ArrayAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
+|	e1=expression'.'e2=expression		{$ast = new StructAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
+|	e1=expression op=('*'|'/'|'%') e2=expression {$ast = new Arithmetic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
 |	iz = expression op=('+'|'-') de = expression 
-{	$ast = new Aritmetic($iz.start.getLine(),$iz.start.getCharPositionInLine()+1,$iz.ast,$op.text,$de.ast);
+{	$ast = new Arithmetic($iz.start.getLine(),$iz.start.getCharPositionInLine()+1,$iz.ast,$op.text,$de.ast);
 }
-|	expression ('>'|'<'|'>='|'<='|'=='|'!=') expression
-|	expression ('||'|'&&')  expression
+|	e1=expression op=('>'|'<'|'>='|'<='|'=='|'!=') e2=expression	{$ast = new Comparison($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
+|	e1=expression op=('&&')  e2=expression	{$ast = new Logic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
+|	e1=expression op=('||')  e2=expression	{$ast = new Logic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
 |	ID {$ast = new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text);}
 |	INT_CONSTANT {$ast = new IntLiteral($INT_CONSTANT.getLine(),$INT_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToInt($INT_CONSTANT.text));}
-|	CHAR_CONSTANT
-|	REAL_CONSTANT
+|	CHAR_CONSTANT	{$ast = new CharLiteral($CHAR_CONSTANT.getLine(),$CHAR_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToChar($CHAR_CONSTANT.text));}
+|	REAL_CONSTANT	{$ast = new RealLiteral($REAL_CONSTANT.getLine(),$REAL_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToReal($REAL_CONSTANT.text));}	
 	;
 
 listExpression: expression(','expression)*;
@@ -73,14 +74,14 @@ listDefVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDe
 defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
 	a=ID{
 	$ast.add($a = new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
-	$a),t);
-	} (','b=ID{$ast.add($a = new VariableDefinition($b.getLine(),$b.getCharPositionInLine()+1,
+	$a.text),t);
+	} (','b=ID{$ast.add($a = new VariableDefinition($b.start.getLine(),$b.start.getCharPositionInLine()+1,
 	$b),t);
 	})* ':' t=type
 	;
 	
 field returns [Field ast]:
-	ID ':' t=type {$ast = new Field($ID.getLine(),$ID.getCharPositionInLine()+1,$ID,$t.ast);}
+	ID ':' t=type {$ast = new Field($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$t.ast);}
 	;	
 	
 fieldList returns [List<Field> ast = new ArrayList()]: 
@@ -96,7 +97,7 @@ fieldList returns [List<Field> ast = new ArrayList()]:
 defFuncion returns [FunctionDefinition ast]:
 	'def' ID '('c=fieldList?')' ':' (type '{'a=listDefVariable b=listStatement '}')?
 	{
-	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID,$a.ast,$b.ast,c.ast);
+	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$a.ast,$b.ast,c.ast);
 	} // SEGUIR AQUI FINALIZAR CREACION DEFINICION FUNCION
 	;
 
