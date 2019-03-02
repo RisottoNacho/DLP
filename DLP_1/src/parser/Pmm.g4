@@ -77,9 +77,9 @@ listDefVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDe
 defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
 	a=ID{
 	$ast.add($a = new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
-	$a.text),t);
+	$a.text,$t));
 	} (','b=ID{$ast.add($a = new VariableDefinition($b.start.getLine(),$b.start.getCharPositionInLine()+1,
-	$b),t);
+	$b,$t));
 	})* ':' t=type
 	;
 	
@@ -98,26 +98,31 @@ fieldList returns [List<Field> ast = new ArrayList()]:
 ;
 	
 defFuncion returns [FunctionDefinition ast]:
-	'def' ID '('c=fieldList?')' ':' (type)? '{'a=listDefVariable b=listStatement '}'
+	'def' ID '('c=fieldList?')' ':' t=type '{'a=listDefVariable b=listStatement '}'
 	{
-	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$a.ast,$b.ast,$c.ast);
-	} // SEGUIR AQUI FINALIZAR CREACION DEFINICION FUNCION
+	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$c.ast,$a.ast,$b.ast,new Function($t.getLine(),$t.getCharPositionInLine()+1,$t.ast));
+	}
+|	'def' ID '('c=fieldList?')' ':' '{'a=listDefVariable b=listStatement '}'
+	{
+	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$c.ast,$a.ast,$b.ast,new Function($t.getLine(),$t.getCharPositionInLine()+1,null));
+	}
 	;
 
 listStament returns [List<Statement> ast = new ArrayList<Statement>()]:
-	(s=statement {$ast.add($s.ast)})*
+	(s=statement {$ast.addAll($s.ast)})*
 	;
 
 statement returns [List<Statement> ast = new ArrayList<Statement>()]:
-	e1=expression '=' e2=expression	{$ast.add(new Assignment($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
+	e1=expression '=' e2=expression';'	{$ast.add(new Assignment($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
 |	v=defVariable';'	{$ast.addAll($v.ast);}
-|	ID '('listExpression?')'	{}
-|	'if' expression ':' '{'statement* '}'
-|	'if' expression ':' statement
-|	'if' expression ':' ('{'statement* '}'| statement) 'else'( '{'statement* '}'| statement)
-|	'while' expression ':' '{'statement* '}'
-|	'print' listExpression
-|	'input'	listExpression
+|	ID '('l=listExpression?')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$l.ast));}
+|	'if' a=expression ':' '{'l=listStatement '}'	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast,null));}
+|	'if' a=expression ':' l=statement		{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast,null));}
+|	'if' a=expression ':' ('{'l=listStatement '}'| l=statement) 'else'( '{'s=listStatement '}'| s=statement)	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast,$s.ast));}
+|	'while' a=expression ':' '{'l=listStatement'}'	{$ast.add(new While($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast));}
+|	'print' a=listExpression';'	{$ast.add(new Print($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast));}
+|	'input'	a=listExpression';'	{$ast.add(new Input($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast));}
+|	'return' a=expression';'	{$ast.add(new Return($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast));}
 	;
 
 /*****************************************LEXER***********************************************************/ 
