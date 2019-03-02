@@ -61,12 +61,13 @@ variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCha
 );};
 **/
 
-type: 'int'
-|	'double'
-|	'char'
-|	'string'
-|	'struct' '{'fieldList'}'
-|	'['INT_CONSTANT']' type
+type returns [Type ast]: 
+	a='int'		{$ast = new Int($a.getLine(),$a.getCharPositionInLine()+1);}
+|	a='double'	{$ast = new Real($a.getLine(),$a.getCharPositionInLine()+1);}
+|	a='char'		{$ast = new Char($a.getLine(),$a.getCharPositionInLine()+1);}
+|	a='string'	{$ast = new String($a.getLine(),$a.getCharPositionInLine()+1);}
+|	a='struct' '{'b=fieldList'}'	{$ast = new Struct($a.getLine(),$a.getCharPositionInLine()+1, $b.ast);}	
+|	'['a=INT_CONSTANT']' t=type		{$ast = new Array($a.getLine(),$a.getCharPositionInLine()+1,LexerHelper.lexemeToInt($a.text), $t.ast);}	
 	;
 	
 listDefVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
@@ -97,9 +98,9 @@ fieldList returns [List<Field> ast = new ArrayList()]:
 ;
 	
 defFuncion returns [FunctionDefinition ast]:
-	'def' ID '('c=fieldList?')' ':' (type '{'a=listDefVariable b=listStatement '}')?
+	'def' ID '('c=fieldList?')' ':' (type)? '{'a=listDefVariable b=listStatement '}'
 	{
-	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$a.ast,$b.ast,c.ast);
+	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$a.ast,$b.ast,$c.ast);
 	} // SEGUIR AQUI FINALIZAR CREACION DEFINICION FUNCION
 	;
 
