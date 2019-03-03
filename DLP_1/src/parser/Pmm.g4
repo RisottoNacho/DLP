@@ -78,7 +78,7 @@ defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefini
 	a=ID{
 	$ast.add($a = new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
 	$a.text,$t.ast));
-	} (','b=ID{$ast.add($a = new VariableDefinition($b.start.getLine(),$b.start.getCharPositionInLine()+1,
+	} (','b=ID{$ast.add($a = new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
 	$b,$t.ast));
 	})* ':' t=type
 	;
@@ -100,11 +100,11 @@ fieldList returns [List<Field> ast = new ArrayList()]:
 defFuncion returns [FunctionDefinition ast]:
 	'def' ID '('c=fieldList?')' ':' t=type '{'a=listDefVariable b=listStatement '}'
 	{
-	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$c.ast,$a.ast,$b.ast,new Function($t.getLine(),$t.getCharPositionInLine()+1,$t.ast));
+	$ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$c.ast,$a.ast,$b.ast,new Function($a.start.getLine(),$a.start.getCharPositionInLine()+1,$t.ast));
 	}
 |	'def' ID '('c=fieldList?')' ':' '{'a=listDefVariable b=listStatement '}'
 	{
-	ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$c.ast,$a.ast,$b.ast,new Function($t.getLine(),$t.getCharPositionInLine()+1,null));
+	$ast = newFunctionDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$c.ast,$a.ast,$b.ast,new Function($a.start.getLine(),$a.start.getCharPositionInLine()+1,null));
 	}
 	;
 
