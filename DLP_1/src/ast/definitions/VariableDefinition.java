@@ -7,8 +7,12 @@ public class VariableDefinition extends ConcreteDefinition implements Definition
 
 	public Type type;
 
-	public VariableDefinition(int row, int column, String name, Type tipo) {
+	public VariableDefinition(int row, int column, String name) {
 		super(row, column, name);
-		this.type = tipo;
 	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
 }

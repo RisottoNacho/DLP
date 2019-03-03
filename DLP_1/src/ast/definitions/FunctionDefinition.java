@@ -20,4 +20,5 @@ public class FunctionDefinition extends ConcreteDefinition implements Definition
 		this.lsStatement = lsStatement;
 		this.functionType = t;
 	}
+
 }
