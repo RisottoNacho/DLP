@@ -27,7 +27,7 @@ listDefFunction returns [List<FunctionDefinition> ast = new ArrayList<FunctionDe
 main returns [FunctionDefinition ast]:
 	'def' id='main' '('c=fieldList?')' ':' '{'a=listDefVariable b=listStatement '}'
 	{
-	$ast = new FunctionDefinition($id.start.getLine(),$id.start.getCharPositionInLine()+1,$id.text,$a.ast,$b.ast,$c.ast);
+	$ast = new FunctionDefinition($c.start.getLine(),$c.start.getCharPositionInLine()+1,$id.text,$a.ast,$b.ast,$c.ast);
 }
 	;
 
