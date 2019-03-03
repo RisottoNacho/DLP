@@ -25,7 +25,7 @@ listDefFunction returns [List<FunctionDefinition> ast = new ArrayList<FunctionDe
 ;
 
 main returns [FunctionDefinition ast]:
-	'def' id='main' '('c=fieldList?')' ':' '{'a=listDefVariable b=listStament '}'
+	'def' id='main' '('c=fieldList?')' ':' '{'a=listDefVariable b=listStatement '}'
 	{
 	$ast = new FunctionDefinition($id.start.getLine(),$id.start.getCharPositionInLine()+1,$id.text,$a.ast,$b.ast,$c.ast);
 }
@@ -44,8 +44,8 @@ expression returns [Expresion ast]:
 {	$ast = new Arithmetic($iz.start.getLine(),$iz.start.getCharPositionInLine()+1,$iz.ast,$op.text,$de.ast);
 }
 |	e1=expression op=('>'|'<'|'>='|'<='|'=='|'!=') e2=expression	{$ast = new Comparison($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
-|	e1=expression op=('&&')  e2=expression	{$ast = new Logic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
-|	e1=expression op=('||')  e2=expression	{$ast = new Logic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
+|	e1=expression (op='&&')  e2=expression	{$ast = new Logic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
+|	e1=expression (op='||')  e2=expression	{$ast = new Logic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op,$e2.ast);}
 |	ID {$ast = new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text);}
 |	INT_CONSTANT {$ast = new IntLiteral($INT_CONSTANT.getLine(),$INT_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToInt($INT_CONSTANT.text));}
 |	CHAR_CONSTANT	{$ast = new CharLiteral($CHAR_CONSTANT.getLine(),$CHAR_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToChar($CHAR_CONSTANT.text));}
@@ -108,7 +108,7 @@ defFuncion returns [FunctionDefinition ast]:
 	}
 	;
 
-listStament returns [List<Statement> ast = new ArrayList<Statement>()]:
+listStatement returns [List<Statement> ast = new ArrayList<Statement>()]:
 	(s=statement {$ast.addAll($s.ast)})*
 	;
 
@@ -116,12 +116,12 @@ statement returns [List<Statement> ast = new ArrayList<Statement>()]:
 	e1=expression '=' e2=expression';'	{$ast.add(new Assignment($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
 |	v=defVariable';'	{$ast.addAll($v.ast);}
 |	ID '('l=listExpression?')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$l.ast));}
-|	'if' a=expression ':' '{'l=listStatement '}'	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast,null));}
-|	'if' a=expression ':' l=statement		{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast,null));}
-|	'if' a=expression ':' ('{'l=listStatement '}'| l=statement) 'else'( '{'s=listStatement '}'| s=statement)	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast,$s.ast));}
-|	'while' a=expression ':' '{'l=listStatement'}'	{$ast.add(new While($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l.ast));}
-|	'print' a=listExpression';'	{$ast.add(new Print($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast));}
-|	'input'	a=listExpression';'	{$ast.add(new Input($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast));}
+|	'if' a=expression ':' '{'l1=listStatement '}'	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l1.ast,null));}
+|	'if' a=expression ':' l2=statement		{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l2.ast,null));}
+|	'if' a=expression ':' ('{'l3=listStatement '}'| l3=statement) 'else'( '{'s=listStatement '}'| s=statement)	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l3.ast,$s.ast));}
+|	'while' a=expression ':' '{'l4=listStatement'}'	{$ast.add(new While($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l4.ast));}
+|	'print' a2=listExpression';'	{$ast.add(new Print($a2.start.getLine(),$a2.start.getCharPositionInLine()+1,$a2.ast));}
+|	'input'	a3=listExpression';'	{$ast.add(new Input($a3.start.getLine(),$a3.start.getCharPositionInLine()+1,$a3.ast));}
 |	'return' a=expression';'	{$ast.add(new Return($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast));}
 	;
 
