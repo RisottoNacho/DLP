@@ -77,9 +77,9 @@ listDefVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDe
 defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
 	a=ID{
 	$ast.add($a = new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
-	$a.text,$t));
+	$a.text,$t.ast));
 	} (','b=ID{$ast.add($a = new VariableDefinition($b.start.getLine(),$b.start.getCharPositionInLine()+1,
-	$b,$t));
+	$b,$t.ast));
 	})* ':' t=type
 	;
 	
@@ -118,7 +118,10 @@ statement returns [List<Statement> ast = new ArrayList<Statement>()]:
 |	ID '('l=listExpression?')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$l.ast));}
 |	'if' a=expression ':' '{'l1=listStatement '}'	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l1.ast,null));}
 |	'if' a=expression ':' l2=statement		{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l2.ast,null));}
-|	'if' a=expression ':' ('{'l3=listStatement '}'| l3=statement) 'else'( '{'s=listStatement '}'| s=statement)	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l3.ast,$s.ast));}
+|	'if' a=expression ':' ('{'l3=listStatement '}') 'else'( '{'s=listStatement '}')	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l3.ast,$s.ast));}
+|	'if' a=expression ':' ('{'l5=listStatement '}') 'else'(s1=statement)	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l5.ast,$s1.ast));}
+|	'if' a=expression ':' (l6=statement) 'else'( '{'s2=listStatement '}')	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l6.ast,$s2.ast));}
+|	'if' a=expression ':' (l7=statement) 'else'(s3=statement)	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l7.ast,$s3.ast));}
 |	'while' a=expression ':' '{'l4=listStatement'}'	{$ast.add(new While($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l4.ast));}
 |	'print' a2=listExpression';'	{$ast.add(new Print($a2.start.getLine(),$a2.start.getCharPositionInLine()+1,$a2.ast));}
 |	'input'	a3=listExpression';'	{$ast.add(new Input($a3.start.getLine(),$a3.start.getCharPositionInLine()+1,$a3.ast));}
