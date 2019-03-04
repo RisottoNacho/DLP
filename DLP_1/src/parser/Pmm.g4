@@ -150,7 +150,7 @@ listStatement returns [List<Statement> ast = new ArrayList<Statement>()]:
 statement returns [List<Statement> ast = new ArrayList<Statement>()]:
 	e1=expression '=' e2=expression';'	{$ast.add(new Assignment($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
 |	v=defVariable';'	{$ast.addAll($v.ast);}
-|{List<Expression> ls = new ArrayList<Expression>();}	ID '('(l=expression{ls.add($l.ast);})*')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,ls));}
+|{List<Expression> ls = new ArrayList<Expression>();}	ID '('(l=listExpression{ls.addAll($l.ast);})*')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,ls));}
 |	'if' a=expression ':' '{'l1=listStatement '}'	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l1.ast,null));}
 |	'if' a=expression ':' l2=statement		{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l2.ast,null));}
 |	'if' a=expression ':' ('{'l3=listStatement '}') 'else'( '{'s=listStatement '}')	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l3.ast,$s.ast));}

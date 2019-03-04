@@ -1369,7 +1369,7 @@ public class PmmParser extends Parser {
 		public ExpressionContext e2;
 		public DefVariableContext v;
 		public Token ID;
-		public ExpressionContext l;
+		public ListExpressionContext l;
 		public ExpressionContext a;
 		public ListStatementContext l1;
 		public StatementContext l2;
@@ -1394,6 +1394,12 @@ public class PmmParser extends Parser {
 			return getRuleContext(DefVariableContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(PmmParser.ID, 0); }
+		public List<ListExpressionContext> listExpression() {
+			return getRuleContexts(ListExpressionContext.class);
+		}
+		public ListExpressionContext listExpression(int i) {
+			return getRuleContext(ListExpressionContext.class,i);
+		}
 		public List<ListStatementContext> listStatement() {
 			return getRuleContexts(ListStatementContext.class);
 		}
@@ -1405,9 +1411,6 @@ public class PmmParser extends Parser {
 		}
 		public StatementContext statement(int i) {
 			return getRuleContext(StatementContext.class,i);
-		}
-		public ListExpressionContext listExpression() {
-			return getRuleContext(ListExpressionContext.class,0);
 		}
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1462,8 +1465,8 @@ public class PmmParser extends Parser {
 					{
 					{
 					setState(327);
-					((StatementContext)_localctx).l = expression(0);
-					ls.add(((StatementContext)_localctx).l.ast);
+					((StatementContext)_localctx).l = listExpression();
+					ls.addAll(((StatementContext)_localctx).l.ast);
 					}
 					}
 					setState(334);
@@ -1823,7 +1826,7 @@ public class PmmParser extends Parser {
 		"\2\u013c\u013d\5\n\6\2\u013d\u013e\7\"\2\2\u013e\u013f\5\n\6\2\u013f\u0140"+
 		"\7!\2\2\u0140\u0141\b\17\1\2\u0141\u01a6\3\2\2\2\u0142\u0143\5\22\n\2"+
 		"\u0143\u0144\7!\2\2\u0144\u0145\b\17\1\2\u0145\u01a6\3\2\2\2\u0146\u0147"+
-		"\b\17\1\2\u0147\u0148\7.\2\2\u0148\u014e\7\5\2\2\u0149\u014a\5\n\6\2\u014a"+
+		"\b\17\1\2\u0147\u0148\7.\2\2\u0148\u014e\7\5\2\2\u0149\u014a\5\f\7\2\u014a"+
 		"\u014b\b\17\1\2\u014b\u014d\3\2\2\2\u014c\u0149\3\2\2\2\u014d\u0150\3"+
 		"\2\2\2\u014e\u014c\3\2\2\2\u014e\u014f\3\2\2\2\u014f\u0151\3\2\2\2\u0150"+
 		"\u014e\3\2\2\2\u0151\u0152\7\6\2\2\u0152\u0153\7!\2\2\u0153\u01a6\b\17"+
