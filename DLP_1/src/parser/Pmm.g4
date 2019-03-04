@@ -45,7 +45,7 @@ main returns [FunctionDefinition ast]:
 	'def' id='main' '('(c=fieldList{fieldLs.addAll($c.ast);})?')' ':' '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
 	
 	{
-	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($a.start.getLine(),$a.start.getCharPositionInLine()+1,null));
+	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,null));
 	}
 
 	;
@@ -85,7 +85,7 @@ type returns [Type ast]:
 |	a='double'	{$ast = new Real($a.getLine(),$a.getCharPositionInLine()+1);}
 |	a='char'		{$ast = new Char($a.getLine(),$a.getCharPositionInLine()+1);}
 |	a='string'	{$ast = new StringType($a.getLine(),$a.getCharPositionInLine()+1);}
-|	a='struct' '{'b=fieldList'}'	{$ast = new Struct($a.getLine(),$a.getCharPositionInLine()+1, $b.ast);}	
+|{List<Field> ls = new ArrayList<Field>();}		a='struct' '{'(b=field{ls.add($b.ast);}';')+'}'	{$ast = new Struct($a.getLine(),$a.getCharPositionInLine()+1, ls);}	
 |	'['a=INT_CONSTANT']' t=type		{$ast = new Array($a.getLine(),$a.getCharPositionInLine()+1,LexerHelper.lexemeToInt($a.text), $t.ast);}	
 	;
 	
@@ -130,16 +130,16 @@ defFunction returns [FunctionDefinition ast]:
 }
 	'def' id=ID '('(c=fieldList{fieldLs.addAll($c.ast);})?')' ':' t=type '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
 	{
-$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($a.start.getLine(),$a.start.getCharPositionInLine()+1,$t.ast));
+	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,$t.ast));
 	}
 |	{
 	List<Field> fieldLs = new ArrayList<Field>();
 	List<VariableDefinition> lsVar = new ArrayList<VariableDefinition>();
 	List<Statement> lsStatement = new ArrayList<Statement>();
 }
-	'def' id=ID '('(c=fieldList{fieldLs.addAll($c.ast);})?')' ':' '{'(a=defVariable{lsVar.addAll($a.ast);})? (b=statement{lsStatement.addAll($b.ast);})* '}'
+	'def' id=ID '('(c=fieldList{fieldLs.addAll($c.ast);})?')' ':' '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
 	{
-	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($a.start.getLine(),$a.start.getCharPositionInLine()+1,null));
+	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,null));
 	}
 	;
 
@@ -150,7 +150,7 @@ listStatement returns [List<Statement> ast = new ArrayList<Statement>()]:
 statement returns [List<Statement> ast = new ArrayList<Statement>()]:
 	e1=expression '=' e2=expression';'	{$ast.add(new Assignment($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
 |	v=defVariable';'	{$ast.addAll($v.ast);}
-|	ID '('l=listExpression?')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$l.ast));}
+|{List<Expression> ls = new ArrayList<Expression>();}	ID '('(l=expression{ls.add($l.ast);})*')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,ls));}
 |	'if' a=expression ':' '{'l1=listStatement '}'	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l1.ast,null));}
 |	'if' a=expression ':' l2=statement		{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l2.ast,null));}
 |	'if' a=expression ':' ('{'l3=listStatement '}') 'else'( '{'s=listStatement '}')	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l3.ast,$s.ast));}
