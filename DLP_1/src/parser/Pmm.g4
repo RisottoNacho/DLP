@@ -109,7 +109,7 @@ defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefini
 	;
 	
 field returns [Field ast]:
-	ID ':' t=type {$ast = new Field($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$t.ast);}
+	ID(','ID)* ':' t=type {$ast = new Field($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$t.ast);}
 	;	
 	
 fieldList returns [List<Field> ast = new ArrayList()]: 
