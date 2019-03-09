@@ -97,7 +97,7 @@ defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefini
 	} (','b=ID
 	{$ast.add(new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
 	$b.text));
-	})* ':' t=type 
+	})* ':' t=type ';'
 	{
 	for(VariableDefinition a : $ast){
 		a.setType($t.ast);
@@ -126,7 +126,7 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 		{
 			boolean rep = false;
 			for(Field f : $ast)
-				if($ast.isEmpty() && f.isEqual($i2.text))
+				if(!$ast.isEmpty() && f.isEqual($i2.text))
 					rep = true;
 			if(rep){
 				Field f = new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text);
@@ -148,7 +148,7 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 			}else
 				$ast.add(new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
 		for(Field f : $ast)
-				if($ast.isEmpty() && f.tipo == null)
+				if(!$ast.isEmpty() && f.tipo == null)
 					f.tipo = $t.ast;
 			
 		}

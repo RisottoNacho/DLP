@@ -19,6 +19,7 @@ def main(): {
   	pair: struct {
     	integer: int;
     	character: char;
+    	aq,tr,d : int;
   	};
   	
   	# Array
