@@ -82,10 +82,10 @@ variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCha
 
 type returns [Type ast]: 
 	a='int'		{$ast = new Int($a.getLine(),$a.getCharPositionInLine()+1);}
-|	a='double'	{$ast = new Real($a.getLine(),$a.getCharPositionInLine()+1);}
+|	a='double'	{$ast = new Real($a.getLine(),$a.getCharPositionInLine()+1);} 
 |	a='char'		{$ast = new Char($a.getLine(),$a.getCharPositionInLine()+1);}
 |	a='string'	{$ast = new StringType($a.getLine(),$a.getCharPositionInLine()+1);}
-|{List<Field> ls = new ArrayList<Field>();}		a='struct' '{'(b=field{ls.add($b.ast);}';')+'}'	{$ast = new Struct($a.getLine(),$a.getCharPositionInLine()+1, ls);}	
+|{List<Field> ls = new ArrayList<Field>();}		a='struct' '{'(b=field{ls.addAll($b.ast);}';')+'}'	{$ast = new Struct($a.getLine(),$a.getCharPositionInLine()+1, ls);}	
 |	'['a=INT_CONSTANT']' t=type		{$ast = new Array($a.getLine(),$a.getCharPositionInLine()+1,LexerHelper.lexemeToInt($a.text), $t.ast);}	
 	;
 	
@@ -108,7 +108,8 @@ defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefini
 parameter returns[VariableDefinition ast]:
 		ID ':' t=type 
 	{
-		$ast = new VariableDefinition($ID.getLine(),$ID.getCharPositionInLine()+1).type = $t.ast;
+		$ast = new VariableDefinition($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text);
+		$ast.type = $t.ast;
 	}
 ;	
 
@@ -120,30 +121,34 @@ listParameter returns [List<VariableDefinition> ast = new ArrayList<VariableDefi
 		})*
 ;
 	
-field returns [List<Field> ast = new ArrayList<Field>]:
+field returns [List<Field> ast = new ArrayList<Field>()]:
 	i1=ID(','i2=ID
 		{
 			boolean rep = false;
 			for(Field f : $ast)
-				if(!f.isEmpty() && f.isEqual(i1))
+				if($ast.isEmpty() && f.isEqual($i2.text))
 					rep = true;
-			if(rep)
-				$ast.add(new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text).setType(new ErrorType($i2.getLine(),$i2.getCharPositionInLine()+1,"Two or more variables with same ID")));
-			else
+			if(rep){
+				Field f = new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text);
+				f.setTipo(new ErrorType($i2.getLine(),$i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
+				$ast.add(f);
+			}else
 				$ast.add(new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text));	
 		}
 	)* ':' t=type 
 		{
 			boolean rep = false;
 			for(Field f : $ast)
-				if(!f.isEmpty() && f.isEqual(i1))
+				if($ast.isEmpty() && f.isEqual($i1.text))
 					rep = true;
-			if(rep)
-				$ast.add(new Field($ID.getLine(),$i1.getCharPositionInLine()+1,$i1.text).setType(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID")));
-			else
-				$ast.add(new Field($ID.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
+			if(rep){
+				Field f = new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text);
+				f.setTipo(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
+				$ast.add(f);
+			}else
+				$ast.add(new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
 		for(Field f : $ast)
-				if(!f.isEmpty() && f.tipo == null)
+				if($ast.isEmpty() && f.tipo == null)
 					f.tipo = $t.ast;
 			
 		}
@@ -152,10 +157,10 @@ field returns [List<Field> ast = new ArrayList<Field>]:
 	
 fieldList returns [List<Field> ast = new ArrayList()]: 
 	(f1=field{
-	$ast.add($f1.ast);
+	$ast.addAll($f1.ast);
 }
 	(','f2=field{
-	$ast.add($f2.ast);
+	$ast.addAll($f2.ast);
 }
 	)*) 
 ;

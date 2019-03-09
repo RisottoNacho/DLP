@@ -48,4 +48,3 @@ def main(): {
   	vector[9][(int)4.3] = 5;
   	f(1, 2.2); # Invocation as a statement
 }
-
