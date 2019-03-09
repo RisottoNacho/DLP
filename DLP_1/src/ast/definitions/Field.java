@@ -16,7 +16,7 @@ public class Field extends ConcreteDefinition {
 	}
 	
 	public boolean isEqual(String f) {
-		if(this.getName().equals(f))
+		if(this.getName().compareTo(f) == 0)
 			return true;
 		return false;
 	}
