@@ -26,10 +26,12 @@ public class ErrorHandler {
 	}
 
 	public void showErrors(PrintStream s) {
-		System.out.println(s);
+		s.println(lsErrors.toString());
 	}
 
 	public boolean anyError() {
+		if(lsErrors.isEmpty())
+			return false;
 		return true;
 	}
 }

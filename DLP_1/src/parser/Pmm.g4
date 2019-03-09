@@ -7,6 +7,7 @@ grammar Pmm;
     import ast.statements.*;
     import ast.types.*;
     import java.lang.String;
+    
 }
 
 program returns [Program ast]: a=listDefinition m=main EOF
