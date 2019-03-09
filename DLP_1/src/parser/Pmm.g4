@@ -89,9 +89,6 @@ type returns [Type ast]:
 |	'['a=INT_CONSTANT']' t=type		{$ast = new Array($a.getLine(),$a.getCharPositionInLine()+1,LexerHelper.lexemeToInt($a.text), $t.ast);}	
 	;
 	
-listDefVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
-	(v=defVariable {$ast.addAll($v.ast);} ';')*
-	;
 
 defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
 	a=ID{
@@ -100,7 +97,7 @@ defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefini
 	} (','b=ID
 	{$ast.add(new VariableDefinition($a.getLine(),$a.getCharPositionInLine()+1,
 	$b.text));
-	})* ':' t=type ';'
+	})* ':' t=type 
 	{
 	for(VariableDefinition a : $ast){
 		a.setType($t.ast);
@@ -108,8 +105,45 @@ defVariable returns [List<VariableDefinition> ast = new ArrayList<VariableDefini
 }
 	;
 	
-field returns [Field ast]:
-	ID(','ID)* ':' t=type {$ast = new Field($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$t.ast);}
+parameter returns[VariableDefinition ast]:
+		ID ':' t=type 
+	{
+		$ast = new VariableDefinition($ID.getLine(),$ID.getCharPositionInLine()+1).type = $t.ast;
+	}
+;	
+
+listParameter returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
+	parameter(','parameter)*
+;
+	
+field returns [List<Field> ast = new ArrayList<Field>]:
+	i1=ID(','i2=ID
+		{
+			boolean rep = false;
+			for(Field f : $ast)
+				if(!f.isEmpty() && f.isEqual(i1))
+					rep = true;
+			if(rep)
+				$ast.add(new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text).setType(new ErrorType($i2.getLine(),$i2.getCharPositionInLine()+1,"Two or more variables with same ID")));
+			else
+				$ast.add(new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text));	
+		}
+	)* ':' t=type 
+		{
+			boolean rep = false;
+			for(Field f : $ast)
+				if(!f.isEmpty() && f.isEqual(i1))
+					rep = true;
+			if(rep)
+				$ast.add(new Field($ID.getLine(),$i1.getCharPositionInLine()+1,$i1.text).setType(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID")));
+			else
+				$ast.add(new Field($ID.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
+		for(Field f : $ast)
+				if(!f.isEmpty() && f.tipo == null)
+					f.tipo = $t.ast;
+			
+		}
+	
 	;	
 	
 fieldList returns [List<Field> ast = new ArrayList()]: 
@@ -124,7 +158,7 @@ fieldList returns [List<Field> ast = new ArrayList()]:
 	
 defFunction returns [FunctionDefinition ast]:
 {
-	List<Field> fieldLs = new ArrayList<Field>();
+	List<VariableDefinition> lsParam = new ArrayList<VariableDefinition>();
 	List<VariableDefinition> lsVar = new ArrayList<VariableDefinition>();
 	List<Statement> lsStatement = new ArrayList<Statement>();
 }
