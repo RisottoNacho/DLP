@@ -38,14 +38,14 @@ listDefFunction returns [List<FunctionDefinition> ast = new ArrayList<FunctionDe
 
 main returns [FunctionDefinition ast]:
 {
-	List<Field> fieldLs = new ArrayList<Field>();
+	List<VariableDefinition> lsParam = new ArrayList<VariableDefinition>();
 	List<VariableDefinition> lsVar = new ArrayList<VariableDefinition>();
 	List<Statement> lsStatement = new ArrayList<Statement>();
 }
-	'def' id='main' '('(c=fieldList{fieldLs.addAll($c.ast);})?')' ':' '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
+	'def' id='main' '('(c=listParameter{lsParam.addAll($c.ast);})?')' ':' '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
 	
 	{
-	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,null));
+	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,lsParam,null));
 	}
 
 	;
@@ -113,7 +113,11 @@ parameter returns[VariableDefinition ast]:
 ;	
 
 listParameter returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
-	parameter(','parameter)*
+	p1=parameter{
+		$ast.add($p1.ast);
+		}(','p2=parameter{
+		$ast.add($p2.ast);
+		})*
 ;
 	
 field returns [List<Field> ast = new ArrayList<Field>]:
@@ -162,18 +166,18 @@ defFunction returns [FunctionDefinition ast]:
 	List<VariableDefinition> lsVar = new ArrayList<VariableDefinition>();
 	List<Statement> lsStatement = new ArrayList<Statement>();
 }
-	'def' id=ID '('(c=fieldList{fieldLs.addAll($c.ast);})?')' ':' t=type '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
+	'def' id=ID '('(c=listParameter{lsParam.addAll($c.ast);})?')' ':' t=type '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
 	{
-	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,$t.ast));
+	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,lsParam,$t.ast));
 	}
 |	{
-	List<Field> fieldLs = new ArrayList<Field>();
+	List<VariableDefinition> lsParam = new ArrayList<VariableDefinition>();
 	List<VariableDefinition> lsVar = new ArrayList<VariableDefinition>();
 	List<Statement> lsStatement = new ArrayList<Statement>();
 }
-	'def' id=ID '('(c=fieldList{fieldLs.addAll($c.ast);})?')' ':' '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
+	'def' id=ID '('(c=listParameter{lsParam.addAll($c.ast);})?')' ':' '{'(a=defVariable{lsVar.addAll($a.ast);})* (b=statement{lsStatement.addAll($b.ast);})* '}'
 	{
-	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,fieldLs,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,null));
+	$ast = new FunctionDefinition($id.getLine(),$id.getCharPositionInLine()+1,$id.text,lsVar,lsStatement,new Function($id.getLine(),$id.getCharPositionInLine()+1,lsParam,null));
 	}
 	;
 
