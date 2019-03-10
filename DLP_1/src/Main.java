@@ -28,7 +28,6 @@ public class Main {
 		if (ErrorHandler.getInstance().anyError()) {
 			ErrorHandler.getInstance().showErrors(System.out);
 		} else {
-			ErrorHandler.getInstance().showErrors(System.out);
 			IntrospectorModel model = new IntrospectorModel("Program", ast);
 			new IntrospectorTree("Introspector", model);
 		}

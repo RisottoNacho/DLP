@@ -1106,11 +1106,9 @@ public class PmmParser extends Parser {
 				((FieldContext)_localctx).i2 = match(ID);
 
 							boolean rep = false;
-							for(Field f : _localctx.ast)
-								if(!_localctx.ast.isEmpty() && f.isEqual((((FieldContext)_localctx).i2!=null?((FieldContext)_localctx).i2.getText():null)))
-									rep = true;
-							if(rep){
-								Field f = new Field(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,(((FieldContext)_localctx).i2!=null?((FieldContext)_localctx).i2.getText():null));
+							Field f = new Field(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,(((FieldContext)_localctx).i2!=null?((FieldContext)_localctx).i2.getText():null));
+							if(_localctx.ast.contains(f)){
+								rep = true;
 								f.setTipo(new ErrorType(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
 								_localctx.ast.add(f);
 							}else
@@ -1128,18 +1126,17 @@ public class PmmParser extends Parser {
 			((FieldContext)_localctx).t = type();
 
 						boolean rep = false;
-						for(Field f : _localctx.ast)
-							if(_localctx.ast.isEmpty() && f.isEqual((((FieldContext)_localctx).i1!=null?((FieldContext)_localctx).i1.getText():null)))
+						Field f = new Field(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,(((FieldContext)_localctx).i1!=null?((FieldContext)_localctx).i1.getText():null));
+							if(_localctx.ast.contains(f))
 								rep = true;
 						if(rep){
-							Field f = new Field(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,(((FieldContext)_localctx).i1!=null?((FieldContext)_localctx).i1.getText():null));
 							f.setTipo(new ErrorType(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
 							_localctx.ast.add(f);
 						}else
 							_localctx.ast.add(new Field(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,(((FieldContext)_localctx).i1!=null?((FieldContext)_localctx).i1.getText():null)));	
-					for(Field f : _localctx.ast)
-							if(!_localctx.ast.isEmpty() && f.tipo == null)
-								f.tipo = ((FieldContext)_localctx).t.ast;
+					for(Field fl : _localctx.ast)
+							if(!_localctx.ast.isEmpty() && fl.tipo == null)
+								fl.tipo = ((FieldContext)_localctx).t.ast;
 						
 					
 			}

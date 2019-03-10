@@ -15,8 +15,10 @@ public class Field extends ConcreteDefinition {
 		this.tipo = tipo;
 	}
 	
-	public boolean isEqual(String f) {
-		if(this.getName().compareTo(f) == 0)
+	
+	@Override
+	public boolean equals(Object f) {
+		if(this.getName().compareTo(((Field) f).getName()) == 0)
 			return true;
 		return false;
 	}

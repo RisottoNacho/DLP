@@ -126,11 +126,9 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 	i1=ID(','i2=ID
 		{
 			boolean rep = false;
-			for(Field f : $ast)
-				if(!$ast.isEmpty() && f.isEqual($i2.text))
-					rep = true;
-			if(rep){
-				Field f = new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text);
+			Field f = new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text);
+			if($ast.contains(f)){
+				rep = true;
 				f.setTipo(new ErrorType($i2.getLine(),$i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
 				$ast.add(f);
 			}else
@@ -139,18 +137,17 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 	)* ':' t=type 
 		{
 			boolean rep = false;
-			for(Field f : $ast)
-				if($ast.isEmpty() && f.isEqual($i1.text))
+			Field f = new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text);
+				if($ast.contains(f))
 					rep = true;
 			if(rep){
-				Field f = new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text);
 				f.setTipo(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
 				$ast.add(f);
 			}else
 				$ast.add(new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
-		for(Field f : $ast)
-				if(!$ast.isEmpty() && f.tipo == null)
-					f.tipo = $t.ast;
+		for(Field fl : $ast)
+				if(!$ast.isEmpty() && fl.tipo == null)
+					fl.tipo = $t.ast;
 			
 		}
 	
