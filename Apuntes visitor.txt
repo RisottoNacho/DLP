@@ -1,0 +1,61 @@
+Usar visitor abstracto con recorrido en profundidad para ahorrarse cosas
+Gramatica atribuida cae en examen
+Una instancia de cada tipo de visitor dependiendo de lo que se quiera visitar
+
+Visitor V = new VisitorOffset();
+V.visit();
+
+Usar el método accept, que todos los nodos del árbol lo tendrán.
+
+Object accept(Visitor V,Object params){
+	return V.visit(this, params);
+}
+
+La cabecera de accept se incluye en ASTNode(la interfaz)
+
+La interfaz visitor:
+	- 1 método visit por cada clase concreta(no abst ni interfaces)
+	- 1 visitor por cada recorrido
+
+IMPORTANT: nuca se llama a Visit, siempre accept.
+
+Tareas de semana:
+1.- Definir interfaz visitor
+2.- modificar las clases concretas del árbol para añadir método accept
+3.- Implementar el LvalueVisitor (implementa la interfaz)
+El LvalueVisitor calcula y comprueba si los elementos a la izquierda en las asignaciones tiene un
+valor coherente con lo que hay a la derecha.
+4.- Modificar la interfaz Expresion para tener getLvalue() : bool y setLvalue(bool)
+esto es para que un objeto diga si puede ir a la izquierda o nom (true o false)
+
+Como crear Visits:
+1.- tengo que calcular algo? lo calculo si no, no lo hago
+2.- tengo que comprobar algo? 
+3.- tengo que continuar con el recorrido?
+
+public Object Visit(Variable v, Object params){
+	v.setLvalue(true);
+	return null;
+}
+
+public Object Visit(IntLiteral v, Object params){
+	v.setLvalue(false);
+	return null;
+}
+
+public Object Visit(Arithmetic v, Object params){
+	v.setLvalue(false);
+	v.left.accept(this,, params); 
+	v.right.accept(this, params);
+	return null;
+}
+
+public Object Visit(Assingment v, Object params){
+	v.left.accept(this,, params); 
+	v.right.accept(this, params);
+	if(!a.left.getLvalue)
+		new ErrorTpype(v.line,v.column,"mensaje");
+	return null;
+}
+
+También lo hay que comprobar en el Input

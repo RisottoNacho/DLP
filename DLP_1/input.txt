@@ -20,8 +20,6 @@ def main(): {
     	integer: int;
     	character: char;
     	aq,tr,d : int;
-    	a,a,a : int;
-    	a,a : int;
   	};
   	
   	# Array
