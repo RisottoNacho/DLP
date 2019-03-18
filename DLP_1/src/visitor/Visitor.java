@@ -2,5 +2,5 @@ package visitor;
 
 public interface Visitor {
 
-	public 
+	public Object Visit();
 }
