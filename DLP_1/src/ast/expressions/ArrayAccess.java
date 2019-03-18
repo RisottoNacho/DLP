@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.ConcreteASTNode;
+import visitor.Visitor;
 
 public class ArrayAccess extends ConcreteASTNode implements Expression {
 
@@ -13,4 +14,18 @@ public class ArrayAccess extends ConcreteASTNode implements Expression {
 		expAccess = b;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return null;
+	}
+
+	@Override
+	public boolean getLvalue() {
+		return true;
+	}
+
+	@Override
+	public void setLvalue(boolean value) {
+
+	}
 }

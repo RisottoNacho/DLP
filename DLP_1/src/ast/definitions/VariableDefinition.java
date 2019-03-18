@@ -2,6 +2,7 @@ package ast.definitions;
 
 import ast.statements.Statement;
 import ast.types.Type;
+import visitor.Visitor;
 
 public class VariableDefinition extends ConcreteDefinition implements Definition, Statement {
 
@@ -14,5 +15,9 @@ public class VariableDefinition extends ConcreteDefinition implements Definition
 	public void setType(Type type) {
 		this.type = type;
 	}
-	
+
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

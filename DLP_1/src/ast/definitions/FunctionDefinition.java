@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.statements.Statement;
 import ast.types.Function;
+import visitor.Visitor;
 
 public class FunctionDefinition extends ConcreteDefinition implements Definition {
 
@@ -19,4 +20,8 @@ public class FunctionDefinition extends ConcreteDefinition implements Definition
 		this.functionType = t;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

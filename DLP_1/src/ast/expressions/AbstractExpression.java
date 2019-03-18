@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.ConcreteASTNode;
+import visitor.Visitor;
 
 public class AbstractExpression extends ConcreteASTNode implements Expression {
 
@@ -8,17 +9,5 @@ public class AbstractExpression extends ConcreteASTNode implements Expression {
 		super(row, column);
 		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public boolean getLvalue() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setLvalue(boolean value) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }
