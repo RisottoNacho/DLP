@@ -1,6 +1,10 @@
 package visitor;
 
+import ast.definitions.Field;
+
 public interface Visitor {
 
-	public Object Visit();
+	Object Visit();
+
+	Object visit(Field field, Object params);
 }
