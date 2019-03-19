@@ -1,6 +1,8 @@
 package ast.definitions;
 
-public interface Definition {
+import ast.ASTNode;
+
+public interface Definition extends ASTNode {
 
 	String getName();
 }
