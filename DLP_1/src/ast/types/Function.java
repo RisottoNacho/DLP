@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.ConcreteASTNode;
 import ast.definitions.VariableDefinition;
+import visitor.Visitor;
 
 public class Function extends ConcreteASTNode implements Type {
 
@@ -19,4 +20,8 @@ public class Function extends ConcreteASTNode implements Type {
 		lsParams = params;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

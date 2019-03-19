@@ -3,6 +3,7 @@ package ast;
 import java.util.List;
 
 import ast.definitions.Definition;
+import visitor.Visitor;
 
 public class Program extends ConcreteASTNode {
 
@@ -20,6 +21,10 @@ public class Program extends ConcreteASTNode {
 	private void setListDef(List<Definition> listDef) {
 		this.listDef = listDef;
 	}
-	
-	
+
+
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

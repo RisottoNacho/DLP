@@ -2,6 +2,7 @@ package ast.statements;
 
 import ast.ConcreteASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 public class Assignment extends ConcreteASTNode implements Statement{
 
@@ -14,4 +15,8 @@ public class Assignment extends ConcreteASTNode implements Statement{
 		right = de;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

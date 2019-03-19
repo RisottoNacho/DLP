@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.ConcreteASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 public class FunctionCall extends ConcreteASTNode implements Statement{
 	
@@ -16,4 +17,8 @@ public class FunctionCall extends ConcreteASTNode implements Statement{
 		this.params = params;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

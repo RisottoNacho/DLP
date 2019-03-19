@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.ConcreteASTNode;
 import ast.definitions.Field;
+import visitor.Visitor;
 
 public class Struct extends ConcreteASTNode implements Type {
 
@@ -14,4 +15,8 @@ public class Struct extends ConcreteASTNode implements Type {
 		lsFields = ls;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

@@ -2,6 +2,7 @@ package ast.types;
 
 import ast.ConcreteASTNode;
 import ast.ErrorHandler;
+import visitor.Visitor;
 
 public class ErrorType extends ConcreteASTNode implements Type {
 	
@@ -19,5 +20,10 @@ public class ErrorType extends ConcreteASTNode implements Type {
 	
 	public String toString() {
 		return message;
+	}
+
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
 	}
 }

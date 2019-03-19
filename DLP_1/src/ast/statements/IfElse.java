@@ -5,6 +5,7 @@ import java.util.List;
 
 import ast.ConcreteASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 public class IfElse extends ConcreteASTNode implements Statement {
 
@@ -22,4 +23,8 @@ public class IfElse extends ConcreteASTNode implements Statement {
 		this.IfBody = ifBody;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

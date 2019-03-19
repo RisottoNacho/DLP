@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.ConcreteASTNode;
+import visitor.Visitor;
 
 public class Array extends ConcreteASTNode implements Type {
 
@@ -13,4 +14,8 @@ public class Array extends ConcreteASTNode implements Type {
 		this.size = size;
 	}
 
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
+	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.ConcreteASTNode;
 import ast.expressions.Expression;
+import visitor.Visitor;
 
 public class Input extends ConcreteASTNode implements Statement {
 
@@ -12,5 +13,10 @@ public class Input extends ConcreteASTNode implements Statement {
 	public Input(int row, int column, List<Expression> expr) {
 		super(row, column);
 		expressionList = expr;
+	}
+
+	@Override
+	public Object accept(Visitor V, Object params) {
+		return V.visit(this, params);
 	}
 }

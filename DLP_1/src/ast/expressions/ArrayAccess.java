@@ -17,7 +17,7 @@ public class ArrayAccess extends ConcreteASTNode implements Expression {
 
     @Override
     public Object accept(Visitor V, Object params) {
-        return null;
+        return V.visit(this, params);
     }
 
     @Override
