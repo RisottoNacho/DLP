@@ -6,6 +6,7 @@ import ast.ErrorHandler;
 import ast.Program;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
+import visitor.LValueVisitor;
 
 public class Main {
 
@@ -24,6 +25,8 @@ public class Main {
 		PmmParser parser = new PmmParser(tokens);
 		Program ast = parser.program().ast;
 
+		LValueVisitor lValueVisitor = new LValueVisitor();
+		lValueVisitor.visit(ast,null);
 		// * The AST is shown
 		if (ErrorHandler.getInstance().anyError()) {
 			ErrorHandler.getInstance().showErrors(System.out);

@@ -19,7 +19,7 @@ public class ErrorType extends ConcreteASTNode implements Type {
 	}
 	
 	public String toString() {
-		return message;
+		return message +"(línea: "+getRow()+", columna: "+getColumn()+")";
 	}
 
 	@Override

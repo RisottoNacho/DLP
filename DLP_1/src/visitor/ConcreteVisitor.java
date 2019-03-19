@@ -38,6 +38,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(Arithmetic arithmetic, Object params) {
+        arithmetic.setLvalue(false);
         arithmetic.left.accept(this, params);
         arithmetic.right.accept(this, params);
         return null;
@@ -45,6 +46,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(ArrayAccess arrayAccess, Object params) {
+        arrayAccess.setLvalue(true);
         arrayAccess.expAccess.accept(this, params);
         arrayAccess.expArray.accept(this, params);
         return null;
@@ -52,6 +54,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(Cast cast, Object params) {
+        cast.setLvalue(false);
         cast.expression.accept(this, params);
         return null;
     }
@@ -63,6 +66,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(Comparison comparison, Object params) {
+        comparison.setLvalue(false);
         comparison.left.accept(this, params);
         comparison.right.accept(this, params);
         return null;
@@ -70,6 +74,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(FunctionProcedure functionProcedure, Object params) {
+        functionProcedure.setLvalue(false);
         for (Expression param : functionProcedure.params)
             param.accept(this, params);
         return null;
@@ -82,6 +87,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(Logic logic, Object params) {
+        logic.setLvalue(false);
         logic.left.accept(this, null);
         logic.right.accept(this, null);
         return null;
