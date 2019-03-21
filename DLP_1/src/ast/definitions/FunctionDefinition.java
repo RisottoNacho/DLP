@@ -24,4 +24,9 @@ public class FunctionDefinition extends ConcreteDefinition implements Definition
 	public Object accept(Visitor V, Object params) {
 		return V.visit(this, params);
 	}
+
+	@Override
+	public void setScope(int scope) {
+		this.scope = scope;
+	}
 }
