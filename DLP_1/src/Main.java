@@ -6,6 +6,7 @@ import ast.ErrorHandler;
 import ast.Program;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
+import visitor.IdentificationVisitor;
 import visitor.LValueVisitor;
 
 public class Main {
@@ -27,6 +28,8 @@ public class Main {
 
 		LValueVisitor lValueVisitor = new LValueVisitor();
 		lValueVisitor.visit(ast,null);
+		IdentificationVisitor identificationVisitor = new IdentificationVisitor();
+		identificationVisitor.visit(ast,null);
 		// * The AST is shown
 		if (ErrorHandler.getInstance().anyError()) {
 			ErrorHandler.getInstance().showErrors(System.out);

@@ -6,11 +6,12 @@ import ast.definitions.*;
 
 public class SymbolTable {
 
-    private int scope = 0;
+    private int scope = -1;
     private List<Map<String, Definition>> table;
 
     public SymbolTable() {
         table = new ArrayList<>();
+        set();
     }
 
     public void set() {
@@ -37,7 +38,7 @@ public class SymbolTable {
         for (Map<String, Definition> m : table
         ) {
             if (m.containsKey(id))
-                return getLastMap().get(id);
+                return m.get(id);
         }
         return null;
     }
