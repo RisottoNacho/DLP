@@ -57,7 +57,7 @@ expression returns [Expression ast]:
 |	'!' e=expression	{$ast = new UnaryNot($e.start.getLine(),$e.start.getCharPositionInLine()+1,$e.ast);}
 |	'-' e=expression	{$ast = new UnaryMinus($e.start.getLine(),$e.start.getCharPositionInLine()+1,$e.ast);}
 |	e1=expression'['e2=expression']'	{$ast = new ArrayAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
-|	e1=expression'.'ID		{$ast = new StructAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text));}
+|	e1=expression'.'ID		{$ast = new StructAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$ID.text);}
 |	ID'('l=listExpression?')'		{$ast = new FunctionProcedure($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$l.ast);}
 |	e1=expression op=('*'|'/'|'%') e2=expression {$ast = new Arithmetic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op.text,$e2.ast);}
 |	iz = expression op=('+'|'-') de = expression 

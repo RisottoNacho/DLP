@@ -7,9 +7,9 @@ public class StructAccess extends ConcreteASTNode implements Expression {
 
     private boolean lValue;
     public Expression left;
-    public Variable right;
+    public String right;
 
-    public StructAccess(int row, int column, Expression iz, Variable de) {
+    public StructAccess(int row, int column, Expression iz, String de) {
         super(row, column);
         right = de;
         left = iz;

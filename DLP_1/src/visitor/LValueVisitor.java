@@ -46,7 +46,6 @@ public class LValueVisitor extends ConcreteVisitor{
     public Object visit(StructAccess structAccess, Object params) {
         structAccess.setLvalue(true);
         structAccess.left.accept(this, params);
-        structAccess.right.accept(this, params);
         return null;
     }
 

@@ -6,6 +6,7 @@ import ast.expressions.Variable;
 import ast.statements.Statement;
 import ast.symboltable.SymbolTable;
 import ast.types.ErrorType;
+import ast.types.Function;
 
 public class IdentificationVisitor extends ConcreteVisitor {
 
@@ -13,17 +14,22 @@ public class IdentificationVisitor extends ConcreteVisitor {
 
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object params) {
+        symbolTable.set();;
+        functionDefinition.functionType.accept(this,params);
+        for(VariableDefinition v : functionDefinition.lsVariables){
+            v.accept(this,params);
+        }
         for (Statement s : functionDefinition.lsStatement) {
             s.accept(this, params);
         }
-        functionDefinition.functionType.accept(this,params);
-        symbolTable.set();;
-        for(VariableDefinition v : functionDefinition.lsVariables){
-            v.accept(this,params);
-            if(!symbolTable.insert(v))
-                new ErrorType(v.getRow(),v.getColumn(),"Esta variable ya está definida");
-        }
         symbolTable.reset();
+        return null;
+    }
+
+    @Override
+    public Object visit(Function functionType, Object params) {
+        for (VariableDefinition def : functionType.lsParams)
+            def.accept(this, params);
         return null;
     }
 

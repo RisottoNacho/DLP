@@ -105,7 +105,6 @@ public abstract class ConcreteVisitor implements Visitor {
     @Override
     public Object visit(StructAccess structAccess, Object params) {
         structAccess.left.accept(this, params);
-        structAccess.right.accept(this, params);
         return null;
     }
 
