@@ -24,7 +24,6 @@ public class SymbolTable {
         table.remove(getLastMap());
     }
 
-    // the id needs to have the type in it, need to question that
     public boolean insert(Definition definition) {
         if (findInCurrentScope(definition.getName()) == null) {
             definition.setScope(scope);

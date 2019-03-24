@@ -7,6 +7,7 @@ import visitor.Visitor;
 public class VariableDefinition extends ConcreteDefinition implements Definition, Statement {
 
     public Type type;
+    private int scope;
 
     public VariableDefinition(int row, int column, String name) {
         super(row, column, name);
@@ -25,4 +26,8 @@ public class VariableDefinition extends ConcreteDefinition implements Definition
     public void setScope(int scope) {
         this.scope = scope;
     }
+    public int getScope(){
+        return scope;
+    }
+
 }
