@@ -1,5 +1,6 @@
 package visitor;
 
+import ast.definitions.Definition;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Variable;
@@ -42,8 +43,10 @@ public class IdentificationVisitor extends ConcreteVisitor {
 
     @Override
     public Object visit(Variable variable, Object params) {
-        if (symbolTable.find(variable.value) == null)
+        Definition def = symbolTable.find(variable.value);
+        if (def == null)
             new ErrorType(variable.getRow(),variable.getColumn(),"Esta variable no ha sido definida");
+        variable.definition = def;
         return null;
     }
 }

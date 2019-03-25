@@ -1,12 +1,14 @@
 package ast.expressions;
 
 import ast.ConcreteASTNode;
+import ast.definitions.Definition;
 import visitor.Visitor;
 
 public class Variable extends ConcreteASTNode implements Expression {
 
     private boolean lValue;
     public String value;
+    public Definition definition;
 
     public Variable(int row, int column, String value) {
         super(row, column);
