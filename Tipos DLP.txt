@@ -1,0 +1,102 @@
+Tipos:
+Comprobar tipo asignación
+
+Preguntar Singleton
+
+Necesitamos que expresión implemente Type para las comprobaciones 
+tener setType y getType en todas ellas.
+
+Meter Definicion a variable
+
+Modificar las llamadas a funciones ya que la parte de la izquierda debería ser una expresión, comprobar esto.
+
+metodos a añadir a type:
+- isLogical():boolean
+- arithmetic(Type t): type
+- arithmetic() :type // Para los tipos unaryMinus
+- logical(Type t) : type  // Para las operaciones con OP logicas
+- logical(): type // Para unaryNot
+- comparison(Type t) : type // Para comparaciones, devulve entero (true or false)
+- isBuildInType() : boolean //calcula si un tipo es de tipo primitivo
+- cast(Type t) : type  // En entero, cast y double
+- dot(String s) : type //Para los accesos a struct
+- squareBrackets(Type t) : Type  // para accesos a array, solo lo implementael tipo array
+- promotesTo(Type t) : Type  //Para la asignación
+- parenthesis(List<Type>) : type // para las funciones, usar el promotesTo para los parametros
+
+Implementar TypeCheckingVisitor
+
+    public Object visit(IntType IntType, Object params) {
+        Ltype = IntType.instance;
+        return null;
+    }
+	
+	public Oject Visit(Variable v,Object p){
+		V.type = v.Definition.type;  // OJO DEFINITION PUEDE SER NULL SI NO ESTA DEFINIDA
+		return null;		// Posible solucion asignar tipo error a variables no definidas desde el LvañueVisitor
+	}
+	
+    public Object visit(WhileStatement w, Object params) {
+        w.condition.accept(this, params);
+		if (!w.condition.type.isLogical) // Esa funcion devuleve un boolean de si es una expresión logica o no y esta en la intefaz type
+			w.condition.type = new ErrorType(...);
+		for(Statement s : w.body)
+			s.accept(this , params);
+        return null;
+    }
+	
+	IfElse es casi igual, pero hay que recorrer ELseBody
+	
+
+    public Object visit(Arithmetic a, Object params) {
+		a.left.accept(this, params);
+		a.right.accept(this,params);
+		a.type = a.left.type.arithmetic(a.right.type); // comprobar con un método si ambos tipos son operables aritmeticamente
+		if(a.type == null)
+			a.type =  new ErrorType(..);
+        return null;
+    }	
+	
+	// SI PASAN COMO PARÁMETRO UN ERROR LO DEVUELVES, PROPAGAR ERROR
+	//Ejemplo de como se implementa en la clase abstracta
+	public Type arithmetic (Type t){
+		if(t instance of ErrorType)
+			return t;
+		return null;
+	}
+	
+	//Ejemplo en IntType
+	public Type arithmetic (Type t){
+		if(t.equals(this))
+			return this;
+		return super.arithmetic(t);
+	}
+		
+	En los 	
+	
+    public Object visit(StructAccess s, Object params) {
+		s.expr.accept(...);
+		s.expr.dot(s.name);
+		if(s.type == null)
+			s.type = new ErrorType(..);
+        return null;
+    }	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
