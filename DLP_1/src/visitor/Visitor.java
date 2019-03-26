@@ -40,10 +40,7 @@ public interface Visitor {
 	Object visit(Struct struct, Object params);
 	Object visit(Void aVoid, Object params);
 	Object visit(ErrorType errorType, Object params);
-
 	Object visit(Real real, Object params);
-
 	Object visit(ast.types.Void aVoid, Object params);
-
 	Object visit(Program program, Object params);
 }
