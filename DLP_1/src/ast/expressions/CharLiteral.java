@@ -1,9 +1,8 @@
 package ast.expressions;
 
-import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class CharLiteral extends ConcreteASTNode implements Expression {
+public class CharLiteral extends ConcreteExpression implements Expression {
 
     public char value;
     private boolean lValue;

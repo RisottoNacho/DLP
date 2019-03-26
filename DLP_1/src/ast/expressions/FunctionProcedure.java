@@ -2,10 +2,9 @@ package ast.expressions;
 
 import java.util.List;
 
-import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class FunctionProcedure extends ConcreteASTNode implements Expression {
+public class FunctionProcedure extends ConcreteExpression implements Expression {
 
     public List<Expression> params;
     public String name;

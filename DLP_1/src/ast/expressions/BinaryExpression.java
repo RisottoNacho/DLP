@@ -2,7 +2,7 @@ package ast.expressions;
 
 import ast.ConcreteASTNode;
 
-public abstract class BinaryExpression extends ConcreteASTNode implements Expression {
+public abstract class BinaryExpression extends ConcreteExpression implements Expression {
 
 	public Expression left;
 	public Expression right;

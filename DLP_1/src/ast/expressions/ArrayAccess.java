@@ -3,7 +3,7 @@ package ast.expressions;
 import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class ArrayAccess extends ConcreteASTNode implements Expression {
+public class ArrayAccess extends ConcreteExpression implements Expression {
 
     public Expression expArray;
     public Expression expAccess;

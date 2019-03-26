@@ -4,7 +4,7 @@ import ast.ConcreteASTNode;
 import ast.types.Type;
 import visitor.Visitor;
 
-public class Cast extends ConcreteASTNode implements Expression {
+public class Cast extends ConcreteExpression implements Expression {
 
     public Expression expression;
     public Type type;

@@ -1,9 +1,8 @@
 package ast.expressions;
 
-import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class StructAccess extends ConcreteASTNode implements Expression {
+public class StructAccess extends ConcreteExpression implements Expression {
 
     private boolean lValue;
     public Expression left;

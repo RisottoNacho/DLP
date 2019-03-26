@@ -1,9 +1,8 @@
 package ast.expressions;
 
-import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class UnaryNot extends ConcreteASTNode implements Expression {
+public class UnaryNot extends ConcreteExpression implements Expression {
 
     private boolean lValue;
     public Expression expression;

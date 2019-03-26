@@ -1,9 +1,9 @@
 package ast.expressions;
 
-import ast.ASTNode;
+import ast.types.Type;
 
-public interface Expression extends ASTNode {
+public interface Expression extends Type {
 
-	public boolean getLvalue();
-	public void setLvalue(boolean value);
+	boolean getLvalue();
+	void setLvalue(boolean value);
 }
