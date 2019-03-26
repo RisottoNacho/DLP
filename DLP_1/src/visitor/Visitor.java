@@ -37,7 +37,6 @@ public interface Visitor {
 	Object visit(Char aChar, Object params);
 	Object visit(Function functionType, Object params);
 	Object visit(Int anInt, Object params);
-	Object visit(StringType stringType, Object params);
 	Object visit(Struct struct, Object params);
 	Object visit(Void aVoid, Object params);
 	Object visit(ErrorType errorType, Object params);

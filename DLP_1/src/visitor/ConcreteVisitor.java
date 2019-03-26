@@ -200,11 +200,6 @@ public abstract class ConcreteVisitor implements Visitor {
     }
 
     @Override
-    public Object visit(StringType stringType, Object params) {
-        return null;
-    }
-
-    @Override
     public Object visit(Struct struct, Object params) {
         for (Field f : struct.lsFields)
             f.accept(this, params);

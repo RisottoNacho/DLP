@@ -85,7 +85,6 @@ type returns [Type ast]:
 	a='int'		{$ast = new Int($a.getLine(),$a.getCharPositionInLine()+1);}
 |	a='double'	{$ast = new Real($a.getLine(),$a.getCharPositionInLine()+1);} 
 |	a='char'		{$ast = new Char($a.getLine(),$a.getCharPositionInLine()+1);}
-|	a='string'	{$ast = new StringType($a.getLine(),$a.getCharPositionInLine()+1);}
 |{List<Field> ls = new ArrayList<Field>();}		a='struct' '{'(b=field{ls.addAll($b.ast);}';')+'}'	{$ast = new Struct($a.getLine(),$a.getCharPositionInLine()+1, ls);}	
 |	'['a=INT_CONSTANT']' t=type		{$ast = new Array($a.getLine(),$a.getCharPositionInLine()+1,LexerHelper.lexemeToInt($a.text), $t.ast);}	
 	;
