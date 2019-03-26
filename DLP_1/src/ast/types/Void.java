@@ -3,7 +3,7 @@ package ast.types;
 import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class Void extends ConcreteASTNode implements Type {
+public class Void extends ConcreteType implements Type {
 
 	public Void(int row, int column) {
 		super(row, column);

@@ -3,7 +3,7 @@ package ast.types;
 import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class Array extends ConcreteASTNode implements Type {
+public class Array extends ConcreteType implements Type {
 
 	public Type type;
 	public int size;

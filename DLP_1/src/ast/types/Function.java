@@ -6,7 +6,7 @@ import ast.ConcreteASTNode;
 import ast.definitions.VariableDefinition;
 import visitor.Visitor;
 
-public class Function extends ConcreteASTNode implements Type {
+public class Function extends ConcreteType implements Type {
 
 	public Type type;
 	public List<VariableDefinition> lsParams;

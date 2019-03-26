@@ -6,7 +6,7 @@ import ast.ConcreteASTNode;
 import ast.definitions.Field;
 import visitor.Visitor;
 
-public class Struct extends ConcreteASTNode implements Type {
+public class Struct extends ConcreteType implements Type {
 
 	public List<Field> lsFields;
 

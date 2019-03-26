@@ -3,7 +3,7 @@ package ast.types;
 import ast.ConcreteASTNode;
 import visitor.Visitor;
 
-public class Char extends ConcreteASTNode implements Type {
+public class Char extends ConcreteType implements Type {
 
 	public Char(int row, int column) {
 		super(row, column);
