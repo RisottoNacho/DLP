@@ -2,7 +2,6 @@ package visitor;
 
 import ast.expressions.*;
 import ast.statements.IfElse;
-import ast.statements.Statement;
 import ast.statements.While;
 import ast.types.ErrorType;
 
