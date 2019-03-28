@@ -39,9 +39,9 @@ public abstract class ConcreteVisitor implements Visitor {
     public Object visit(VariableDefinition variableDefinition, Object params) {
         return null;
     }
-
     @Override
     public Object visit(Arithmetic arithmetic, Object params) {
+
         arithmetic.setLvalue(false);
         arithmetic.left.accept(this, params);
         arithmetic.right.accept(this, params);

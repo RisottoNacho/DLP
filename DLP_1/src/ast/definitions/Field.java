@@ -6,16 +6,10 @@ import visitor.Visitor;
 
 public class Field extends ConcreteDefinition {
 
-    public Type type;
 
     public Field(int row, int column, String name) {
         super(row, column, name);
     }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
 
     @Override
     public boolean equals(Object f) {
