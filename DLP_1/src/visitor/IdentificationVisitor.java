@@ -16,7 +16,7 @@ public class IdentificationVisitor extends ConcreteVisitor {
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object params) {
         symbolTable.set();;
-        functionDefinition.functionType.accept(this,params);
+        functionDefinition.type.accept(this,params);
         for(VariableDefinition v : functionDefinition.lsVariables){
             v.accept(this,params);
         }
@@ -37,7 +37,7 @@ public class IdentificationVisitor extends ConcreteVisitor {
     @Override
     public Object visit(VariableDefinition variableDefinition, Object params) {
         if(!symbolTable.insert(variableDefinition))
-            new ErrorType(variableDefinition.getRow(),variableDefinition.getColumn(),"Esta variable ya está definida");
+           variableDefinition.type = new ErrorType(variableDefinition.getRow(),variableDefinition.getColumn(),"Esta variable ya está definida");
         return null;
     }
 

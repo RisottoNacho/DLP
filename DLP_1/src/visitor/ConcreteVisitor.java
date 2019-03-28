@@ -28,7 +28,7 @@ public abstract class ConcreteVisitor implements Visitor {
         for (Statement s : functionDefinition.lsStatement) {
             s.accept(this, params);
         }
-        functionDefinition.functionType.accept(this,params);
+        functionDefinition.type.accept(this,params);
         for(VariableDefinition v : functionDefinition.lsVariables){
             v.accept(this,params);
         }

@@ -24,7 +24,7 @@ public class LValueVisitor extends ConcreteVisitor{
         assignment.left.accept(this, params);
         assignment.right.accept(this, params);
         if(!assignment.left.getLvalue())
-            new ErrorType(assignment.getRow(),assignment.getColumn(),"El elemento de la izquierda no es asignable ");
+            assignment.left.setType(new ErrorType(assignment.getRow(),assignment.getColumn(),"El elemento de la izquierda no es asignable "));
         return null;
     }
 
