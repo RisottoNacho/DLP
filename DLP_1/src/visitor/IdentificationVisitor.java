@@ -45,7 +45,7 @@ public class IdentificationVisitor extends ConcreteVisitor {
     public Object visit(Variable variable, Object params) {
         Definition def = symbolTable.find(variable.value);
         if (def == null)
-            new ErrorType(variable.getRow(),variable.getColumn(),"Esta variable no ha sido definida");
+            variable.type = new ErrorType(variable.getRow(),variable.getColumn(),"Esta variable no ha sido definida");
         variable.definition = def;
         return null;
     }

@@ -7,7 +7,6 @@ import visitor.Visitor;
 public class Cast extends ConcreteExpression implements Expression {
 
     public Expression expression;
-    public Type type;
     private boolean lValue;
 
     public Cast(int row, int column, Expression e, Type t) {

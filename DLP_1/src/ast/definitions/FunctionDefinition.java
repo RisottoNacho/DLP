@@ -10,14 +10,13 @@ public class FunctionDefinition extends ConcreteDefinition implements Definition
 
 	public List<VariableDefinition> lsVariables;
 	public List<Statement> lsStatement;
-	public Function functionType;
-	
+
 	public FunctionDefinition(int row, int column, String name,
 			List<VariableDefinition> lsVariables, List<Statement> lsStatement, Function t) {
 		super(row,column,name);
 		this.lsVariables = lsVariables;
 		this.lsStatement = lsStatement;
-		this.functionType = t;
+		type = t;
 	}
 
 	@Override

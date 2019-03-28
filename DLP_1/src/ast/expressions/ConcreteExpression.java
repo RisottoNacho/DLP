@@ -7,6 +7,8 @@ import visitor.Visitor;
 import java.util.List;
 
 public class ConcreteExpression extends ConcreteASTNode implements Expression{
+    public Type type;
+
     public ConcreteExpression(int row, int column) {
         super(row, column);
     }

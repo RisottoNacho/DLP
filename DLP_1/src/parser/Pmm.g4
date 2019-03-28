@@ -145,8 +145,8 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 			}else
 				$ast.add(new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
 		for(Field fl : $ast)
-				if(!$ast.isEmpty() && fl.tipo == null)
-					fl.tipo = $t.ast;
+				if(!$ast.isEmpty() && fl.type == null)
+					fl.type = $t.ast;
 			
 		}
 	

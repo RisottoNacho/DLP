@@ -6,15 +6,10 @@ import visitor.Visitor;
 
 public class VariableDefinition extends ConcreteDefinition implements Definition, Statement {
 
-    public Type type;
     private int scope;
 
     public VariableDefinition(int row, int column, String name) {
         super(row, column, name);
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     @Override

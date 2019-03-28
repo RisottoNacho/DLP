@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.definitions.Definition;
+import ast.types.Type;
 import visitor.Visitor;
 
 public class Variable extends ConcreteExpression implements Expression {

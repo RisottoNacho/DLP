@@ -12,11 +12,9 @@ package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+    import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
+    import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class PmmParser extends Parser {
@@ -1100,7 +1098,7 @@ public class PmmParser extends Parser {
 							Field f = new Field(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,(((FieldContext)_localctx).i2!=null?((FieldContext)_localctx).i2.getText():null));
 							if(_localctx.ast.contains(f)){
 								rep = true;
-								f.setTipo(new ErrorType(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
+								f.setType(new ErrorType(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
 								_localctx.ast.add(f);
 							}else
 								_localctx.ast.add(new Field(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,(((FieldContext)_localctx).i2!=null?((FieldContext)_localctx).i2.getText():null)));	
@@ -1121,13 +1119,13 @@ public class PmmParser extends Parser {
 							if(_localctx.ast.contains(f))
 								rep = true;
 						if(rep){
-							f.setTipo(new ErrorType(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
+							f.setType(new ErrorType(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
 							_localctx.ast.add(f);
 						}else
 							_localctx.ast.add(new Field(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,(((FieldContext)_localctx).i1!=null?((FieldContext)_localctx).i1.getText():null)));	
 					for(Field fl : _localctx.ast)
-							if(!_localctx.ast.isEmpty() && fl.tipo == null)
-								fl.tipo = ((FieldContext)_localctx).t.ast;
+							if(!_localctx.ast.isEmpty() && fl.type == null)
+								fl.type = ((FieldContext)_localctx).t.ast;
 						
 					
 			}
