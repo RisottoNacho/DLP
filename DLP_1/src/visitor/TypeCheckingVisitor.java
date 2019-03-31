@@ -109,9 +109,9 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
     public Object visit(Cast cast, Object params) {
         cast.expression.accept(this, params);
         String tipoOld = cast.type.toString();
-        cast.type = cast.expression.getType().promotesTo(cast.type);
+        cast.type = cast.expression.getType().cast(cast.type);
         if (cast.type == null)
-            cast.type = new ErrorType(cast.getRow(), cast.getColumn(), "No se puede hacer cast de " + cast.expression.getType().toString() + " a " + tipoOld);
+            cast.type = new ErrorType(cast.getRow(), cast.getColumn(), "No se puede hacer cast de " +tipoOld+ " a " + cast.expression.getType().toString() );
         return null;
     }
 
@@ -158,7 +158,8 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
                 param.setType(new ErrorType(param.getRow(), param.getColumn(), "Las funciones sólo pueden recibir parámetros de tipos simples"));
             ls.add(param.getType());
         }
-        functionCall.name.definition.getType().parenthesis(ls);
+        if(functionCall.name.definition.getType().parenthesis(ls) == null)
+            new ErrorType(functionCall.getRow(),functionCall.getColumn(),"Parámetros de la función incorrectos");
         return null;
     }
 
@@ -173,7 +174,11 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
                 param.setType(new ErrorType(param.getRow(), param.getColumn(), "Las funciones sólo pueden recibir parámetros de tipos simples"));
             ls.add(param.getType());
         }
-        functionProcedure.name.definition.getType().parenthesis(ls);
+        Type t =functionProcedure.name.definition.getType().parenthesis(ls);
+        if(t == null)
+            functionProcedure.type = new ErrorType(functionProcedure.getRow(),functionProcedure.getColumn(),"Parámetros de la función incorrectos");
+        else
+            functionProcedure.type = t;
         return null;
     }
 
@@ -182,7 +187,7 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         assignment.left.accept(this, params);
         assignment.right.accept(this, params);
         if (assignment.left.getType().promotesTo(assignment.right.getType()) == null)
-            new ErrorType(assignment.getRow(), assignment.getColumn(), "No se puede asignar " + assignment.left.getType().toString() + " a " + assignment.right.getType().toString());
+            new ErrorType(assignment.getRow(), assignment.getColumn(), "No se puede asignar " + assignment.left.toString() + " a " + assignment.right.toString());
         return null;
     }
 

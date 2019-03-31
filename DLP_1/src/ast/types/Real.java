@@ -15,7 +15,7 @@ public class Real extends ConcreteType implements Type {
 
     @Override
     public Type arithmetic(Type type) {
-        if (type instanceof Int || type instanceof Real)
+        if (type instanceof Real)
             return this;
         return null;
     }

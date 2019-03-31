@@ -32,7 +32,7 @@ public class Function extends ConcreteType implements Type {
             if (ls.get(i).promotesTo(lsParams.get(i).type) == null)
                 return null;
         }
-        return this;
+        return returnType;
     }
 
     @Override

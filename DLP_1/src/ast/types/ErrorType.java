@@ -60,7 +60,7 @@ public class ErrorType extends ConcreteType implements Type {
 
     @Override
     public boolean isBuiltInType() {
-        return false;
+        return true;
     }
 
     @Override

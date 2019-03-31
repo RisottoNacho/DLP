@@ -26,8 +26,8 @@ public class Array extends ConcreteType implements Type {
 
 	@Override
 	public Type squareBrackets(Type type){
-		if(type.getClass().equals(this.type.getClass()))
-			return type;
+		if(type instanceof Int)
+			return this.type;
 		return null;
 	}
 }
