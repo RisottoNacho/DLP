@@ -69,11 +69,6 @@ public class ErrorType extends ConcreteType implements Type {
     }
 
     @Override
-    public Type dot(Type type) {
-        return this;
-    }
-
-    @Override
     public Type squareBrackets(Type type) {
         return this;
     }

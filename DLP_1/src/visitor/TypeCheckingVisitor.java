@@ -82,4 +82,49 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
             comparison.type = new ErrorType(comparison.getRow(), comparison.getColumn(), "Comparacion de tipos inválidos");
         return null;
     }
+
+    @Override
+    public Object visit(Cast cast, Object params) {
+        cast.expression.accept(this, params);
+        String tipoOld = cast.type.toString();
+        cast.type = cast.expression.getType().promotesTo(cast.type);
+        if (cast.type == null)
+            cast.type = new ErrorType(cast.getRow(), cast.getColumn(), "No se puede hacer cast de " + cast.expression.getType().toString() + "a " + tipoOld);
+        return null;
+    }
+
+    @Override
+    public Object visit(StructAccess structAccess, Object params) {
+        structAccess.left.accept(this, params);
+        structAccess.type = structAccess.left.getType().dot(structAccess.right);
+        if(structAccess.type == null)
+            structAccess.type=new ErrorType(structAccess.getRow(),structAccess.getColumn(),"Acceso a struct incorrecto");
+        return null;
+    }
+
+    @Override
+    public Object visit(ArrayAccess arrayAccess, Object params) {
+        arrayAccess.setLvalue(true);
+        arrayAccess.expAccess.accept(this, params);
+        arrayAccess.expArray.accept(this, params);
+        return null;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

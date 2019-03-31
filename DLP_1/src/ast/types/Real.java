@@ -24,4 +24,23 @@ public class Real extends ConcreteType implements Type {
 	public Type arithmetic() {
 		return this;
 	}
+
+	@Override
+	public boolean isBuiltInType(){
+		return true;
+	}
+
+	@Override
+	public Type promotesTo(Type type){
+		if (type instanceof Real)
+			return this;
+		if(type instanceof Int)
+			return type;
+		return null;
+	}
+
+	@Override
+	public String toString(){
+		return "Double";
+	}
 }

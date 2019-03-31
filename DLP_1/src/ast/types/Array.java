@@ -18,4 +18,9 @@ public class Array extends ConcreteType implements Type {
 	public Object accept(Visitor V, Object params) {
 		return V.visit(this, params);
 	}
+
+	@Override
+	public String toString(){
+		return "Array";
+	}
 }

@@ -60,9 +60,7 @@ public class ConcreteType extends ConcreteASTNode implements Type{
     }
 
     @Override
-    public Type dot(Type type) {
-        if(type instanceof ErrorType)
-            return type;
+    public Type dot(String s) {
         return null;
     }
 

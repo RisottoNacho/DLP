@@ -14,7 +14,7 @@ public interface Type extends ASTNode {
     Type comparison(Type type);
     boolean isBuiltInType();
     Type cast(Type type);
-    Type dot(Type type);
+    Type dot(String s);
     Type squareBrackets(Type type);
     Type promotesTo(Type type);
     Type parenthesis(List<Type> typeList);

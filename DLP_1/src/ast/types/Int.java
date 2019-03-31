@@ -49,4 +49,24 @@ public class Int extends ConcreteType implements Type {
             return this;
         return null;
     }
+
+    @Override
+    public boolean isBuiltInType(){
+        return true;
+    }
+
+    @Override
+    public Type promotesTo(Type type){
+        if (type instanceof Real)
+            return type;
+        if(type instanceof Int)
+            return this;
+        return null;
+    }
+
+    @Override
+    public String toString(){
+        return "Int";
+    }
 }
+
