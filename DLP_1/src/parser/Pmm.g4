@@ -124,26 +124,19 @@ listParameter returns [List<VariableDefinition> ast = new ArrayList<VariableDefi
 field returns [List<Field> ast = new ArrayList<Field>()]:
 	i1=ID(','i2=ID
 		{
-			boolean rep = false;
 			Field f = new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text);
 			if($ast.contains(f)){
-				rep = true;
 				f.setType(new ErrorType($i2.getLine(),$i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
-				$ast.add(f);
-			}else
-				$ast.add(new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text));	
+			}
+			$ast.add(f);
 		}
 	)* ':' t=type 
 		{
-			boolean rep = false;
 			Field f = new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text);
-				if($ast.contains(f))
-					rep = true;
-			if(rep){
-				f.setType(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
-				$ast.add(f);
-			}else
-				$ast.add(new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
+				if($ast.contains(f)){
+				    f.setType(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
+			}
+			$ast.add(f);
 		for(Field fl : $ast)
 				if(!$ast.isEmpty() && fl.type == null)
 					fl.type = $t.ast;

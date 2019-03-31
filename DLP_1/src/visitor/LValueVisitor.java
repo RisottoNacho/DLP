@@ -2,6 +2,7 @@ package visitor;
 
 import ast.expressions.*;
 import ast.statements.Assignment;
+import ast.statements.Input;
 import ast.types.ErrorType;
 
 public class LValueVisitor extends ConcreteVisitor{
@@ -64,6 +65,17 @@ public class LValueVisitor extends ConcreteVisitor{
     @Override
     public Object visit(CharLiteral charLiteral, Object params) {
         charLiteral.setLvalue(false);
+        return null;
+    }
+
+    @Override
+    public Object visit(Input input, Object params) {
+        for (Expression ex : input.expressionList)
+            ex.accept(this, params);
+        for(Expression ls : input.expressionList){
+            if(!ls.getLvalue())
+                ls.setType(new ErrorType(ls.getRow(),ls.getColumn(),"Input solo acepta variables"));
+        }
         return null;
     }
 }

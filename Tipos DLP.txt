@@ -6,6 +6,9 @@ Preguntar Singleton
 Necesitamos que expresión implemente Type para las comprobaciones 
 tener setType y getType en todas ellas.
 
+PREGUNTAR CONTAINS
+PREGUNTAR CASTEOS
+
 Meter Definicion a variable
 
 Modificar las llamadas a funciones ya que la parte de la izquierda debería ser una expresión, comprobar esto.

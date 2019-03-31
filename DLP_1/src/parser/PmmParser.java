@@ -1096,14 +1096,11 @@ public class PmmParser extends Parser {
 				setState(234);
 				((FieldContext)_localctx).i2 = match(ID);
 
-							boolean rep = false;
 							Field f = new Field(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,(((FieldContext)_localctx).i2!=null?((FieldContext)_localctx).i2.getText():null));
 							if(_localctx.ast.contains(f)){
-								rep = true;
 								f.setType(new ErrorType(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
-								_localctx.ast.add(f);
-							}else
-								_localctx.ast.add(new Field(((FieldContext)_localctx).i2.getLine(),((FieldContext)_localctx).i2.getCharPositionInLine()+1,(((FieldContext)_localctx).i2!=null?((FieldContext)_localctx).i2.getText():null)));	
+							}
+							_localctx.ast.add(f);
 						
 				}
 				}
@@ -1118,13 +1115,10 @@ public class PmmParser extends Parser {
 
 						boolean rep = false;
 						Field f = new Field(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,(((FieldContext)_localctx).i1!=null?((FieldContext)_localctx).i1.getText():null));
-							if(_localctx.ast.contains(f))
-								rep = true;
-						if(rep){
-							f.setType(new ErrorType(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
-							_localctx.ast.add(f);
-						}else
-							_localctx.ast.add(new Field(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,(((FieldContext)_localctx).i1!=null?((FieldContext)_localctx).i1.getText():null)));	
+							if(_localctx.ast.contains(f)){
+							    f.setType(new ErrorType(((FieldContext)_localctx).i1.getLine(),((FieldContext)_localctx).i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
+						}
+						_localctx.ast.add(f);
 					for(Field fl : _localctx.ast)
 							if(!_localctx.ast.isEmpty() && fl.type == null)
 								fl.type = ((FieldContext)_localctx).t.ast;
