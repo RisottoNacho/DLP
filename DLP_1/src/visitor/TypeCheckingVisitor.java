@@ -1,9 +1,18 @@
 package visitor;
 
+import ast.definitions.FunctionDefinition;
+import ast.definitions.VariableDefinition;
 import ast.expressions.*;
+import ast.statements.FunctionCall;
 import ast.statements.IfElse;
+import ast.statements.Statement;
 import ast.statements.While;
 import ast.types.ErrorType;
+import ast.types.Function;
+import ast.types.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TypeCheckingVisitor extends ConcreteVisitor {
 
@@ -97,18 +106,63 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
     public Object visit(StructAccess structAccess, Object params) {
         structAccess.left.accept(this, params);
         structAccess.type = structAccess.left.getType().dot(structAccess.right);
-        if(structAccess.type == null)
-            structAccess.type=new ErrorType(structAccess.getRow(),structAccess.getColumn(),"Acceso a struct incorrecto");
+        if (structAccess.type == null)
+            structAccess.type = new ErrorType(structAccess.getRow(), structAccess.getColumn(), "Acceso a struct incorrecto");
         return null;
     }
 
     @Override
     public Object visit(ArrayAccess arrayAccess, Object params) {
-        arrayAccess.setLvalue(true);
         arrayAccess.expAccess.accept(this, params);
         arrayAccess.expArray.accept(this, params);
+        arrayAccess.type = arrayAccess.expArray.getType().squareBrackets(arrayAccess.expAccess.getType());
+        if (arrayAccess.type == null)
+            arrayAccess.type = new ErrorType(arrayAccess.getRow(), arrayAccess.getColumn(), "Acceso a array incorrecto");
         return null;
     }
+
+    @Override
+    public Object visit(Function functionType, Object params) {
+        List<Type> ls = new ArrayList<>();
+        for (VariableDefinition def : functionType.lsParams) {
+            def.accept(this, params);
+            if (!def.type.isBuiltInType())
+                def.type = new ErrorType(def.getRow(), def.getColumn(), "Las funciones sólo pueden recibir parámetros de tipos simples");
+            ls.add(def.type);
+        }
+        if (functionType.parenthesis(ls) == null)
+            new ErrorType(functionType.getRow(), functionType.getColumn(), "Los parámetros no coinciden con los esperados para la fución");
+        return null;
+    }
+
+    @Override
+    public Object visit(FunctionCall functionCall, Object params) {
+        List<Type> ls = new ArrayList<>();
+        for (Expression param : functionCall.params) {
+            param.accept(this, params);
+            if (!param.getType().isBuiltInType())
+                param.setType(new ErrorType(param.getRow(), param.getColumn(), "Las funciones sólo pueden recibir parámetros de tipos simples"));
+            ls.add(param.getType());
+        }
+        functionCall.params.
+        return null;
+    }
+
+
+    @Override
+    public Object visit(FunctionProcedure functionProcedure, Object params) {
+        List<Type> ls = new ArrayList<>();
+        for (Expression param : functionProcedure.params) {
+            param.accept(this, params);
+            if (!param.getType().isBuiltInType())
+                param.setType(new ErrorType(param.getRow(), param.getColumn(), "Las funciones sólo pueden recibir parámetros de tipos simples"));
+            ls.add(param.getType());
+        }
+        functionProcedure.type =
+        return null;
+    }
+
+    private
 }
 
 

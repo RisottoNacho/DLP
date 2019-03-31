@@ -37,7 +37,7 @@ public class PmmParser extends Parser {
 		RULE_defFunction = 12, RULE_listStatement = 13, RULE_statement = 14;
 	public static final String[] ruleNames = {
 		"program", "listDefinition", "listDefFunction", "main", "expression", 
-		"listExpression", "type", "defVariable", "parameter", "listParameter", 
+		"listExpression", "returnType", "defVariable", "parameter", "listParameter",
 		"field", "fieldList", "defFunction", "listStatement", "statement"
 	};
 

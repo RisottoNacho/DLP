@@ -23,4 +23,11 @@ public class Array extends ConcreteType implements Type {
 	public String toString(){
 		return "Array";
 	}
+
+	@Override
+	public Type squareBrackets(Type type){
+		if(type.getClass().equals(this.type.getClass()))
+			return type;
+		return null;
+	}
 }
