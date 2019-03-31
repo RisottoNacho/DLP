@@ -41,7 +41,7 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         arithmetic.right.accept(this, params);
         arithmetic.type = arithmetic.left.getType().arithmetic(arithmetic.right.getType());
         if (arithmetic.type == null)
-            arithmetic.type = new ErrorType(arithmetic.getRow(), arithmetic.getColumn(), "Operación aritmética inválida");
+            arithmetic.type = new ErrorType(arithmetic.getRow(), arithmetic.getColumn(), "Operación aritmética con tipos inválidos");
         return null;
     }
 
@@ -50,7 +50,7 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         unaryMinus.expression.accept(this, params);
         unaryMinus.expression.getType().arithmetic();
         if (unaryMinus.type == null)
-            unaryMinus.type = new ErrorType(unaryMinus.getRow(), unaryMinus.getColumn(), "Menos unario inválido");
+            unaryMinus.type = new ErrorType(unaryMinus.getRow(), unaryMinus.getColumn(), "Menos unario con tipo inválido");
         return null;
     }
 
@@ -60,7 +60,26 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         logic.right.accept(this, null);
         logic.type = logic.left.getType().logical(logic.right.getType());
         if (logic.getType() == null)
-            logic.type = new ErrorType(logic.getRow(), logic.getColumn(), "Operacion lógica inválida");
+            logic.type = new ErrorType(logic.getRow(), logic.getColumn(), "Operacion lógica con tipos inválidos");
+        return null;
+    }
+
+    @Override
+    public Object visit(UnaryNot unaryNot, Object params) {
+        unaryNot.expression.accept(this, params);
+        unaryNot.type = unaryNot.expression.getType().logical();
+        if (unaryNot.getType() == null)
+            unaryNot.type = new ErrorType(unaryNot.getRow(), unaryNot.getColumn(), "Operacion lógica con tipos inválidos");
+        return null;
+    }
+
+    @Override
+    public Object visit(Comparison comparison, Object params) {
+        comparison.left.accept(this, params);
+        comparison.right.accept(this, params);
+        comparison.type = comparison.left.getType().comparison(comparison.right.getType());
+        if (comparison.type == null)
+            comparison.type = new ErrorType(comparison.getRow(), comparison.getColumn(), "Comparacion de tipos inválidos");
         return null;
     }
 }
