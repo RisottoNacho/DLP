@@ -51,7 +51,7 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
     public Object visit(IfElse ifElse, Object params) {
         ifElse.condition.accept(this, params);
         if (!ifElse.condition.getType().isLogical())
-            ifElse.condition.setType(new ErrorType(ifElse.condition.getRow(), ifElse.condition.getColumn(), "La condición del bucle no es una expresión lógica"));
+            ifElse.condition.setType(new ErrorType(ifElse.condition.getRow(), ifElse.condition.getColumn(), "La condición del if no es una expresión lógica"));
         ifElse.IfBody.forEach(s -> s.accept(this, params));
         ifElse.ElseBody.forEach(s -> s.accept(this, params));
         return null;
@@ -111,7 +111,7 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         String tipoOld = cast.type.toString();
         cast.type = cast.expression.getType().promotesTo(cast.type);
         if (cast.type == null)
-            cast.type = new ErrorType(cast.getRow(), cast.getColumn(), "No se puede hacer cast de " + cast.expression.getType().toString() + "a " + tipoOld);
+            cast.type = new ErrorType(cast.getRow(), cast.getColumn(), "No se puede hacer cast de " + cast.expression.getType().toString() + " a " + tipoOld);
         return null;
     }
 

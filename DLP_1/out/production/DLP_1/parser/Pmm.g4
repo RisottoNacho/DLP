@@ -58,7 +58,7 @@ expression returns [Expression ast]:
 |	'-' e=expression	{$ast = new UnaryMinus($e.start.getLine(),$e.start.getCharPositionInLine()+1,$e.ast);}
 |	e1=expression'['e2=expression']'	{$ast = new ArrayAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
 |	e1=expression'.'ID		{$ast = new StructAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$ID.text);}
-|	ID'('l=listExpression?')'		{$ast = new FunctionProcedure($ID.getLine(),$ID.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text),$l.ast);}
+|	ID'('l=listExpression')'		{$ast = new FunctionProcedure($ID.getLine(),$ID.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text),$l.ast);}
 |	e1=expression op=('*'|'/'|'%') e2=expression {$ast = new Arithmetic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op.text,$e2.ast);}
 |	iz = expression op=('+'|'-') de = expression 
 {	$ast = new Arithmetic($iz.start.getLine(),$iz.start.getCharPositionInLine()+1,$iz.ast,$op.text,$de.ast);
@@ -72,8 +72,8 @@ expression returns [Expression ast]:
 |	REAL_CONSTANT	{$ast = new RealLiteral($REAL_CONSTANT.getLine(),$REAL_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToReal($REAL_CONSTANT.text));}	
 	;
 
-listExpression returns [List<Expression> ast = new ArrayList<Expression>()]: e1=expression	{$ast.add($e1.ast);}
-(','e2=expression{$ast.add($e2.ast);})*;
+listExpression returns [List<Expression> ast = new ArrayList<Expression>()]: (e1=expression	{$ast.add($e1.ast);}
+(','e2=expression{$ast.add($e2.ast);})*)?;
 
 /**
 variable returns[Variable ast]: ID {$ast = new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,
@@ -191,6 +191,7 @@ statement returns [List<Statement> ast = new ArrayList<Statement>()]:
 |	'if' a=expression ':' (l6=statement) 'else'( '{'s2=listStatement '}')	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l6.ast,$s2.ast));}
 |	'if' a=expression ':' (l7=statement) 'else'(s3=statement)	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l7.ast,$s3.ast));}
 |	'while' a=expression ':' '{'l4=listStatement'}'	{$ast.add(new While($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l4.ast));}
+|	'while' a=expression ':' l9=statement	{$ast.add(new While($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l9.ast));}
 |	'print' a2=listExpression';'	{$ast.add(new Print($a2.start.getLine(),$a2.start.getCharPositionInLine()+1,$a2.ast));}
 |	'input'	a3=listExpression';'	{$ast.add(new Input($a3.start.getLine(),$a3.start.getCharPositionInLine()+1,$a3.ast));}
 |	'return' a=expression';'	{$ast.add(new Return($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast));}
