@@ -7,10 +7,10 @@ import visitor.Visitor;
 public class FunctionProcedure extends ConcreteExpression implements Expression {
 
     public List<Expression> params;
-    public String name;
+    public Variable name;
     private boolean lValue;
 
-    public FunctionProcedure(int row, int column, String name, List<Expression> ls) {
+    public FunctionProcedure(int row, int column, Variable name, List<Expression> ls) {
         super(row, column);
         this.name = name;
         params = ls;

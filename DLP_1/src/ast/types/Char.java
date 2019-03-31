@@ -20,9 +20,16 @@ public class Char extends ConcreteType implements Type {
 	}
 
 	@Override
-	public Type promotesTo(Type type){
-		if(type instanceof Int)
+	public Type cast(Type type){
+		if (type.isBuiltInType())
 			return type;
+		return null;
+	}
+
+	@Override
+	public Type promotesTo(Type type){
+		if(type instanceof Char)
+			return this;
 		return null;
 	}
 

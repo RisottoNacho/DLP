@@ -58,7 +58,7 @@ expression returns [Expression ast]:
 |	'-' e=expression	{$ast = new UnaryMinus($e.start.getLine(),$e.start.getCharPositionInLine()+1,$e.ast);}
 |	e1=expression'['e2=expression']'	{$ast = new ArrayAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
 |	e1=expression'.'ID		{$ast = new StructAccess($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$ID.text);}
-|	ID'('l=listExpression?')'		{$ast = new FunctionProcedure($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$l.ast);}
+|	ID'('l=listExpression?')'		{$ast = new FunctionProcedure($ID.getLine(),$ID.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text),$l.ast);}
 |	e1=expression op=('*'|'/'|'%') e2=expression {$ast = new Arithmetic($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$op.text,$e2.ast);}
 |	iz = expression op=('+'|'-') de = expression 
 {	$ast = new Arithmetic($iz.start.getLine(),$iz.start.getCharPositionInLine()+1,$iz.ast,$op.text,$de.ast);
@@ -128,7 +128,7 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 			Field f = new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text);
 			if($ast.contains(f)){
 				rep = true;
-				f.setTipo(new ErrorType($i2.getLine(),$i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
+				f.setType(new ErrorType($i2.getLine(),$i2.getCharPositionInLine()+1,"Two or more variables with same ID"));
 				$ast.add(f);
 			}else
 				$ast.add(new Field($i2.getLine(),$i2.getCharPositionInLine()+1,$i2.text));	
@@ -140,13 +140,13 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 				if($ast.contains(f))
 					rep = true;
 			if(rep){
-				f.setTipo(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
+				f.setType(new ErrorType($i1.getLine(),$i1.getCharPositionInLine()+1,"Two or more variables with same ID"));
 				$ast.add(f);
 			}else
 				$ast.add(new Field($i1.getLine(),$i1.getCharPositionInLine()+1,$i1.text));	
 		for(Field fl : $ast)
-				if(!$ast.isEmpty() && fl.tipo == null)
-					fl.tipo = $t.ast;
+				if(!$ast.isEmpty() && fl.type == null)
+					fl.type = $t.ast;
 			
 		}
 	
@@ -190,7 +190,7 @@ listStatement returns [List<Statement> ast = new ArrayList<Statement>()]:
 statement returns [List<Statement> ast = new ArrayList<Statement>()]:
 	e1=expression '=' e2=expression';'	{$ast.add(new Assignment($e1.start.getLine(),$e1.start.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
 |	v=defVariable';'	{$ast.addAll($v.ast);}
-|{List<Expression> ls = new ArrayList<Expression>();}	ID '('(l=listExpression{ls.addAll($l.ast);})*')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,ls));}
+|{List<Expression> ls = new ArrayList<Expression>();}	ID '('(l=listExpression{ls.addAll($l.ast);})*')'';'	{$ast.add(new FunctionCall($ID.getLine(),$ID.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text),ls));}
 |	'if' a=expression ':' '{'l1=listStatement '}'	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l1.ast,null));}
 |	'if' a=expression ':' l2=statement		{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l2.ast,null));}
 |	'if' a=expression ':' ('{'l3=listStatement '}') 'else'( '{'s=listStatement '}')	{$ast.add(new IfElse($a.start.getLine(),$a.start.getCharPositionInLine()+1,$a.ast,$l3.ast,$s.ast));}

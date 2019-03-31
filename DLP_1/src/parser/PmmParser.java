@@ -12,9 +12,11 @@ package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-    import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-    import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class PmmParser extends Parser {
@@ -37,7 +39,7 @@ public class PmmParser extends Parser {
 		RULE_defFunction = 12, RULE_listStatement = 13, RULE_statement = 14;
 	public static final String[] ruleNames = {
 		"program", "listDefinition", "listDefFunction", "main", "expression", 
-		"listExpression", "returnType", "defVariable", "parameter", "listParameter",
+		"listExpression", "type", "defVariable", "parameter", "listParameter", 
 		"field", "fieldList", "defFunction", "listStatement", "statement"
 	};
 
@@ -508,7 +510,7 @@ public class PmmParser extends Parser {
 
 				setState(110);
 				match(T__3);
-				((ExpressionContext)_localctx).ast =  new FunctionProcedure(((ExpressionContext)_localctx).ID.getLine(),((ExpressionContext)_localctx).ID.getCharPositionInLine()+1,(((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null),((ExpressionContext)_localctx).l.ast);
+				((ExpressionContext)_localctx).ast =  new FunctionProcedure(((ExpressionContext)_localctx).ID.getLine(),((ExpressionContext)_localctx).ID.getCharPositionInLine()+1,new Variable(((ExpressionContext)_localctx).ID.getLine(),((ExpressionContext)_localctx).ID.getCharPositionInLine()+1,(((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null)),((ExpressionContext)_localctx).l.ast);
 				}
 				break;
 			case 6:
@@ -1563,7 +1565,7 @@ public class PmmParser extends Parser {
 				match(T__3);
 				setState(350);
 				match(T__29);
-				_localctx.ast.add(new FunctionCall(((StatementContext)_localctx).ID.getLine(),((StatementContext)_localctx).ID.getCharPositionInLine()+1,(((StatementContext)_localctx).ID!=null?((StatementContext)_localctx).ID.getText():null),ls));
+				_localctx.ast.add(new FunctionCall(((StatementContext)_localctx).ID.getLine(),((StatementContext)_localctx).ID.getCharPositionInLine()+1,new Variable(((StatementContext)_localctx).ID.getLine(),((StatementContext)_localctx).ID.getCharPositionInLine()+1,(((StatementContext)_localctx).ID!=null?((StatementContext)_localctx).ID.getText():null)),ls));
 				}
 				break;
 			case 4:

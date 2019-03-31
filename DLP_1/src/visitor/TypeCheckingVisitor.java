@@ -135,6 +135,7 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         return null;
     }
 
+    @SuppressWarnings("all")
     @Override
     public Object visit(FunctionCall functionCall, Object params) {
         List<Type> ls = new ArrayList<>();
@@ -144,11 +145,12 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
                 param.setType(new ErrorType(param.getRow(), param.getColumn(), "Las funciones sólo pueden recibir parámetros de tipos simples"));
             ls.add(param.getType());
         }
-        functionCall.params.
+        functionCall.name.definition.getType().parenthesis(ls);
         return null;
     }
 
 
+    @SuppressWarnings("all")
     @Override
     public Object visit(FunctionProcedure functionProcedure, Object params) {
         List<Type> ls = new ArrayList<>();
@@ -158,11 +160,10 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
                 param.setType(new ErrorType(param.getRow(), param.getColumn(), "Las funciones sólo pueden recibir parámetros de tipos simples"));
             ls.add(param.getType());
         }
-        functionProcedure.type =
+        functionProcedure.name.definition.getType().parenthesis(ls);
         return null;
     }
 
-    private
 }
 
 

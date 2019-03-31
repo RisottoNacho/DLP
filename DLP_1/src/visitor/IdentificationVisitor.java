@@ -15,14 +15,12 @@ public class IdentificationVisitor extends ConcreteVisitor {
 
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object params) {
+        if(!symbolTable.insert(functionDefinition))
+            functionDefinition.type = new ErrorType(functionDefinition.getRow(),functionDefinition.getColumn(),"Esta función ya está definida");
         symbolTable.set();;
         functionDefinition.type.accept(this,params);
-        for(VariableDefinition v : functionDefinition.lsVariables){
-            v.accept(this,params);
-        }
-        for (Statement s : functionDefinition.lsStatement) {
-            s.accept(this, params);
-        }
+        functionDefinition.lsVariables.forEach(v -> v.accept(this, params));
+        functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
         symbolTable.reset();
         return null;
     }

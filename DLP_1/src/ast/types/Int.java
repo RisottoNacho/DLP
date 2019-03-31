@@ -56,9 +56,14 @@ public class Int extends ConcreteType implements Type {
     }
 
     @Override
-    public Type promotesTo(Type type){
-        if (type instanceof Real)
+    public Type cast(Type type){
+        if (type.isBuiltInType())
             return type;
+        return null;
+    }
+
+    @Override
+    public Type promotesTo(Type type){
         if(type instanceof Int)
             return this;
         return null;

@@ -79,6 +79,7 @@ public abstract class ConcreteVisitor implements Visitor {
     @Override
     public Object visit(FunctionProcedure functionProcedure, Object params) {
         functionProcedure.setLvalue(false);
+        functionProcedure.name.accept(this,params);
         for (Expression param : functionProcedure.params)
             param.accept(this, params);
         return null;
@@ -134,6 +135,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(FunctionCall functionCall, Object params) {
+        functionCall.name.accept(this,params);
         for (Expression param : functionCall.params)
             param.accept(this, params);
         return null;
