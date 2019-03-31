@@ -18,6 +18,8 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type arithmetic(Type type) {
+        if(type instanceof ErrorType)
+            return type;
         return null;
     }
 
@@ -28,6 +30,8 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type logical(Type type) {
+        if(type instanceof ErrorType)
+            return type;
         return null;
     }
 
@@ -38,6 +42,8 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type comparison(Type type) {
+        if(type instanceof ErrorType)
+            return type;
         return null;
     }
 
@@ -48,21 +54,29 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type cast(Type type) {
+        if(type instanceof ErrorType)
+            return type;
         return null;
     }
 
     @Override
     public Type dot(Type type) {
+        if(type instanceof ErrorType)
+            return type;
         return null;
     }
 
     @Override
     public Type squareBrackets(Type type) {
+        if(type instanceof ErrorType)
+            return type;
         return null;
     }
 
     @Override
     public Type promotesTo(Type type) {
+        if(type instanceof ErrorType)
+            return type;
         return null;
     }
 
