@@ -44,33 +44,33 @@ public class Int extends ConcreteType implements Type {
     }
 
     @Override
-    public Type comparison(Type type){
-        if(type instanceof Int)
+    public Type comparison(Type type) {
+        if (type instanceof Int)
             return this;
         return null;
     }
 
     @Override
-    public boolean isBuiltInType(){
+    public boolean isBuiltInType() {
         return true;
     }
 
     @Override
-    public Type cast(Type type){
+    public Type cast(Type type) {
         if (type.isBuiltInType())
             return type;
         return null;
     }
 
     @Override
-    public Type promotesTo(Type type){
-        if(type instanceof Int)
+    public Type promotesTo(Type type) {
+        if (type instanceof Int)
             return this;
         return null;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Int";
     }
 }

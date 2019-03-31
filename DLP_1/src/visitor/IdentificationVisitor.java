@@ -15,10 +15,11 @@ public class IdentificationVisitor extends ConcreteVisitor {
 
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object params) {
-        if(!symbolTable.insert(functionDefinition))
-            functionDefinition.type = new ErrorType(functionDefinition.getRow(),functionDefinition.getColumn(),"Esta función ya está definida");
-        symbolTable.set();;
-        functionDefinition.type.accept(this,params);
+        if (!symbolTable.insert(functionDefinition))
+            functionDefinition.type = new ErrorType(functionDefinition.getRow(), functionDefinition.getColumn(), "Esta función ya está definida");
+        symbolTable.set();
+        ;
+        functionDefinition.type.accept(this, params);
         functionDefinition.lsVariables.forEach(v -> v.accept(this, params));
         functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
         symbolTable.reset();
@@ -34,8 +35,8 @@ public class IdentificationVisitor extends ConcreteVisitor {
 
     @Override
     public Object visit(VariableDefinition variableDefinition, Object params) {
-        if(!symbolTable.insert(variableDefinition))
-           variableDefinition.type = new ErrorType(variableDefinition.getRow(),variableDefinition.getColumn(),"Esta variable ya está definida");
+        if (!symbolTable.insert(variableDefinition))
+            variableDefinition.type = new ErrorType(variableDefinition.getRow(), variableDefinition.getColumn(), "Esta variable ya está definida");
         return null;
     }
 
@@ -43,7 +44,7 @@ public class IdentificationVisitor extends ConcreteVisitor {
     public Object visit(Variable variable, Object params) {
         Definition def = symbolTable.find(variable.value);
         if (def == null)
-            variable.type = new ErrorType(variable.getRow(),variable.getColumn(),"Esta variable no ha sido definida");
+            variable.type = new ErrorType(variable.getRow(), variable.getColumn(), "Esta variable no ha sido definida");
         variable.definition = def;
         return null;
     }

@@ -22,19 +22,19 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
 
     @Override
     public Object visit(IntLiteral intLiteral, Object params) {
-        intLiteral.type = new Int(intLiteral.getRow(),intLiteral.getColumn());
+        intLiteral.type = new Int(intLiteral.getRow(), intLiteral.getColumn());
         return null;
     }
 
     @Override
     public Object visit(RealLiteral realLiteral, Object params) {
-        realLiteral.type = new Real(realLiteral.getRow(),realLiteral.getColumn());
+        realLiteral.type = new Real(realLiteral.getRow(), realLiteral.getColumn());
         return null;
     }
 
     @Override
     public Object visit(CharLiteral charLiteral, Object params) {
-        charLiteral.type = new Char(charLiteral.getRow(),charLiteral.getColumn());
+        charLiteral.type = new Char(charLiteral.getRow(), charLiteral.getColumn());
         return null;
     }
 
@@ -182,7 +182,7 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         assignment.left.accept(this, params);
         assignment.right.accept(this, params);
         if (assignment.left.getType().promotesTo(assignment.right.getType()) == null)
-            new ErrorType(assignment.getRow(),assignment.getColumn(),"No se puede asignar "+assignment.left.getType().toString()+" a "+assignment.right.getType().toString());
+            new ErrorType(assignment.getRow(), assignment.getColumn(), "No se puede asignar " + assignment.left.getType().toString() + " a " + assignment.right.getType().toString());
         return null;
     }
 

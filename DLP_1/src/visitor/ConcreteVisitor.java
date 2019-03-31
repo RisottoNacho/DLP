@@ -28,9 +28,9 @@ public abstract class ConcreteVisitor implements Visitor {
         for (Statement s : functionDefinition.lsStatement) {
             s.accept(this, params);
         }
-        functionDefinition.type.accept(this,params);
-        for(VariableDefinition v : functionDefinition.lsVariables){
-            v.accept(this,params);
+        functionDefinition.type.accept(this, params);
+        for (VariableDefinition v : functionDefinition.lsVariables) {
+            v.accept(this, params);
         }
         return null;
     }
@@ -39,6 +39,7 @@ public abstract class ConcreteVisitor implements Visitor {
     public Object visit(VariableDefinition variableDefinition, Object params) {
         return null;
     }
+
     @Override
     public Object visit(Arithmetic arithmetic, Object params) {
 
@@ -79,7 +80,7 @@ public abstract class ConcreteVisitor implements Visitor {
     @Override
     public Object visit(FunctionProcedure functionProcedure, Object params) {
         functionProcedure.setLvalue(false);
-        functionProcedure.name.accept(this,params);
+        functionProcedure.name.accept(this, params);
         for (Expression param : functionProcedure.params)
             param.accept(this, params);
         return null;
@@ -135,7 +136,7 @@ public abstract class ConcreteVisitor implements Visitor {
 
     @Override
     public Object visit(FunctionCall functionCall, Object params) {
-        functionCall.name.accept(this,params);
+        functionCall.name.accept(this, params);
         for (Expression param : functionCall.params)
             param.accept(this, params);
         return null;
