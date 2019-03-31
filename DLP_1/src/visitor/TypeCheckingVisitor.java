@@ -3,13 +3,8 @@ package visitor;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.*;
-import ast.statements.FunctionCall;
-import ast.statements.IfElse;
-import ast.statements.Statement;
-import ast.statements.While;
-import ast.types.ErrorType;
-import ast.types.Function;
-import ast.types.Type;
+import ast.statements.*;
+import ast.types.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +17,24 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
         if (variable.definition != null) {
             variable.type = variable.definition.getType();
         }
+        return null;
+    }
+
+    @Override
+    public Object visit(IntLiteral intLiteral, Object params) {
+        intLiteral.type = new Int(intLiteral.getRow(),intLiteral.getColumn());
+        return null;
+    }
+
+    @Override
+    public Object visit(RealLiteral realLiteral, Object params) {
+        realLiteral.type = new Real(realLiteral.getRow(),realLiteral.getColumn());
+        return null;
+    }
+
+    @Override
+    public Object visit(CharLiteral charLiteral, Object params) {
+        charLiteral.type = new Char(charLiteral.getRow(),charLiteral.getColumn());
         return null;
     }
 
@@ -161,6 +174,15 @@ public class TypeCheckingVisitor extends ConcreteVisitor {
             ls.add(param.getType());
         }
         functionProcedure.name.definition.getType().parenthesis(ls);
+        return null;
+    }
+
+    @Override
+    public Object visit(Assignment assignment, Object params) {
+        assignment.left.accept(this, params);
+        assignment.right.accept(this, params);
+        if (assignment.left.getType().promotesTo(assignment.right.getType()) == null)
+            new ErrorType(assignment.getRow(),assignment.getColumn(),"No se puede asignar "+assignment.left.getType().toString()+" a "+assignment.right.getType().toString());
         return null;
     }
 
