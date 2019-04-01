@@ -15,6 +15,11 @@ public class Int extends ConcreteType implements Type {
     }
 
     @Override
+    public int getSize(){
+        return 2;
+    }
+
+    @Override
     public boolean isLogical() {
         return true;
     }

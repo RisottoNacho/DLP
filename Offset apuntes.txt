@@ -1,0 +1,33 @@
+las posiciones de memoria de las variables locales siempre seran BP - algo
+los parametros siempre seran BP + algo
+Hacer BP+4 siempre accesde al primer parametro almacenado, es decir el ultimo que se mete en la pila, el último de ellos
+
+Para calcular offset de variables globales:
+Es la suma del tamaño de las variables anteriores.
+
+Para las variables locales:
+Suma de las variables anteriores incloyéndose a si misma porque ahora va hacia arriba en la pila.
+
+Para los parámetros:
+BP + 4 + los parámetros a su derecha en la declaracion sin incluirse a si mismo
+
+La interfaz type tiene ahora un getSize que devuelve su tamaño en memoria
+El struct devuelve la suma de lo que ocupan sus campos
+El array devuelve su tamaño por lo que ocupa ese tamaño en memoria
+Una funcion devuelve 0
+ErrorType devuelve 0
+Void devuelve 0
+
+Los warnings de MAPL son errores
+
+Offsets:
+- Se calcula en el visit de definicion de variable ya los parametros de una funcion son variableDefintion.
+Usamos el scope para distintguir en que contexto nos encontramos, asi hacemos un sumatorio o contador de variables globales 
+y lo vamos incrementando con la variable actual al mismo tiempo que guardar su offset.
+
+- Si el scope es 1 no se puede distinguir entre parametro y varible local, para los parametros hay que evitar que se ponga su scope a 1
+no haciendo el accept a ellos y recorriendolos en el propio visit de FunctionType.(Tambien se puede usar un parametro para distinguirlos)
+
+- Para las variables locales hay que tener en cuenta el resultado de los parametros, su tamaño para la formula
+
+- Para los fields se puede hacer en el propio struct

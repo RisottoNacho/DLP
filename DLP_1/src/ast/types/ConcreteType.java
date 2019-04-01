@@ -12,6 +12,11 @@ public class ConcreteType extends ConcreteASTNode implements Type{
     }
 
     @Override
+    public int getSize(){
+        return 0;
+    }
+
+    @Override
     public boolean isLogical() {
         return false;
     }

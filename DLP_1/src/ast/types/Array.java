@@ -15,6 +15,11 @@ public class Array extends ConcreteType implements Type {
 	}
 
 	@Override
+	public int getSize(){
+		return size*type.getSize();
+	}
+
+	@Override
 	public Object accept(Visitor V, Object params) {
 		return V.visit(this, params);
 	}

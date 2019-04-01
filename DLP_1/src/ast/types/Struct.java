@@ -8,29 +8,39 @@ import visitor.Visitor;
 
 public class Struct extends ConcreteType implements Type {
 
-	public List<Field> lsFields;
+    public List<Field> lsFields;
 
-	public Struct(int row, int column, List<Field> ls) {
-		super(row, column);
-		lsFields = ls;
-	}
+    public Struct(int row, int column, List<Field> ls) {
+        super(row, column);
+        lsFields = ls;
+    }
 
-	@Override
-	public Object accept(Visitor V, Object params) {
-		return V.visit(this, params);
-	}
+    @Override
+    public int getSize() {
+        int sum = 0;
+        for (Field f : lsFields
+        ) {
+            sum += f.type.getSize();
+        }
+        return sum;
+    }
 
-	@Override
-	public String toString(){
-		return "Struct";
-	}
+    @Override
+    public Object accept(Visitor V, Object params) {
+        return V.visit(this, params);
+    }
 
-	@Override
-	public Type dot(String s){
-		for (Field f : lsFields){
-			if(f.getName().equals(s))
-				return f.type;
-		}
-		return null;
-	}
+    @Override
+    public String toString() {
+        return "Struct";
+    }
+
+    @Override
+    public Type dot(String s) {
+        for (Field f : lsFields) {
+            if (f.getName().equals(s))
+                return f.type;
+        }
+        return null;
+    }
 }

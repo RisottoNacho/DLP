@@ -15,6 +15,11 @@ public class Char extends ConcreteType implements Type {
     }
 
     @Override
+    public int getSize(){
+        return 1;
+    }
+
+    @Override
     public boolean isBuiltInType() {
         return true;
     }
