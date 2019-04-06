@@ -23,15 +23,12 @@ public abstract class ConcreteVisitor implements Visitor {
         return null;
     }
 
+    @SuppressWarnings("all")
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object params) {
-        for (Statement s : functionDefinition.lsStatement) {
-            s.accept(this, params);
-        }
         functionDefinition.type.accept(this, params);
-        for (VariableDefinition v : functionDefinition.lsVariables) {
-            v.accept(this, params);
-        }
+        functionDefinition.lsVariables.forEach(v -> v.accept(this, params));
+        functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
         return null;
     }
 

@@ -8,6 +8,7 @@ import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import visitor.IdentificationVisitor;
 import visitor.LValueVisitor;
+import visitor.OffsetVisitor;
 import visitor.TypeCheckingVisitor;
 
 public class Main {
@@ -33,6 +34,8 @@ public class Main {
         identificationVisitor.visit(ast, null);
         TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor();
         typeCheckingVisitor.visit(ast, null);
+        OffsetVisitor offsetVisitor = new OffsetVisitor();
+        offsetVisitor.visit(ast, null);
         // * The AST is shown
         if (ErrorHandler.getInstance().anyError()) {
             ErrorHandler.getInstance().showErrors(System.out);

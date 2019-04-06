@@ -8,16 +8,15 @@ import ast.types.Function;
 public class OffsetVisitor extends ConcreteVisitor {
 
     private int currentGlobalSize = 0;
+    private int currentLocalSize;
 
+    @SuppressWarnings("all")
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object params) {
-        for (Statement s : functionDefinition.lsStatement) {
-            s.accept(this, params);
-        }
         functionDefinition.type.accept(this, params);
-        for (VariableDefinition v : functionDefinition.lsVariables) {
-            v.accept(this, params);
-        }
+        currentLocalSize = 0;
+        functionDefinition.lsVariables.forEach(v -> v.accept(this, params));
+        functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
         return null;
     }
 
@@ -36,8 +35,9 @@ public class OffsetVisitor extends ConcreteVisitor {
         if (variableDefinition.getScope() == 0) {
             variableDefinition.setOffSet(currentGlobalSize);
             currentGlobalSize += variableDefinition.getType().getSize();
-        } else if (variableDefinition.getScope() == 1)){
-
+        } else if (variableDefinition.getScope() == 1) {
+            currentLocalSize += variableDefinition.getType().getSize();
+            variableDefinition.setOffSet(currentLocalSize);
         }
         return null;
     }
