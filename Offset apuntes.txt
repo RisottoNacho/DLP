@@ -31,3 +31,129 @@ no haciendo el accept a ellos y recorriendolos en el propio visit de FunctionTyp
 - Para las variables locales hay que tener en cuenta el resultado de los parametros, su tamaño para la formula
 
 - Para los fields se puede hacer en el propio struct
+
+
+CLASE 08/04 ---------------------------------------------------------/
+
+añadir metodo subfix(): (necesario preguntar qué devulve)  a la interfaz type
+
+
+1.- Crear un codegenerator
+
+2.- Hacer ExecuteCodeGeneratorVisitor, AdressCodeGeneratorVisitor y ValueCodeGeneratorVisitor  (No heredan del abstract visitor)
+debería hacer un CodeGenerator que bajo el haya un abstracto nuevo  (AbstractCGVisitor)
+
+En esa clase todos los metodos hacen  throw new IlegalStateException("Code generation template \"FeldAccess\" not defined for "+ 
+this.getClass().getName());
+
+El ExecuteCodeGeneratorVisitor tiene una referencia a los otros 2 visitor, y el AdressCodeGeneratorVisitor tiene una al ValueCodeGeneratorVisitor
+El abstract implementara CodeGenerator
+El CodeGenerator(recibe como parametros fichero de entrada y de salida) se pasa como parametro al visitor ExecuteCodeGeneratorVisitor para ejecutar en el main
+EN el constructor de ExecuteCodeGeneratorVisitor se instancian los otros 2 visitor que reciben como paradeetro el CodeGenerator
+
+3.- plantillas
+En el value visitor un visit por cada expresion
+En el adress visitor visita los Lvalues
+En el execute visitor visita Sentencias, Definiciones y Program
+
+AHORA LO QUE IRIA DENTRO DEL EXECUTE VISITOR
+
+El de program:
+
+EXECUTE[[PROGRAM: PROGRAM -> DEFINITION*]]() =
+for(DEFINITION d : DEFINITION*)
+	if(d instance of VarDef)
+		EXECUTE[[d]]
+		
+<CALL MAIN>  (esto seria cg.mainInvocation();  cg es el codeGenerator) 
+<HALT>
+
+for(DEFINITION d : DEFINITION*)
+	if(d instance of FuncDef)
+		EXECUTE[[d]]
+
+
+El de write:
+
+EXECUTE[[WRITE: STATEMENT -> EXPRESSION]]() =
+	Value[[EXPRESSION]]()   Write.expression.accept(this.ValueCodeGeneratorVisitor,null);  // ESTA ES LA PUTA CLAVE DE COMO VAN ESTOS PUTOS
+	<out> Expression.type.subfix();        cg.out(write.expression.getType());
+
+
+El de Read:
+
+EXECUTE[[WRITE: STATEMENT -> EXPRESSION]]() =
+	ADRESS[[EXPRESSION]]()
+	<IN> expresion.type.subfix()
+	<store> expresion.type.subfix()
+	
+
+
+EXECUTE[[ASSIGNMENT: STATEMENT -> EXPRESSION1  EXPRESSION2]]() =	
+	ADRESS[[EXPRESSION1]]()
+	VALUE[[EXPRESSION2]]()
+	<store> expresion.type.subfix();
+
+INTLITERAL[[:EXPRESSION -> INT_CONSTANT]]
+	<pushi> expresion.value  (cg.push(expresion.value))
+	
+VARIABLE[[:EXPRESSION -> ID]]
+	ADRESS[[VARIABLE]]()
+	<load> expression.type.subfix
+
+ADRESS[[VARIABLE : EXPRESSION -> ID]]()
+	if(expression.definicion.scope == 0)
+		<pusha> expression.definicion.offset
+	else
+		<pusha BP>
+		<pushi> expression.definicion.offset
+		<add>
+
+
+VALUE[[ARITHMETIC : EXPRESSION1 -> EXPRESSION2 EXPRESSION3]]   // AL FINAL SI SE PUEDEN SUMAR CHAR y convertir int a char
+	VALUE[[EXPRESSION2]]
+	cg.convertTo(expresion2.type, expresion1.type);
+	VALUE[[EXPRESSION3]]
+	cg.convertTo(expresion3.type, expresion1.type);
+	
+	// OJO con las conversiones
+	
+	cg.arithmetic(expresion.operator, expresion.type)    
+
+
+EXECUTE[[FUNCTIONDEF : DEFINITION -> TYPE STATEMENT*]]
+	def.name<:>
+	
+	<enter> def.bytesLocals //para saber cuantos bytes ocupan las variables locales, lo asignamos al final del visit de definiciond e duncion a la misma funcion
+	for(statement s : STATEMENT*)
+		if(!s instaceOf varDefinition)
+			EXECUTE[[s]]
+	if(type.returntype instaceOf Void)
+		<ret> 0,def.bytesLocals, bytesParams
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
