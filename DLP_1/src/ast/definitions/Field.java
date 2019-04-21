@@ -1,7 +1,6 @@
 package ast.definitions;
 
 
-import ast.types.Type;
 import visitor.Visitor;
 
 public class Field extends ConcreteDefinition {

@@ -1,6 +1,5 @@
 package ast.types;
 
-import ast.ConcreteASTNode;
 import visitor.Visitor;
 
 public class Char extends ConcreteType implements Type {
@@ -22,6 +21,15 @@ public class Char extends ConcreteType implements Type {
     @Override
     public boolean isBuiltInType() {
         return true;
+    }
+
+    @Override
+    public Type arithmetic(Type type) {
+        if (type instanceof Int)
+            return this;
+        if(type instanceof Char)
+            return type;
+        return null;
     }
 
     @Override

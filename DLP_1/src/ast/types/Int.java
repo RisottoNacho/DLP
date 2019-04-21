@@ -28,6 +28,8 @@ public class Int extends ConcreteType implements Type {
     public Type arithmetic(Type type) {
         if (type instanceof Int)
             return this;
+        if(type instanceof Char)
+            return type;
         return null;
     }
 
