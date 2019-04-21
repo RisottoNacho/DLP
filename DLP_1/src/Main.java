@@ -6,10 +6,7 @@ import ast.ErrorHandler;
 import ast.Program;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
-import visitor.IdentificationVisitor;
-import visitor.LValueVisitor;
-import visitor.OffsetVisitor;
-import visitor.TypeCheckingVisitor;
+import visitor.*;
 
 public class Main {
 
@@ -36,6 +33,9 @@ public class Main {
         typeCheckingVisitor.visit(ast, null);
         OffsetVisitor offsetVisitor = new OffsetVisitor();
         offsetVisitor.visit(ast, null);
+        CodeGenerator codeGenerator = new CodeGenerator("input.txt","output.txt");
+        ExecuteCodeGeneratorVisitor executeCodeGeneratorVisitor = new ExecuteCodeGeneratorVisitor(codeGenerator);
+        executeCodeGeneratorVisitor.visit(ast, null);
         // * The AST is shown
         if (ErrorHandler.getInstance().anyError()) {
             ErrorHandler.getInstance().showErrors(System.out);

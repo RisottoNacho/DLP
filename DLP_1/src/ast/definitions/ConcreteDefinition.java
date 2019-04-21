@@ -39,7 +39,7 @@ public abstract class ConcreteDefinition extends ConcreteASTNode implements Defi
 
 	@Override
 	public int getOffSet() {
-		return 0;
+		return -1;
 	}
 
 }

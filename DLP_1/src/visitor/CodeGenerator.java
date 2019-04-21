@@ -17,8 +17,16 @@ public class CodeGenerator {
         }
     }
 
-    public void pusha(int offset) {
+    public void pushGlobal(int offset) {
         out.println("pusha " + offset);
+        out.flush();
+    }
+
+    public void pushLocal(int offset) {
+        out.println("pusha bp");
+        out.println("pushi "+offset);
+        out.println("add");
+        out.flush();
     }
 
     public void row(int line) {
