@@ -6,6 +6,7 @@ import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Expression;
 import ast.statements.Input;
+import ast.statements.Print;
 
 public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
 
@@ -36,7 +37,12 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         }
         return null;
     }
-
+    @Override
+    public Object visit(Print print, Object params) {
+        for (Expression ex : print.expressionList)
+            ex.accept(this.valueCodeGeneratorVisitor, params);
+        return null;
+    }
     @Override
     public Object visit(Input input, Object params) {
         for (Expression ex : input.expressionList)

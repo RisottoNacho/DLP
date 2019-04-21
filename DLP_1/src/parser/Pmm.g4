@@ -145,15 +145,6 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 	
 	;	
 	
-fieldList returns [List<Field> ast = new ArrayList()]: 
-	(f1=field{
-	$ast.addAll($f1.ast);
-}
-	(','f2=field{
-	$ast.addAll($f2.ast);
-}
-	)*) 
-;
 	
 defFunction returns [FunctionDefinition ast]:
 {
