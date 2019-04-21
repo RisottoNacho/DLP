@@ -22,10 +22,12 @@ public class VariableDefinition extends ConcreteDefinition implements Definition
     public void setScope(int scope) {
         this.scope = scope;
     }
-    public int getScope(){
+
+    public int getScope() {
         return scope;
     }
 
+    @Override
     public int getOffSet() {
         return offSet;
     }

@@ -31,4 +31,15 @@ public abstract class ConcreteDefinition extends ConcreteASTNode implements Defi
 	public Type getType(){
 		return type;
 	}
+
+	@Override
+	public int getScope(){
+		return scope;
+	}
+
+	@Override
+	public int getOffSet() {
+		return 0;
+	}
+
 }

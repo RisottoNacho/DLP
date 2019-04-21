@@ -144,7 +144,7 @@ field returns [List<Field> ast = new ArrayList<Field>()]:
 		}
 	
 	;	
-	
+
 	
 defFunction returns [FunctionDefinition ast]:
 {

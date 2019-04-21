@@ -17,6 +17,15 @@ public class CodeGenerator {
         }
     }
 
+    public void pusha(int offset) {
+        out.println("pusha " + offset);
+    }
+
+    public void row(int line) {
+        out.println("#Line " + line);
+        out.flush();
+    }
+
     public void mainInvocation() {
         out.println("call main");
         out.flush();
@@ -28,6 +37,17 @@ public class CodeGenerator {
     }
 
     public void out(Type type) {
-        out.println("out" + type.subFix());
+        out.println("\tout" + type.subFix());
+        out.flush();
+    }
+
+    public void in(Type type) {
+        out.println("\tout" + type.subFix());
+        out.flush();
+    }
+
+    public void store(Type type) {
+        out.println("\tstore" + type.subFix());
+        out.flush();
     }
 }
