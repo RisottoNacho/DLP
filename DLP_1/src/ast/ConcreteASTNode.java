@@ -24,6 +24,10 @@ public abstract class ConcreteASTNode implements ASTNode {
 	private void setColumn(int column) {
 		this.column = column;
 	}
-	
+
+	@Override
+	public String toString(){
+		return this.getClass().toString();
+	}
 	
 }
