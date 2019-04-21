@@ -25,6 +25,11 @@ public class Int extends ConcreteType implements Type {
     }
 
     @Override
+    public char subFix() {
+        return 'i';
+    }
+
+    @Override
     public Type arithmetic(Type type) {
         if (type instanceof Int)
             return this;

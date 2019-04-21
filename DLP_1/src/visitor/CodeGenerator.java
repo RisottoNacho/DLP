@@ -14,4 +14,14 @@ public class CodeGenerator {
             e.printStackTrace();
         }
     }
+
+    public void mainInvocation(){
+        out.println("call main");
+        out.flush();
+    }
+
+    public void halt(){
+        out.println("halt");
+        out.flush();
+    }
 }

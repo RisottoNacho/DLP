@@ -18,5 +18,6 @@ public interface Type extends ASTNode {
     Type squareBrackets(Type type);
     Type promotesTo(Type type);
     Type parenthesis(List<Type> typeList);
+    char subFix();
     int getSize();
 }

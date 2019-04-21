@@ -33,6 +33,11 @@ public class Char extends ConcreteType implements Type {
     }
 
     @Override
+    public char subFix() {
+        return 'b';
+    }
+
+    @Override
     public Type cast(Type type) {
         if (type.isBuiltInType())
             return type;

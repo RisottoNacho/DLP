@@ -19,6 +19,12 @@ public class Real extends ConcreteType implements Type {
     }
 
     @Override
+    public char subFix() {
+        return 'f';
+    }
+
+
+    @Override
     public Type arithmetic(Type type) {
         if (type instanceof Real)
             return this;

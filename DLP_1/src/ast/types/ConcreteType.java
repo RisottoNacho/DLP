@@ -89,6 +89,11 @@ public class ConcreteType extends ConcreteASTNode implements Type{
     }
 
     @Override
+    public char subFix() {
+        return ' ';
+    }
+
+    @Override
     public Object accept(Visitor V, Object params) {
         return null;
     }
