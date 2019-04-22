@@ -8,6 +8,8 @@ import ast.expressions.Expression;
 import ast.statements.Assignment;
 import ast.statements.Input;
 import ast.statements.Print;
+import ast.types.Function;
+import ast.types.Void;
 
 public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
 
@@ -62,6 +64,26 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         assignment.left.accept(this.adressCodeGeneratorVisitor, params);
         assignment.right.accept(this.valueCodeGeneratorVisitor, params);
         codeGenerator.store(assignment.left.getType());
+        return null;
+    }
+
+    @Override
+    public Object visit(FunctionDefinition functionDefinition, Object params) {
+        codeGenerator.labelFor(functionDefinition.getName());
+        int size=0;
+        for(VariableDefinition v : functionDefinition.lsVariables)
+            size+=v.getOffSet();
+        codeGenerator.enter(size);
+        functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
+        if(functionDefinition.type instanceof Void)
+
+        return null;
+    }
+
+    @Override
+    public Object visit(VariableDefinition variableDefinition, Object params) {
+        codeGenerator.row(variableDefinition.getRow());
+
         return null;
     }
 }

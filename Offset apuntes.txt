@@ -124,7 +124,7 @@ VALUE[[ARITHMETIC : EXPRESSION1 -> EXPRESSION2 EXPRESSION3]]   // AL FINAL SI SE
 EXECUTE[[FUNCTIONDEF : DEFINITION -> TYPE STATEMENT*]]
 	def.name<:>
 	
-	<enter> def.bytesLocals //para saber cuantos bytes ocupan las variables locales, lo asignamos al final del visit de definiciond e duncion a la misma funcion
+	<enter> def.bytesLocals //para saber cuantos bytes ocupan las variables locales, lo asignamos al final del visit de definicion de funcion a la misma funcion
 	for(statement s : STATEMENT*)
 		if(!s instaceOf varDefinition)
 			EXECUTE[[s]]
@@ -132,14 +132,32 @@ EXECUTE[[FUNCTIONDEF : DEFINITION -> TYPE STATEMENT*]]
 		<ret> 0,def.bytesLocals, bytesParams
 
 
+CLASE 22/04 ---------------------------------------------------------/
 
 
+hacer setters para adressvisitor y valuevisitor como vin con david en casa
 
-
-
-
-
-
+EXECUTE[[IF:STATEMENT -> EXPRESSION STATEMENT1*,STATEMENT2*]]
+	VALUE[[EXPRESSION]]
+	<jz label>else //salta a una etiqueta, esta debe ser única asi que hay que poner un contador de etiquetas en el codeGenerator
+	cg.getLabel() //y lo mismo para la etiqueta fin
+	for(statement s : statement1)
+		EXECUTE[[s]]
+	<jmp label> fin
+	<label else><:>
+	for (statement s in statement2)
+		EXECUTE[[s]]
+	<label>fin
+	
+EXECUTE[[WHILE:STATEMENT -> EXPRESSION STATEMENT*]]
+//hacen falta 2 labels
+	<label>bucle
+	VALUE[[EXPRESSION]]
+	<jz> end
+	for(statement s : statement)
+		EXECUTE[[s]]
+	<jmp>bucle
+	<label>end
 
 
 

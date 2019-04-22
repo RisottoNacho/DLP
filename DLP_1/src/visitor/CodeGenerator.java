@@ -19,8 +19,19 @@ public class CodeGenerator {
         }
     }
 
+    public void enter(int size){
+        out.println("enter "+size);
+        out.flush();
+    }
+
+    public void labelFor(String name){
+        out.println(name+":");
+        out.flush();
+    }
+
     public void push(Expression expression){
-        out.println("push"+expression.getType().subFix()+" "+expression.);
+        out.println("\tpush"+expression.getType().subFix()+" "+expression.);
+        out.flush();
     }
 
     public void pushGlobal(int offset) {
