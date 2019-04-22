@@ -1,5 +1,7 @@
 package visitor;
 
+import ast.expressions.Expression;
+import ast.types.Int;
 import ast.types.Type;
 
 import java.io.FileNotFoundException;
@@ -17,15 +19,19 @@ public class CodeGenerator {
         }
     }
 
+    public void push(Expression expression){
+        out.println("push"+expression.getType().subFix()+" "+expression.);
+    }
+
     public void pushGlobal(int offset) {
-        out.println("pusha " + offset);
+        out.println("\tpusha " + offset);
         out.flush();
     }
 
     public void pushLocal(int offset) {
-        out.println("pusha bp");
-        out.println("pushi "+offset);
-        out.println("add");
+        out.println("\tpusha bp");
+        out.println("\tpushi "+offset);
+        out.println("\tadd");
         out.flush();
     }
 
