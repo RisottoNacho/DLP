@@ -29,11 +29,9 @@ public class CodeGenerator {
         }else{
             if (type.toString().compareTo("Char") == 0) {
                 data += "\tb2i";
-                return;
             }
-            if(type.toString().compareTo("double") == 0) {
+            else if(type.toString().compareTo("double") == 0) {
                 data += "\tf2i";
-                return;
             }
         }
         out.println(data);
