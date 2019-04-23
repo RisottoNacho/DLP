@@ -18,6 +18,26 @@ public class CodeGenerator {
         }
     }
 
+    public void arithmetic(String op,Type type){
+        switch (op) {
+            case "+":
+                out.println("\tadd" + type.subFix());
+                break;
+            case "-":
+                out.println("\tsub" + type.subFix());
+                break;
+            case "*":
+                out.println("\tmul" + type.subFix());
+                break;
+            case "/":
+                out.println("\tdiv" + type.subFix());
+                break;
+            case "%":
+                out.println("\tmod" + type.subFix());
+                break;
+        }
+    }
+
     public void convertTo(Type type, Type targetType) {
         String data = "";
         if (targetType.toString().compareTo("double") == 0) {

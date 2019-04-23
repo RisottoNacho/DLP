@@ -1,9 +1,6 @@
 package visitor;
 
-import ast.expressions.Arithmetic;
-import ast.expressions.CharLiteral;
-import ast.expressions.IntLiteral;
-import ast.expressions.RealLiteral;
+import ast.expressions.*;
 
 public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
 
@@ -34,9 +31,18 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
     @Override
     public Object visit(Arithmetic arithmetic, Object params) {
         arithmetic.left.accept(this, params);
-        codeGenerator.convertTo(arithmetic.left.getType(),arithmetic.type);
+        codeGenerator.convertTo(arithmetic.left.getType(), arithmetic.type);
         arithmetic.right.accept(this, params);
-        codeGenerator.convertTo(arithmetic.right.getType(),arithmetic.type);
+        codeGenerator.convertTo(arithmetic.right.getType(), arithmetic.type);
+
+        codeGenerator.arithmetic(arithmetic.operator,arithmetic.type);
+        return null;
+    }
+
+    @Override
+    public Object visit(Cast cast, Object params) {
+        cast.setLvalue(false);
+        cast.expression.accept(this, params);
         return null;
     }
 }
