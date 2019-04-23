@@ -26,11 +26,15 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(Program program, Object params) {
+
+        //VISIT VARIABLEDEFINITION NEEDS TO BE CHECKED
+
+        /*
         for (Definition definition : program.getListDef()) {
             if (definition instanceof VariableDefinition)
                 definition.accept(this, params);
         }
-
+*/
         codeGenerator.mainInvocation();
         codeGenerator.halt();
 
@@ -83,7 +87,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(VariableDefinition variableDefinition, Object params) {
-        codeGenerator.row(variableDefinition.getRow());
+        //codeGenerator.row(variableDefinition.getRow());
 
         return null;
     }

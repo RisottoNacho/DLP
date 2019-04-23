@@ -1,0 +1,7 @@
+call main
+halt
+#Line  5
+main:
+enter 6
+#Line  8
+	pusha 0

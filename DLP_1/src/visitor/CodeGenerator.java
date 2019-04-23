@@ -18,23 +18,45 @@ public class CodeGenerator {
         }
     }
 
-    public void enter(int size){
-        out.println("enter "+size);
+    public void convertTo(Type type, Type targetType) {
+        String data = "";
+        if (targetType.toString().compareTo("double") == 0) {
+            if (type.toString().compareTo("Int") == 0)
+                data += "\ti2f";
+        } else if (targetType.toString().compareTo("Char") == 0) {
+            if (type.toString().compareTo("Int") == 0)
+                data += "\ti2b";
+        }else{
+            if (type.toString().compareTo("Char") == 0) {
+                data += "\tb2i";
+                return;
+            }
+            if(type.toString().compareTo("double") == 0) {
+                data += "\tf2i";
+                return;
+            }
+        }
+        out.println(data);
         out.flush();
     }
 
-    public void labelFor(String name){
-        out.println(name+":");
+    public void enter(int size) {
+        out.println("\tenter " + size);
         out.flush();
     }
 
-    public void ret(int left,int bytesLocals,int bytesParams){
-        out.println("ret "+left+","+bytesLocals+","+bytesParams);
+    public void labelFor(String name) {
+        out.println(name + ":");
         out.flush();
     }
 
-    public void push(Expression expression){
-        out.println("\tpush"+expression.getType().subFix()+" "+expression.getValue().toString());
+    public void ret(int left, int bytesLocals, int bytesParams) {
+        out.println("ret " + left + "," + bytesLocals + "," + bytesParams);
+        out.flush();
+    }
+
+    public void push(Expression expression) {
+        out.println("\tpush" + expression.getType().subFix() + " " + expression.getValue().toString());
         out.flush();
     }
 
@@ -45,7 +67,7 @@ public class CodeGenerator {
 
     public void pushLocal(int offset) {
         out.println("\tpusha bp");
-        out.println("\tpushi "+offset);
+        out.println("\tpushi " + offset);
         out.println("\taddi");
         out.flush();
     }
