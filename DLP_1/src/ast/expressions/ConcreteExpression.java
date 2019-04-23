@@ -22,6 +22,11 @@ public class ConcreteExpression extends ConcreteASTNode implements Expression{
     }
 
     @Override
+    public Object getValue() {
+        return null;
+    }
+
+    @Override
     public boolean getLvalue() {
         return false;
     }

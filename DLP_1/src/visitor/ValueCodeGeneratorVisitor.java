@@ -12,7 +12,7 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(IntLiteral intLiteral, Object params) {
-        //NEED TOSTRING IN ALL EXPRESSIONS
+        codeGenerator.push(intLiteral);
         return null;
     }
 

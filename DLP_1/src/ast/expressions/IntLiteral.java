@@ -19,6 +19,11 @@ public class IntLiteral extends ConcreteExpression implements Expression {
     }
 
     @Override
+    public Object getValue(){
+        return value;
+    }
+
+    @Override
     public boolean getLvalue() {
         return lValue;
     }

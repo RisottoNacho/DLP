@@ -24,6 +24,11 @@ public class RealLiteral extends ConcreteExpression implements Expression {
     }
 
     @Override
+    public Object getValue(){
+        return real;
+    }
+
+    @Override
     public void setLvalue(boolean value) {
         lValue = value;
     }

@@ -69,6 +69,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(FunctionDefinition functionDefinition, Object params) {
+        codeGenerator.row(functionDefinition.getRow());
         codeGenerator.labelFor(functionDefinition.getName());
         int size=0;
         for(VariableDefinition v : functionDefinition.lsVariables)
@@ -76,7 +77,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         codeGenerator.enter(size);
         functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
         if(functionDefinition.type instanceof Void)
-
+            codeGenerator.ret(0,size,functionDefinition.type.getSize());
         return null;
     }
 
