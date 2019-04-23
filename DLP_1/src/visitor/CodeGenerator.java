@@ -18,6 +18,29 @@ public class CodeGenerator {
         }
     }
 
+    public void comparison(String op,Type  type){
+        switch (op) {
+            case ">":
+                out.println("\tgt" + type.subFix());
+                break;
+            case "<":
+                out.println("\tlt" + type.subFix());
+                break;
+            case ">=":
+                out.println("\tge" + type.subFix());
+                break;
+            case "<=":
+                out.println("\tle" + type.subFix());
+                break;
+            case "==":
+                out.println("\teq" + type.subFix());
+                break;
+            case "!=":
+                out.println("\tne" + type.subFix());
+                break;
+        }
+    }
+
     public void arithmetic(String op,Type type){
         switch (op) {
             case "+":

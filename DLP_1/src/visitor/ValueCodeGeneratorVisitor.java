@@ -11,6 +11,14 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
     }
 
     @Override
+    public Object visit(Comparison comparison, Object params) {
+        comparison.left.accept(this, params);
+        comparison.right.accept(this, params);
+        codeGenerator.comparison(comparison.operator,comparison.type);
+        return null;
+    }
+
+    @Override
     public Object visit(IntLiteral intLiteral, Object params) {
         codeGenerator.push(intLiteral);
         return null;
@@ -41,8 +49,8 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(Cast cast, Object params) {
-        cast.setLvalue(false);
-        cast.expression.accept(this, params);
+        cast.expression.accept(this,params);
+        codeGenerator.convertTo(cast.expression.getType(),cast.type);
         return null;
     }
 }
