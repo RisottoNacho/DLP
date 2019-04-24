@@ -45,6 +45,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         }
         return null;
     }
+
     @Override
     public Object visit(Print print, Object params) {
         codeGenerator.row(print.getRow());
@@ -53,6 +54,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         codeGenerator.out(print.expressionList.get(0).getType());   //NEEDS TO BE CHECKED OUT
         return null;
     }
+
     @Override
     public Object visit(Input input, Object params) {
         codeGenerator.row(input.getRow());
@@ -76,13 +78,13 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
     public Object visit(FunctionDefinition functionDefinition, Object params) {
         codeGenerator.row(functionDefinition.getRow());
         codeGenerator.labelFor(functionDefinition.getName());
-        int size=0;
-        for(VariableDefinition v : functionDefinition.lsVariables)
-            size+=v.getOffSet();
+        int size = 0;
+        for (VariableDefinition v : functionDefinition.lsVariables)
+            size += v.getOffSet();
         codeGenerator.enter(size);
         functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
-        if(functionDefinition.type instanceof Void)
-            codeGenerator.ret(0,size,functionDefinition.type.getSize());
+        if (functionDefinition.type instanceof Void)
+            codeGenerator.ret(0, size, functionDefinition.type.getSize());
         return null;
     }
 
