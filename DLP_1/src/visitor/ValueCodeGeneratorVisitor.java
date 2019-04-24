@@ -5,9 +5,17 @@ import ast.expressions.*;
 public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
 
     private CodeGenerator codeGenerator;
+    private AdressCodeGeneratorVisitor adressCodeGeneratorVisitor;
 
     public ValueCodeGeneratorVisitor(CodeGenerator codeGenerator) {
         this.codeGenerator = codeGenerator;
+    }
+
+    @Override
+    public Object visit(Variable variable, Object params) {
+        variable.accept(this.adressCodeGeneratorVisitor,params);
+        codeGenerator.load(variable.getType());
+        return null;
     }
 
     @Override
@@ -67,5 +75,9 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
         cast.expression.accept(this,params);
         codeGenerator.convertTo(cast.expression.getType(),cast.type);
         return null;
+    }
+
+    public void setAdressCodeGeneratorVisitor(AdressCodeGeneratorVisitor adressCodeGeneratorVisitor) {
+        this.adressCodeGeneratorVisitor = adressCodeGeneratorVisitor;
     }
 }

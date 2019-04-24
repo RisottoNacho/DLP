@@ -21,6 +21,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         valueCodeGeneratorVisitor = new ValueCodeGeneratorVisitor(codeGenerator);
         adressCodeGeneratorVisitor = new AdressCodeGeneratorVisitor(codeGenerator);
         this.codeGenerator = codeGenerator;
+        valueCodeGeneratorVisitor.setAdressCodeGeneratorVisitor(adressCodeGeneratorVisitor);
     }
 
 

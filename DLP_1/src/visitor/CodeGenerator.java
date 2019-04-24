@@ -18,12 +18,17 @@ public class CodeGenerator {
         }
     }
 
-    public void unaryNot(){
+    public void load(Type type) {
+        out.println("\tload" + type.subFix());
+        out.flush();
+    }
+
+    public void unaryNot() {
         out.println("\tnot");
         out.flush();
     }
 
-    public void  logic(String op){
+    public void logic(String op) {
         switch (op) {
             case "&&":
                 out.println("\tand");
@@ -35,7 +40,7 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void comparison(String op,Type  type){
+    public void comparison(String op, Type type) {
         switch (op) {
             case ">":
                 out.println("\tgt" + type.subFix());
@@ -59,7 +64,7 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void arithmetic(String op,Type type){
+    public void arithmetic(String op, Type type) {
         switch (op) {
             case "+":
                 out.println("\tadd" + type.subFix());
@@ -88,11 +93,10 @@ public class CodeGenerator {
         } else if (targetType.toString().compareTo("Char") == 0) {
             if (type.toString().compareTo("Int") == 0)
                 data += "\ti2b";
-        }else{
+        } else {
             if (type.toString().compareTo("Char") == 0) {
                 data += "\tb2i";
-            }
-            else if(type.toString().compareTo("double") == 0) {
+            } else if (type.toString().compareTo("double") == 0) {
                 data += "\tf2i";
             }
         }

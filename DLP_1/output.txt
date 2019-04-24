@@ -2,6 +2,111 @@ call main
 halt
 #Line  5
 main:
-enter 6
+	enter 6
 #Line  8
 	pusha 0
+	pushb a
+	storeb
+#Line  9
+	pusha 0
+	loadb
+	pushb 
+
+	outb
+#Line  11
+	pusha bp
+	pushi 2
+	addi
+	pushi 1
+	storei
+#Line  12
+	pusha 1
+	pushb 0
+	b2i
+
+	pushi 3
+
+	muli
+	storei
+#Line  13
+	pusha bp
+	pushi 2
+	addi
+	loadi
+	pushb  
+	pusha 1
+	loadi
+	pushb 
+
+	outi
+#Line  15
+	pusha 3
+	loadf
+	outf
+	storef
+#Line  16
+	pushi 2
+
+
+	pusha 3
+	loadf
+
+	mulf
+	pushb 
+
+	outf
+#Line  18
+	pushi 3
+
+
+	pushf 4.5
+
+	subf
+	pushb  
+	pushb 0
+	b2i
+
+	pushf 48.0
+
+	divf
+	pushb  
+	pushb 0
+
+	pushb 1
+
+	modb
+	pushb  
+	pushb 0
+
+	pushb 1
+
+	addb
+	pushb 
+
+	outf
+#Line  22
+	pushi 1
+	pushi 2
+	lti
+	pushb  
+	pushi 4
+	pushi 3
+	gei
+	pushb  
+	pushi 5
+	pushi 5
+	eqi
+	pushb  
+	pushi 1
+	pushi 2
+	and
+	pushb  
+	pushi 0
+	pushi 3
+	or
+	pushb  
+	pushi 0
+	not
+	pushb 
+
+	outi
