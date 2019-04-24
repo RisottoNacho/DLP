@@ -18,6 +18,23 @@ public class CodeGenerator {
         }
     }
 
+    public void unaryNot(){
+        out.println("\tnot");
+        out.flush();
+    }
+
+    public void  logic(String op){
+        switch (op) {
+            case "&&":
+                out.println("\tand");
+                break;
+            case "||":
+                out.println("\tor");
+                break;
+        }
+        out.flush();
+    }
+
     public void comparison(String op,Type  type){
         switch (op) {
             case ">":
@@ -39,6 +56,7 @@ public class CodeGenerator {
                 out.println("\tne" + type.subFix());
                 break;
         }
+        out.flush();
     }
 
     public void arithmetic(String op,Type type){
@@ -59,6 +77,7 @@ public class CodeGenerator {
                 out.println("\tmod" + type.subFix());
                 break;
         }
+        out.flush();
     }
 
     public void convertTo(Type type, Type targetType) {

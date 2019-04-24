@@ -11,6 +11,21 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
     }
 
     @Override
+    public Object visit(UnaryNot unaryNot, Object params) {
+        unaryNot.expression.accept(this, params);
+        codeGenerator.unaryNot();
+        return null;
+    }
+
+    @Override
+    public Object visit(Logic logic, Object params) {
+        logic.left.accept(this, null);
+        logic.right.accept(this, null);
+        codeGenerator.logic(logic.operator);
+        return null;
+    }
+
+    @Override
     public Object visit(Comparison comparison, Object params) {
         comparison.left.accept(this, params);
         comparison.right.accept(this, params);
