@@ -80,7 +80,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         codeGenerator.labelFor(functionDefinition.getName());
         int size = 0;
         for (VariableDefinition v : functionDefinition.lsVariables)
-            size += v.getOffSet();
+            size += v.getType().getSize();
         codeGenerator.enter(size);
         functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
         if (functionDefinition.type instanceof Void)
