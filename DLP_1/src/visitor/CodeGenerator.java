@@ -130,8 +130,8 @@ public class CodeGenerator {
     }
 
     public void pushLocal(int offset) {
-        out.println("\tpusha bp");
-        out.println("\tpushi " + offset);
+        out.println("\tpush bp");
+        out.println("\tpushi " + -offset);
         out.println("\taddi");
         out.flush();
     }

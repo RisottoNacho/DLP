@@ -14,13 +14,15 @@ main:
 	pushb 10
 	outb
 #Line  11
-	pusha bp
-	pushi 2
+	push bp
+	pushi -2
 	addi
 	pushi 1
 	storei
 #Line  12
-	pusha 1
+	push bp
+	pushi -4
+	addi
 	pushb 48
 	b2i
 
@@ -29,14 +31,16 @@ main:
 	muli
 	storei
 #Line  13
-	pusha bp
-	pushi 2
+	push bp
+	pushi -2
 	addi
 	loadi
 	outi
 	pushb 32
 	outb
-	pusha 1
+	push bp
+	pushi -4
+	addi
 	loadi
 	outi
 	pushb 10

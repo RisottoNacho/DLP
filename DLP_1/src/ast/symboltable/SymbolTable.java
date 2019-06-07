@@ -28,17 +28,16 @@ public class SymbolTable {
     public boolean insert(Definition definition) {
         if (findInCurrentScope(definition.getName()) == null) {
             definition.setScope(scope);
-            getLastMap().put(definition.getName(),definition);
+            getLastMap().put(definition.getName(), definition);
             return true;
         }
         return false;
     }
 
     public Definition find(String id) {
-        for (Map<String, Definition> m : table
-        ) {
-            if (m.containsKey(id))
-                return m.get(id);
+        for (int i = table.size() - 1; i >= 0; i--) {
+            if (table.get(i).containsKey(id))
+                return table.get(i).get(id);
         }
         return null;
     }
