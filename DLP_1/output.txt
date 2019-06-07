@@ -5,13 +5,13 @@ main:
 	enter 4
 #Line  8
 	pusha 0
-	pushb a
+	pushb 97
 	storeb
 #Line  9
 	pusha 0
 	loadb
-	pushb 
-
+	outb
+	pushb 10
 	outb
 #Line  11
 	pusha bp
@@ -21,7 +21,7 @@ main:
 	storei
 #Line  12
 	pusha 1
-	pushb 0
+	pushb 48
 	b2i
 
 	pushi 3
@@ -33,12 +33,14 @@ main:
 	pushi 2
 	addi
 	loadi
-	pushb  
+	outi
+	pushb 32
+	outb
 	pusha 1
 	loadi
-	pushb 
-
 	outi
+	pushb 10
+	outb
 #Line  15
 	pusha 3
 	loadf
@@ -52,9 +54,9 @@ main:
 	loadf
 
 	mulf
-	pushb 
-
 	outf
+	pushb 10
+	outb
 #Line  18
 	pushi 3
 
@@ -62,51 +64,67 @@ main:
 	pushf 4.5
 
 	subf
-	pushb  
-	pushb 0
+	outf
+	pushb 32
+	outb
+	pushb 48
 	b2i
 
 	pushf 48.0
 
 	divf
-	pushb  
-	pushb 0
+	outf
+	pushb 32
+	outb
+	pushb 48
 
-	pushb 1
+	pushb 49
 
 	modb
-	pushb  
-	pushb 0
+	outb
+	pushb 32
+	outb
+	pushb 48
 
-	pushb 1
+	pushb 49
 
 	addb
-	pushb 
-
-	outf
+	outb
+	pushb 10
+	outb
 #Line  22
 	pushi 1
 	pushi 2
 	lti
-	pushb  
+	outi
+	pushb 32
+	outb
 	pushi 4
 	pushi 3
 	gei
-	pushb  
+	outi
+	pushb 32
+	outb
 	pushi 5
 	pushi 5
 	eqi
-	pushb  
+	outi
+	pushb 32
+	outb
 	pushi 1
 	pushi 2
 	and
-	pushb  
+	outi
+	pushb 32
+	outb
 	pushi 0
 	pushi 3
 	or
-	pushb  
+	outi
+	pushb 32
+	outb
 	pushi 0
 	not
-	pushb 
-
 	outi
+	pushb 10
+	outb

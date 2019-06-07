@@ -20,7 +20,7 @@ public class CharLiteral extends ConcreteExpression implements Expression {
 
     @Override
     public Object getValue(){
-        return value;
+        return (int)value;
     }
 
     @Override

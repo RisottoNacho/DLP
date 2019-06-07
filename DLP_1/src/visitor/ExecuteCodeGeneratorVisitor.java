@@ -49,19 +49,21 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
     @Override
     public Object visit(Print print, Object params) {
         codeGenerator.row(print.getRow());
-        for (Expression ex : print.expressionList)
+        for (Expression ex : print.expressionList) {
             ex.accept(this.valueCodeGeneratorVisitor, params);
-        codeGenerator.out(print.expressionList.get(0).getType());   //NEEDS TO BE CHECKED OUT
+            codeGenerator.out(ex.getType());   //NEEDS TO BE CHECKED OUT
+        }
         return null;
     }
 
     @Override
     public Object visit(Input input, Object params) {
         codeGenerator.row(input.getRow());
-        for (Expression ex : input.expressionList)
+        for (Expression ex : input.expressionList) {
             ex.accept(this.valueCodeGeneratorVisitor, params);
-        codeGenerator.in(input.expressionList.get(0).getType());   //NEEDS TO BE CHECKED OUT
-        codeGenerator.store(input.expressionList.get(0).getType());
+            codeGenerator.in(ex.getType());   //NEEDS TO BE CHECKED OUT
+            codeGenerator.store(ex.getType());
+        }
         return null;
     }
 
