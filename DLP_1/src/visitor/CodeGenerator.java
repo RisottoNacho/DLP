@@ -157,7 +157,7 @@ public class CodeGenerator {
     }
 
     public void in(Type type) {
-        out.println("\tout" + type.subFix());
+        out.println("\tin" + type.subFix());
         out.flush();
     }
 

@@ -51,7 +51,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         codeGenerator.row(print.getRow());
         for (Expression ex : print.expressionList) {
             ex.accept(this.valueCodeGeneratorVisitor, params);
-            codeGenerator.out(ex.getType());   //NEEDS TO BE CHECKED OUT
+            codeGenerator.out(ex.getType());
         }
         return null;
     }
@@ -61,7 +61,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         codeGenerator.row(input.getRow());
         for (Expression ex : input.expressionList) {
             ex.accept(this.valueCodeGeneratorVisitor, params);
-            codeGenerator.in(ex.getType());   //NEEDS TO BE CHECKED OUT
+            codeGenerator.in(ex.getType());
             codeGenerator.store(ex.getType());
         }
         return null;
