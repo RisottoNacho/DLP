@@ -47,8 +47,7 @@ main:
 	outb
 #Line  15
 	pusha 3
-	loadf
-	outf
+	inf
 	storef
 #Line  16
 	pushi 2

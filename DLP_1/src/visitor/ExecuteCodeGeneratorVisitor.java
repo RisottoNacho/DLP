@@ -60,7 +60,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
     public Object visit(Input input, Object params) {
         codeGenerator.row(input.getRow());
         for (Expression ex : input.expressionList) {
-            ex.accept(this.valueCodeGeneratorVisitor, params);
+            ex.accept(this.adressCodeGeneratorVisitor, params);
             codeGenerator.in(ex.getType());
             codeGenerator.store(ex.getType());
         }
