@@ -87,7 +87,7 @@ public class CodeGenerator {
 
     public void convertTo(Type type, Type targetType) {
         String data = "";
-        if (targetType.toString().compareTo("double") == 0) {
+        if (targetType.toString().compareTo("Double") == 0) {
             if (type.toString().compareTo("Int") == 0)
                 data += "\ti2f";
         } else if (targetType.toString().compareTo("Char") == 0) {
@@ -96,7 +96,7 @@ public class CodeGenerator {
         } else {
             if (type.toString().compareTo("Char") == 0) {
                 data += "\tb2i";
-            } else if (type.toString().compareTo("double") == 0) {
+            } else if (type.toString().compareTo("Double") == 0) {
                 data += "\tf2i";
             }
         }
