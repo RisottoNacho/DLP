@@ -25,9 +25,7 @@ main:
 	addi
 	pushb 48
 	b2i
-
 	pushi 3
-
 	muli
 	storei
 #Line  13
@@ -52,10 +50,8 @@ main:
 #Line  16
 	pushi 2
 	i2f
-
 	pusha 3
 	loadf
-
 	mulf
 	outf
 	pushb 10
@@ -63,36 +59,33 @@ main:
 #Line  18
 	pushi 3
 	i2f
-
 	pushf 4.5
-
 	subf
 	outf
 	pushb 32
 	outb
 	pushb 48
-
-
+	b2i
+	i2f
 	pushf 48.0
-
 	divf
 	outf
 	pushb 32
 	outb
 	pushb 48
-
+	b2i
 	pushb 49
-
-	modb
-	outb
+	b2i
+	modi
+	outi
 	pushb 32
 	outb
 	pushb 48
-
+	b2i
 	pushb 49
-
-	addb
-	outb
+	b2i
+	addi
+	outi
 	pushb 10
 	outb
 #Line  22

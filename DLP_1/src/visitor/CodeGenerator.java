@@ -88,10 +88,16 @@ public class CodeGenerator {
     public void convertTo(Type type, Type targetType) {
         String data = "";
         if (targetType.toString().compareTo("Double") == 0) {
-            if (type.toString().compareTo("Int") == 0)
+            if (type.toString().compareTo("Char") == 0) {
+                data += "\tb2i";
+                data += "\n\ti2f";
+            } else if (type.toString().compareTo("Int") == 0)
                 data += "\ti2f";
         } else if (targetType.toString().compareTo("Char") == 0) {
-            if (type.toString().compareTo("Int") == 0)
+            if (type.toString().compareTo("Double") == 0) {
+                data += "\tf2i";
+                data += "\n\ti2b";
+            } else if (type.toString().compareTo("Int") == 0)
                 data += "\ti2b";
         } else {
             if (type.toString().compareTo("Char") == 0) {
@@ -100,8 +106,10 @@ public class CodeGenerator {
                 data += "\tf2i";
             }
         }
-        out.println(data);
-        out.flush();
+        if (data != "") {
+            out.println(data);
+            out.flush();
+        }
     }
 
     public void enter(int size) {

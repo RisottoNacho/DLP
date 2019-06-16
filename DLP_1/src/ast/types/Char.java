@@ -25,10 +25,10 @@ public class Char extends ConcreteType implements Type {
 
     @Override
     public Type arithmetic(Type type) {
-        if (type instanceof Int)
-            return this;
-        if(type instanceof Char)
+        if (type instanceof ErrorType)
             return type;
+        if(type instanceof Char)
+            return new Int(0,0);
         return null;
     }
 
