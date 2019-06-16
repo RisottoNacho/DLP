@@ -61,6 +61,7 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(Arithmetic arithmetic, Object params) {
+
         arithmetic.left.accept(this, params);
         codeGenerator.convertTo(arithmetic.left.getType(), arithmetic.type);
         arithmetic.right.accept(this, params);
