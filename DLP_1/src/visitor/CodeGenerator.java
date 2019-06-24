@@ -123,7 +123,7 @@ public class CodeGenerator {
     }
 
     public void ret(int left, int bytesLocals, int bytesParams) {
-        out.println("ret " + left + "," + bytesLocals + "," + bytesParams);
+        out.println("\tret " + left + "," + bytesLocals + "," + bytesParams);
         out.flush();
     }
 

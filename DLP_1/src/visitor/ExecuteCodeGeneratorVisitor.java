@@ -87,6 +87,18 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
         if (functionDefinition.type instanceof Void)
             codeGenerator.ret(0, size, functionDefinition.type.getSize());
+        else
+            functionDefinition.type.accept(this, size);
+        return null;
+    }
+
+    @Override
+    public Object visit(Function functionType, Object params) {
+        int tam = 0;
+        for (VariableDefinition par : functionType.lsParams) {
+            tam += par.getType().getSize();
+        }
+        codeGenerator.ret(functionType.returnType.getSize(), (int) params, tam);
         return null;
     }
 
