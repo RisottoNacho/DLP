@@ -35,7 +35,7 @@ public class Main {
         offsetVisitor.visit(ast, null);
         CodeGenerator codeGenerator = new CodeGenerator("input.txt","output.txt");
         ExecuteCodeGeneratorVisitor executeCodeGeneratorVisitor = new ExecuteCodeGeneratorVisitor(codeGenerator);
-        executeCodeGeneratorVisitor.visit(ast, null);
+        executeCodeGeneratorVisitor.visit(ast, "input.txt");
         // * The AST is shown
         if (ErrorHandler.getInstance().anyError()) {
             ErrorHandler.getInstance().showErrors(System.out);

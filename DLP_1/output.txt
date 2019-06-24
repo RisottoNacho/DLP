@@ -1,3 +1,4 @@
+#source "input.txt"
 call main
 halt
 #Line  5

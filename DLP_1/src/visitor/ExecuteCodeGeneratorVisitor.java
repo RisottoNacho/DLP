@@ -36,6 +36,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
                 definition.accept(this, params);
         }
 */
+        codeGenerator.source((String) params);
         codeGenerator.mainInvocation();
         codeGenerator.halt();
 

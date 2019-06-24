@@ -18,6 +18,11 @@ public class CodeGenerator {
         }
     }
 
+    public void source(String programName){
+        out.println("#source "+"\""+programName+"\"");
+        out.flush();
+    }
+
     public void load(Type type) {
         out.println("\tload" + type.subFix());
         out.flush();
