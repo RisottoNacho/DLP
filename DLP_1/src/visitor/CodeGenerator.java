@@ -25,6 +25,17 @@ public class CodeGenerator {
         out.flush();
     }
 
+    public void debug(String comment) {
+        out.println("\t'*"+comment);
+        out.flush();
+    }
+
+    public void comment(String comment) {
+        out.print("'"+comment);
+        out.flush();
+    }
+
+
     public void call(String label) {
         out.println("\tcall " + label);
         out.flush();
@@ -190,7 +201,7 @@ public class CodeGenerator {
     }
 
     public void row(int line) {
-        out.println("#Line  " + line);
+        out.println("#line  " + line);
         out.flush();
     }
 
