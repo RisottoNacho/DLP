@@ -1,128 +1,78 @@
 #source "input.txt"
 call main
 halt
-#Line  5
+#Line  4
 main:
-	enter 4
-#Line  8
-	pusha 0
-	pushb 97
-	storeb
-#Line  9
-	pusha 0
-	loadb
-	outb
-	pushb 10
-	outb
-#Line  11
-	push bp
-	pushi -2
-	addi
-	pushi 1
-	storei
+	enter 54
 #Line  12
 	push bp
-	pushi -4
+	pushi -54
 	addi
-	pushb 48
-	b2i
-	pushi 3
-	muli
+	pushi 0
+	addi
+	ini
 	storei
 #Line  13
 	push bp
-	pushi -2
+	pushi -54
+	addi
+	pushi 0
+	addi
+	pushb 97
+	b2i
+	storei
+#Line  14
+	push bp
+	pushi -54
+	addi
+	pushi 0
+	addi
+	push bp
+	pushi -54
+	addi
+	loadi
+	push bp
+	pushi -54
+	addi
+	loadi
+	muli
+	pushi 12
+	modi
+	pushi 1
+	addi
+	storei
+#Line  15
+	push bp
+	pushi -54
 	addi
 	loadi
 	outi
-	pushb 32
+	pushb 10
 	outb
+	push bp
+	pushi -54
+	addi
+	loadi
+	outi
+	pushb 10
+	outb
+	push bp
+	pushi -54
+	addi
+	loadi
+	i2f
+	outf
+	pushb 10
+	outb
+#Line  17
 	push bp
 	pushi -4
 	addi
-	loadi
-	outi
-	pushb 10
-	outb
-#Line  15
-	pusha 3
 	inf
 	storef
-#Line  16
-	pushi 2
-	i2f
-	pusha 3
-	loadf
-	mulf
-	outf
-	pushb 10
-	outb
-#Line  18
-	pushi 3
-	i2f
-	pushf 4.5
-	subf
-	outf
-	pushb 32
-	outb
-	pushb 48
-	b2i
-	i2f
-	pushf 48.0
-	divf
-	outf
-	pushb 32
-	outb
-	pushb 48
-	b2i
-	pushb 49
-	b2i
-	modi
-	outi
-	pushb 32
-	outb
-	pushb 48
-	b2i
-	pushb 49
-	b2i
+#Line  19
+	push bp
+	pushi -6
 	addi
-	outi
-	pushb 10
-	outb
-#Line  22
-	pushi 1
-	pushi 2
-	lti
-	outi
-	pushb 32
-	outb
-	pushi 4
-	pushi 3
-	gei
-	outi
-	pushb 32
-	outb
-	pushi 5
-	pushi 5
-	eqi
-	outi
-	pushb 32
-	outb
-	pushi 1
-	pushi 2
-	and
-	outi
-	pushb 32
-	outb
 	pushi 0
-	pushi 3
-	or
-	outi
-	pushb 32
-	outb
-	pushi 0
-	not
-	outi
-	pushb 10
-	outb
-	ret 0,4,0
+	storei

@@ -1,5 +1,6 @@
 package visitor;
 
+import ast.expressions.StructAccess;
 import ast.expressions.Variable;
 
 public class AdressCodeGeneratorVisitor extends AbstractCGVisitor {
@@ -12,13 +13,20 @@ public class AdressCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(Variable variable, Object params) {
-        if(variable.definition.getScope() == 0){
+        if (variable.definition.getScope() == 0) {
             codeGenerator.pushGlobal(variable.definition.getOffSet());
-        }
-        else{
+        } else {
             codeGenerator.pushLocal(variable.definition.getOffSet());
         }
         return null;
     }
+
+    @Override
+    public Object visit(StructAccess structAccess, Object params) {
+        structAccess.left.accept(this, params);
+        codeGenerator.pushStruct(structAccess.left.getType().getField(structAccess.right).getOffSet());
+        return null;
+    }
+
 
 }

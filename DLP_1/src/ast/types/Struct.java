@@ -36,6 +36,15 @@ public class Struct extends ConcreteType implements Type {
     }
 
     @Override
+    public Field getField(String s){
+        for (Field f : lsFields) {
+            if (f.getName().equals(s))
+                return f;
+        }
+        return null;
+    }
+
+    @Override
     public Type dot(String s) {
         for (Field f : lsFields) {
             if (f.getName().equals(s))

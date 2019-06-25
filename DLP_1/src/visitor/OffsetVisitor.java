@@ -1,9 +1,11 @@
 package visitor;
 
+import ast.definitions.Field;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.statements.Statement;
 import ast.types.Function;
+import ast.types.Struct;
 
 public class OffsetVisitor extends ConcreteVisitor {
 
@@ -17,6 +19,16 @@ public class OffsetVisitor extends ConcreteVisitor {
         currentLocalSize = 0;
         functionDefinition.lsVariables.forEach(v -> v.accept(this, params));
         functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
+        return null;
+    }
+
+    @Override
+    public Object visit(Struct struct, Object params) {
+        int size = 0;
+        for (Field f : struct.lsFields) {
+            f.setOffSet(size);
+            size += f.type.getSize();
+        }
         return null;
     }
 

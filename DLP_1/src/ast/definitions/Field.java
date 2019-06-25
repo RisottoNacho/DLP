@@ -5,6 +5,7 @@ import visitor.Visitor;
 
 public class Field extends ConcreteDefinition {
 
+    private int offSet;
 
     public Field(int row, int column, String name) {
         super(row, column, name);
@@ -25,5 +26,14 @@ public class Field extends ConcreteDefinition {
     @Override
     public void setScope(int scope) {
         this.scope = scope;
+    }
+
+    @Override
+    public int getOffSet() {
+        return offSet;
+    }
+
+    public void setOffSet(int offSet) {
+        this.offSet = offSet;
     }
 }

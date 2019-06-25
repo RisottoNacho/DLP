@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.ConcreteASTNode;
+import ast.definitions.Field;
 import visitor.Visitor;
 
 import java.util.List;
@@ -19,6 +20,11 @@ public class ConcreteType extends ConcreteASTNode implements Type{
     @Override
     public boolean isLogical() {
         return false;
+    }
+
+    @Override
+    public Field getField(String s){
+        return null;
     }
 
     @Override

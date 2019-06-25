@@ -142,6 +142,12 @@ public class CodeGenerator {
         out.flush();
     }
 
+    public void pushStruct(int offset) {
+        out.println("\tpushi " + offset);
+        out.println("\taddi");
+        out.flush();
+    }
+
     public void pushLocal(int offset) {
         out.println("\tpush bp");
         out.println("\tpushi " + -offset);

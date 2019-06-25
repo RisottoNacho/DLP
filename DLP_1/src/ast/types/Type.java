@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.ASTNode;
+import ast.definitions.Field;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public interface Type extends ASTNode {
     Type squareBrackets(Type type);
     Type promotesTo(Type type);
     Type parenthesis(List<Type> typeList);
+    Field getField(String s);
     char subFix();
     int getSize();
 }
