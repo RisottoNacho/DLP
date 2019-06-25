@@ -5,9 +5,7 @@ import ast.definitions.Definition;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.Expression;
-import ast.statements.Assignment;
-import ast.statements.Input;
-import ast.statements.Print;
+import ast.statements.*;
 import ast.types.Function;
 import ast.types.Void;
 
@@ -55,6 +53,20 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
             ex.accept(this.valueCodeGeneratorVisitor, params);
             codeGenerator.out(ex.getType());
         }
+        return null;
+    }
+
+    @Override
+    public Object visit(While whileStatement, Object params) {
+        codeGenerator.row(whileStatement.getRow());
+        int label = codeGenerator.getLabels(2);
+        whileStatement.condition.accept(this.valueCodeGeneratorVisitor, params);
+        codeGenerator.jnz("label" + (label + 1));
+        codeGenerator.labelFor("label" + label);
+        for (Statement est : whileStatement.body)
+            est.accept(this, params);
+        codeGenerator.jmp("label" + label);
+        codeGenerator.labelFor("label" + (label + 1));
         return null;
     }
 

@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 public class CodeGenerator {
 
     private PrintWriter out;
+    private int labelCount;
 
     public CodeGenerator(String input, String output) {
         try {
@@ -16,10 +17,27 @@ public class CodeGenerator {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        labelCount = 0;
     }
 
-    public void source(String programName){
-        out.println("#source "+"\""+programName+"\"");
+    public int getLabels(int plus) {
+        int a = labelCount;
+        labelCount = labelCount + plus;
+        return a;
+    }
+
+    public void jmp(String label) {
+        out.println("\tjmp " + label);
+        out.flush();
+    }
+
+    public void jnz(String label) {
+        out.println("\tjnz " + label);
+        out.flush();
+    }
+
+    public void source(String programName) {
+        out.println("#source " + "\"" + programName + "\"");
         out.flush();
     }
 
@@ -123,7 +141,8 @@ public class CodeGenerator {
     }
 
     public void labelFor(String name) {
-        out.println(name + ":");
+        out.println(name + labelCount + ":");
+        labelCount++;
         out.flush();
     }
 
@@ -138,7 +157,7 @@ public class CodeGenerator {
     }
 
     public void push(Type tipo, int offset) {
-        out.println("\tpush"+ tipo.subFix() + " "  + offset);
+        out.println("\tpush" + tipo.subFix() + " " + offset);
         out.flush();
     }
 

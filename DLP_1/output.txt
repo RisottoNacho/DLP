@@ -2,7 +2,7 @@
 call main
 halt
 #Line  4
-main:
+main0:
 	enter 54
 #Line  12
 	push bp
@@ -76,3 +76,39 @@ main:
 	addi
 	pushi 0
 	storei
+#Line  20
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 10
+	lti
+	jnz label2
+label13:
+#Line  21
+	pusha 0
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 4
+	muli
+	addi
+	push bp
+	pushi -4
+	addi
+	loadf
+	storef
+#Line  22
+	push bp
+	pushi -6
+	addi
+	loadi
+	outi
+	pushb 58
+	outb
+	pusha 0
+	loadf
+	outf
+	pushb 32
+	outb

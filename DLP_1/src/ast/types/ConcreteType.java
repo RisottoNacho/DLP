@@ -23,11 +23,6 @@ public class ConcreteType extends ConcreteASTNode implements Type{
     }
 
     @Override
-    public Type getTypeArray(){
-        return null;
-    }
-
-    @Override
     public Field getField(String s){
         return null;
     }

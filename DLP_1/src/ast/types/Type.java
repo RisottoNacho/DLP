@@ -21,6 +21,5 @@ public interface Type extends ASTNode {
     Type parenthesis(List<Type> typeList);
     Field getField(String s);
     char subFix();
-    Type getTypeArray();
     int getSize();
 }

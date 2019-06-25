@@ -36,7 +36,7 @@ public class AdressCodeGeneratorVisitor extends AbstractCGVisitor {
         Int aux = new Int(0, 0);
         arrayAccess.expArray.accept(this, params);
         arrayAccess.expAccess.accept(this.valueCodeGeneratorVisitor, params);
-        codeGenerator.push(aux, arrayAccess.getType().getTypeArray().getSize());
+        codeGenerator.push(aux, arrayAccess.getType().getSize());
         codeGenerator.arithmetic("*", aux);
         codeGenerator.arithmetic("+", aux);
         return null;
