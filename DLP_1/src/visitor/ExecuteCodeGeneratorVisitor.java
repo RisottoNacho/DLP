@@ -76,9 +76,9 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
     public Object visit(While whileStatement, Object params) {
         codeGenerator.row(whileStatement.getRow());
         int label = codeGenerator.getLabels(2);
+        codeGenerator.labelFor("label" + label);
         whileStatement.condition.accept(this.valueCodeGeneratorVisitor, params);
         codeGenerator.jz("label" + (label + 1));
-        codeGenerator.labelFor("label" + label);
         for (Statement est : whileStatement.body)
             est.accept(this, params);
         codeGenerator.jmp("label" + label);

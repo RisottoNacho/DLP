@@ -28,14 +28,14 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(StructAccess structAccess, Object params) {
-        structAccess.left.accept(this.adressCodeGeneratorVisitor, params);
+        structAccess.accept(this.adressCodeGeneratorVisitor, params);
         codeGenerator.load(structAccess.getType());
         return null;
     }
 
     @Override
     public Object visit(ArrayAccess arrayAccess, Object params) {
-        arrayAccess.expArray.accept(this.adressCodeGeneratorVisitor, params);
+        arrayAccess.accept(this.adressCodeGeneratorVisitor, params);
         codeGenerator.load(arrayAccess.getType());
         return null;
     }
