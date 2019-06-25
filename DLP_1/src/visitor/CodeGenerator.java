@@ -137,6 +137,11 @@ public class CodeGenerator {
         out.flush();
     }
 
+    public void push(int offset) {
+        out.println("\tpushi" + offset);
+        out.flush();
+    }
+
     public void pushGlobal(int offset) {
         out.println("\tpusha " + offset);
         out.flush();

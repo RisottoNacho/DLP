@@ -20,6 +20,11 @@ public class Array extends ConcreteType implements Type {
 	}
 
 	@Override
+	public Type getTypeArray(){
+		return type;
+	}
+
+	@Override
 	public Object accept(Visitor V, Object params) {
 		return V.visit(this, params);
 	}

@@ -1,5 +1,6 @@
 package visitor;
 
+import ast.expressions.ArrayAccess;
 import ast.expressions.StructAccess;
 import ast.expressions.Variable;
 
@@ -28,5 +29,11 @@ public class AdressCodeGeneratorVisitor extends AbstractCGVisitor {
         return null;
     }
 
+    @Override
+    public Object visit(ArrayAccess arrayAccess, Object params) {
+        arrayAccess.expArray.accept(this, params);
+        codeGenerator.pushStruct(arrayAccess.getType().getTypeArray().getSize());
+        return null;
+    }
 
 }
