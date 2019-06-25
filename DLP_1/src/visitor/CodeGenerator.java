@@ -31,8 +31,8 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void jnz(String label) {
-        out.println("\tjnz " + label);
+    public void jz(String label) {
+        out.println("\tjz " + label);
         out.flush();
     }
 
@@ -141,7 +141,7 @@ public class CodeGenerator {
     }
 
     public void labelFor(String name) {
-        out.println(name + labelCount + ":");
+        out.println(name + ":");
         labelCount++;
         out.flush();
     }

@@ -57,11 +57,27 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
     }
 
     @Override
+    public Object visit(IfElse ifElse, Object params) {
+        int label = codeGenerator.getLabels(2);
+        codeGenerator.row(ifElse.getRow());
+        ifElse.condition.accept(this.valueCodeGeneratorVisitor, params);
+        codeGenerator.jz("label" + label);
+        for (Statement est : ifElse.IfBody)
+            est.accept(this, params);
+        codeGenerator.jmp("label" + (label + 1));
+        codeGenerator.labelFor("label" + label);
+        for (Statement est : ifElse.ElseBody)
+            est.accept(this, params);
+        codeGenerator.labelFor("label" + (label + 1));
+        return null;
+    }
+
+    @Override
     public Object visit(While whileStatement, Object params) {
         codeGenerator.row(whileStatement.getRow());
         int label = codeGenerator.getLabels(2);
         whileStatement.condition.accept(this.valueCodeGeneratorVisitor, params);
-        codeGenerator.jnz("label" + (label + 1));
+        codeGenerator.jz("label" + (label + 1));
         codeGenerator.labelFor("label" + label);
         for (Statement est : whileStatement.body)
             est.accept(this, params);

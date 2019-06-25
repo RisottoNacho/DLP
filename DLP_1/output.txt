@@ -2,7 +2,7 @@
 call main
 halt
 #Line  4
-main0:
+main:
 	enter 54
 #Line  12
 	push bp
@@ -83,8 +83,8 @@ main0:
 	loadi
 	pushi 10
 	lti
-	jnz label2
-label13:
+	jz label2
+label1:
 #Line  21
 	pusha 0
 	push bp
@@ -112,3 +112,153 @@ label13:
 	outf
 	pushb 32
 	outb
+#Line  23
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 2
+	modi
+	jz label4
+#Line  24
+	pushb 111
+	outb
+	pushb 100
+	outb
+	pushb 100
+	outb
+	pushb 10
+	outb
+	jmp label5
+label4:
+#Line  26
+	pushb 101
+	outb
+	pushb 118
+	outb
+	pushb 101
+	outb
+	pushb 110
+	outb
+	pushb 10
+	outb
+label5:
+#Line  27
+	push bp
+	pushi -6
+	addi
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 1
+	addi
+	storei
+	jmp label1
+label2:
+#Line  29
+	pushb 10
+	outb
+#Line  31
+	push bp
+	pushi -6
+	addi
+	pushi 0
+	storei
+#Line  32
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 4
+	lti
+	jz label10
+label9:
+#Line  33
+	push bp
+	pushi -8
+	addi
+	pushi 0
+	storei
+#Line  34
+	push bp
+	pushi -8
+	addi
+	loadi
+	pushi 5
+	lti
+	jz label13
+label12:
+#Line  35
+	push bp
+	pushi -48
+	addi
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 10
+	muli
+	addi
+	push bp
+	pushi -8
+	addi
+	loadi
+	pushi 2
+	muli
+	addi
+	push bp
+	pushi -6
+	addi
+	loadi
+	push bp
+	pushi -8
+	addi
+	loadi
+	addi
+	storei
+#Line  36
+	push bp
+	pushi -48
+	addi
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 10
+	muli
+	addi
+	loadi
+	outi
+	pushb 32
+	outb
+#Line  37
+	push bp
+	pushi -8
+	addi
+	push bp
+	pushi -8
+	addi
+	loadi
+	pushi 1
+	addi
+	storei
+	jmp label12
+label13:
+#Line  39
+	pushb 10
+	outb
+#Line  40
+	push bp
+	pushi -6
+	addi
+	push bp
+	pushi -6
+	addi
+	loadi
+	pushi 1
+	addi
+	storei
+	jmp label9
+label10:
+	ret 0,54,0
