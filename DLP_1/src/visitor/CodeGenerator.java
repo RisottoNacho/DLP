@@ -137,8 +137,8 @@ public class CodeGenerator {
         out.flush();
     }
 
-    public void push(int offset) {
-        out.println("\tpushi" + offset);
+    public void push(Type tipo, int offset) {
+        out.println("\tpush"+ tipo.subFix() + " "  + offset);
         out.flush();
     }
 

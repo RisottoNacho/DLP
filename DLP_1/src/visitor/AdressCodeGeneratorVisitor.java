@@ -3,10 +3,12 @@ package visitor;
 import ast.expressions.ArrayAccess;
 import ast.expressions.StructAccess;
 import ast.expressions.Variable;
+import ast.types.Int;
 
 public class AdressCodeGeneratorVisitor extends AbstractCGVisitor {
 
     private CodeGenerator codeGenerator;
+    private ValueCodeGeneratorVisitor valueCodeGeneratorVisitor;
 
     public AdressCodeGeneratorVisitor(CodeGenerator codeGenerator) {
         this.codeGenerator = codeGenerator;
@@ -31,9 +33,17 @@ public class AdressCodeGeneratorVisitor extends AbstractCGVisitor {
 
     @Override
     public Object visit(ArrayAccess arrayAccess, Object params) {
+        Int aux = new Int(0, 0);
         arrayAccess.expArray.accept(this, params);
-        codeGenerator.pushStruct(arrayAccess.getType().getTypeArray().getSize());
+        arrayAccess.expAccess.accept(this.valueCodeGeneratorVisitor, params);
+        codeGenerator.push(aux, arrayAccess.getType().getTypeArray().getSize());
+        codeGenerator.arithmetic("*", aux);
+        codeGenerator.arithmetic("+", aux);
         return null;
+    }
+
+    public void setValueCodeGenerator(ValueCodeGeneratorVisitor v) {
+        this.valueCodeGeneratorVisitor = v;
     }
 
 }
