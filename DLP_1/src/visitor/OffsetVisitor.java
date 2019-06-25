@@ -22,6 +22,7 @@ public class OffsetVisitor extends ConcreteVisitor {
         return null;
     }
 
+
     @Override
     public Object visit(Struct struct, Object params) {
         int size = 0;
@@ -44,6 +45,7 @@ public class OffsetVisitor extends ConcreteVisitor {
 
     @Override
     public Object visit(VariableDefinition variableDefinition, Object params) {
+        variableDefinition.type.accept(this, params);
         if (variableDefinition.getScope() == 0) {
             variableDefinition.setOffSet(currentGlobalSize);
             currentGlobalSize += variableDefinition.getType().getSize();
