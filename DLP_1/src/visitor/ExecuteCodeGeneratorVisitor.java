@@ -110,25 +110,33 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
     public Object visit(FunctionDefinition functionDefinition, Object params) {
         codeGenerator.row(functionDefinition.getRow());
         codeGenerator.labelFor(functionDefinition.getName());
-        int size = 0;
-        for (VariableDefinition v : functionDefinition.lsVariables)
-            size += v.getType().getSize();
-        codeGenerator.enter(size);
-        functionDefinition.lsStatement.forEach(s -> s.accept(this, params));
-        if (functionDefinition.type instanceof Void)
-            codeGenerator.ret(0, size, functionDefinition.type.getSize());
-        else
-            functionDefinition.type.accept(this, size);
+        codeGenerator.enter(functionDefinition.getLocalVarSize());
+        functionDefinition.lsStatement.forEach(s -> s.accept(this, functionDefinition));
+        if (functionDefinition.type.getReturnType() instanceof Void)
+            codeGenerator.ret(0, functionDefinition.getLocalVarSize(), functionDefinition.type.getSize());
         return null;
     }
 
     @Override
-    public Object visit(Function functionType, Object params) {
+    public Object visit(FunctionCall functionCall, Object params) {
+        for (Expression param : functionCall.params)
+            param.accept(this.valueCodeGeneratorVisitor, params);
+        codeGenerator.call(functionCall.name.value);
+        if (!(functionCall.name.definition.getType().getReturnType() instanceof Void))
+            codeGenerator.pop(functionCall.name.definition.getType().getReturnType());
+        return null;
+    }
+
+
+    @Override
+    public Object visit(Return returnStatement, Object params) {
+        returnStatement.expression.accept(this.valueCodeGeneratorVisitor, params);
+        FunctionDefinition functionDefinition = (FunctionDefinition) params;
         int tam = 0;
-        for (VariableDefinition par : functionType.lsParams) {
+        for (VariableDefinition par : functionDefinition.type.getParams()) {
             tam += par.getType().getSize();
         }
-        codeGenerator.ret(functionType.returnType.getSize(), (int) params, tam);
+        codeGenerator.ret(functionDefinition.type.getReturnType().getSize(), functionDefinition.getLocalVarSize(), tam);
         return null;
     }
 

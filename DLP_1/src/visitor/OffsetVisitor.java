@@ -38,7 +38,7 @@ public class OffsetVisitor extends ConcreteVisitor {
         int size = 4;
         for (int i = functionType.lsParams.size() - 1; i > -1; i--) {
             functionType.lsParams.get(i).setOffSet(size);
-            size += functionType.lsParams.get(i).getOffSet();
+            size += functionType.lsParams.get(i).getType().getSize();
         }
         return null;
     }
@@ -51,7 +51,7 @@ public class OffsetVisitor extends ConcreteVisitor {
             currentGlobalSize += variableDefinition.getType().getSize();
         } else if (variableDefinition.getScope() == 1) {
             currentLocalSize += variableDefinition.getType().getSize();
-            variableDefinition.setOffSet(currentLocalSize);
+            variableDefinition.setOffSet(-currentLocalSize);
         }
         return null;
     }

@@ -20,6 +20,16 @@ public class CodeGenerator {
         labelCount = 0;
     }
 
+    public void pop(Type type) {
+        out.println("\tpop"+type.subFix());
+        out.flush();
+    }
+
+    public void call(String label) {
+        out.println("\tcall " + label);
+        out.flush();
+    }
+
     public int getLabels(int plus) {
         int a = labelCount;
         labelCount = labelCount + plus;
@@ -174,7 +184,7 @@ public class CodeGenerator {
 
     public void pushLocal(int offset) {
         out.println("\tpush bp");
-        out.println("\tpushi " + -offset);
+        out.println("\tpushi " + offset);
         out.println("\taddi");
         out.flush();
     }

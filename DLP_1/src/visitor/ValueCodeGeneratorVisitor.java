@@ -34,6 +34,14 @@ public class ValueCodeGeneratorVisitor extends AbstractCGVisitor {
     }
 
     @Override
+    public Object visit(FunctionProcedure functionProcedure, Object params) {
+        for (Expression param : functionProcedure.params)
+            param.accept(this, params);
+        codeGenerator.call(functionProcedure.name.value);
+        return null;
+    }
+
+    @Override
     public Object visit(ArrayAccess arrayAccess, Object params) {
         arrayAccess.accept(this.adressCodeGeneratorVisitor, params);
         codeGenerator.load(arrayAccess.getType());

@@ -36,6 +36,16 @@ public class Function extends ConcreteType implements Type {
     }
 
     @Override
+    public Type getReturnType() {
+        return returnType;
+    }
+
+    @Override
+    public List<VariableDefinition> getParams() {
+        return lsParams;
+    }
+
+    @Override
     public String toString() {
         return "Función";
     }

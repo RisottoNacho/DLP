@@ -2,18 +2,19 @@ package ast.types;
 
 import ast.ConcreteASTNode;
 import ast.definitions.Field;
+import ast.definitions.VariableDefinition;
 import visitor.Visitor;
 
 import java.util.List;
 
-public class ConcreteType extends ConcreteASTNode implements Type{
+public class ConcreteType extends ConcreteASTNode implements Type {
 
     public ConcreteType(int row, int column) {
         super(row, column);
     }
 
     @Override
-    public int getSize(){
+    public int getSize() {
         return 0;
     }
 
@@ -23,13 +24,23 @@ public class ConcreteType extends ConcreteASTNode implements Type{
     }
 
     @Override
-    public Field getField(String s){
+    public Field getField(String s) {
+        return null;
+    }
+
+    @Override
+    public List<VariableDefinition> getParams() {
+        return null;
+    }
+
+    @Override
+    public Type getReturnType() {
         return null;
     }
 
     @Override
     public Type arithmetic(Type type) {
-        if(type instanceof ErrorType)
+        if (type instanceof ErrorType)
             return type;
         return null;
     }
@@ -41,7 +52,7 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type logical(Type type) {
-        if(type instanceof ErrorType)
+        if (type instanceof ErrorType)
             return type;
         return null;
     }
@@ -53,7 +64,7 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type comparison(Type type) {
-        if(type instanceof ErrorType)
+        if (type instanceof ErrorType)
             return type;
         return null;
     }
@@ -65,7 +76,7 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type cast(Type type) {
-        if(type instanceof ErrorType)
+        if (type instanceof ErrorType)
             return type;
         return null;
     }
@@ -77,14 +88,14 @@ public class ConcreteType extends ConcreteASTNode implements Type{
 
     @Override
     public Type squareBrackets(Type type) {
-        if(type instanceof ErrorType)
+        if (type instanceof ErrorType)
             return type;
         return null;
     }
 
     @Override
     public Type promotesTo(Type type) {
-        if(type instanceof ErrorType)
+        if (type instanceof ErrorType)
             return type;
         return null;
     }
