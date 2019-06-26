@@ -25,6 +25,12 @@ public class CodeGenerator {
         out.flush();
     }
 
+    public void ln() {
+        out.println("");
+        out.flush();
+    }
+
+
     public void debug(String comment) {
         out.println("\t'*"+comment);
         out.flush();

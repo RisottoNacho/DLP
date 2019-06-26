@@ -42,6 +42,7 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
                 codeGenerator.debug(definition.getType().toString() + " " + definition.getName() + " (offset " + definition.getOffSet() + ")");
             }
         }
+        codeGenerator.ln();
         codeGenerator.comment("Invocation to the main function\n");
         codeGenerator.mainInvocation();
         codeGenerator.halt();
@@ -129,10 +130,12 @@ public class ExecuteCodeGeneratorVisitor extends AbstractCGVisitor {
         for (VariableDefinition par : functionDefinition.type.getParams()) {
             codeGenerator.debug(par.type.toString() + " " + par.getName() + " (offset " + par.getOffSet() + ")");
         }
+        codeGenerator.ln();
         codeGenerator.debug("Local variables");
         for (VariableDefinition var : functionDefinition.lsVariables) {
             codeGenerator.debug(var.type.toString() + " " + var.getName() + " (offset " + var.getOffSet() + ")");
         }
+        codeGenerator.ln();
         codeGenerator.enter(functionDefinition.getLocalVarSize());
         functionDefinition.lsStatement.forEach(s -> s.accept(this, functionDefinition));
         if (functionDefinition.type.getReturnType() instanceof Void) {
